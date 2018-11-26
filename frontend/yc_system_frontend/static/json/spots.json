@@ -1,0 +1,146 @@
+{
+  "name": "成都市",
+  "children": [
+    {
+      "name": "青羊区",
+      "value": 12,
+      "children": [
+        {
+          "name": "qy123"
+        },
+        {
+          "name": "qy122"
+        },
+        {
+          "name": "qy143"
+        },
+        {
+          "name": "qyg23"
+        },
+        {
+          "name": "qy1x3"
+        }
+      ]
+    },
+    {
+      "name": "武侯区",
+      "children": [
+        {
+          "name": "wuh123"
+        },
+        {
+          "name": "wuh122"
+        },
+        {
+          "name": "wuh143"
+        },
+        {
+          "name": "wuhg23"
+        },
+        {
+          "name": "wuh1x3"
+        }
+      ]
+    },
+    {
+      "name": "金牛区",
+      "children": [
+        {
+          "name": "jn123"
+        },
+        {
+          "name": "jn122"
+        },
+        {
+          "name": "jn143"
+        },
+        {
+          "name": "jng23"
+        },
+        {
+          "name": "jn1x3"
+        }
+      ]
+    },
+    {
+      "name": "成华区",
+      "children": [
+        {
+          "name": "ch123"
+        },
+        {
+          "name": "ch122"
+        },
+        {
+          "name": "ch143"
+        },
+        {
+          "name": "chg23"
+        },
+        {
+          "name": "ch1x3"
+        }
+      ]
+    },
+    {
+      "name": "高新区",
+      "children": [
+        {
+          "name": "gx123"
+        },
+        {
+          "name": "gx122"
+        },
+        {
+          "name": "gx143"
+        },
+        {
+          "name": "gxg23"
+        },
+        {
+          "name": "gx1x3"
+        }
+      ]
+    },
+    {
+      "name": "双流区",
+      "children": [
+        {
+          "name": "sl123"
+        },
+        {
+          "name": "sl122"
+        },
+        {
+          "name": "sl143"
+        },
+        {
+          "name": "slg23"
+        },
+        {
+          "name": "sl1x3"
+        }
+      ]
+    },
+    {
+      "name": "天府新区",
+      "children": [
+        {
+          "name": "tfxq123"
+        },
+        {
+          "name": "tfxq122"
+        },
+        {
+          "name": "tfxq143"
+        },
+        {
+          "name": "tfxqg23"
+        },
+        {
+          "name": "tfxq1x3"
+        }
+      ]
+    }
+  ]
+}
