@@ -8,6 +8,7 @@
 <script>
 import Axios from 'axios'
 export default {
+  props: ['graphData'],
   data() {
     return {
       needbackoff: false,
@@ -17,12 +18,20 @@ export default {
       }
     }
   },
-  mounted() {
-    // var allLieChart = this.echarts.init(document.getElementById('allInOne'))
+  created() {
+    // console.log(this.graphData)
     Axios.get('http://localhost:3000/home/years').then((data) => {
       this.grapmaker(data.data)
       this.initdata = data.data
     })
+    // this.grapmaker(this.graphData)
+    // this.initdata = this.graphData
+  },
+  watch: {
+    graphData(newVal, oldVal) {
+      // console.log(newVal)
+      // console.log(oldVal)
+    }
   },
   methods: {
     backTop() {

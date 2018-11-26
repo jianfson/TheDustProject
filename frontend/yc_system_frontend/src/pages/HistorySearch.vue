@@ -2,7 +2,7 @@
   <div id="historySearch">
     <div class="history-left-container">
       <div class="history-right-form-title history-left-top-container">
-        <span class="history-subtitle">历史数据查询</span>
+        <span class="history-subtitle">点位信息</span>
       </div>
       <div class="history-map-left">
         <map-area></map-area>
@@ -14,14 +14,31 @@
           <span class="history-subtitle">历史数据查询</span>
         </div>
         <div class="history-inputs-section">
-          <el-form :model="historyForm" size="mini">
+          <el-form :model="historyForm" size="mini" :label-position="right">
             <el-form-item label="区域" prop="area">
-              <el-cascader expand-trigger="hover" :options="historyOptions" v-model="historyForm.area" size="mini"></el-cascader>
+              <el-cascader
+                expand-trigger="hover"
+                :options="historyOptions"
+                v-model="historyForm.area"
+                size="mini"
+              ></el-cascader>
+            </el-form-item>
+            <el-form-item label="显示方式" prop="method">
+              <el-select v-model="historyForm.method">
+                <el-option v-for="(item,index) in timeMethodOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+              </el-select>
             </el-form-item>
             <el-form-item label="日期" prop="date">
-              <el-date-picker v-model="historyForm.date" type="daterange" range-separator="至" size="mini"></el-date-picker>
+              <el-date-picker
+                v-model="historyForm.date"
+                type="daterange"
+                range-separator="至"
+                size="mini"
+              ></el-date-picker>
             </el-form-item>
-            <el-form-item><el-button class="home-btn" size="mini" type="primary">查 询</el-button></el-form-item>
+            <el-form-item>
+              <el-button class="home-btn" size="mini" type="primary">查 询</el-button>
+            </el-form-item>
           </el-form>
         </div>
       </div>
@@ -44,8 +61,26 @@ export default {
     return {
       historyForm: {
         area: null,
-        date: null
+        date: null,
+        method: null
       },
+      timeMethodOptions: [{
+        value: 'day',
+        label: '日'
+      },
+      {
+        value: 'month',
+        label: '月'
+      },
+      {
+        value: 'session',
+        label: '季度'
+      },
+      {
+        value: 'year',
+        label: '年度'
+      }
+      ],
       historyOptions: [
         {
           value: 'allcity',
@@ -150,11 +185,11 @@ export default {
 /* 右边表单+图表部分 */
 .history-right-form-container {
   width:  100%;
-  height: 200px;
+  height: 280px;
 }
 .history-bottom-graph {
   width: 100%;
-  height: calc(100% - 200px);
+  height: calc(100% - 280px);
 }
 
 /* 左边地图部分 */

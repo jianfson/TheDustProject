@@ -22,14 +22,14 @@
           <span class="subtitle">查询扬尘情况</span>
         </div>
         <div class="inputs-section">
-          <el-form :model="homeForm" size="mini">
+          <el-form :model="homeForm" size="mini" ref="homeForm" :rules="searchRules">
             <el-form-item class="home-reaserach" label="区域" prop="area">
               <el-cascader class="home-reaserach" expand-trigger="hover" :options="researchOptions" v-model="homeForm.area" size="mini"></el-cascader>
             </el-form-item>
             <el-form-item label="日期" prop="date">
               <el-date-picker v-model="homeForm.date" type="daterange" range-separator="至" size="mini"></el-date-picker>
             </el-form-item>
-            <el-form-item><el-button class="home-btn" size="mini" type="primary">查 询</el-button></el-form-item>
+            <el-form-item><el-button class="home-btn" size="mini" type="primary" @click="submitSearch('homeForm')">查 询</el-button></el-form-item>
           </el-form>
         </div>
       </div>
@@ -38,7 +38,7 @@
           <span class="subtitle">区域扬尘变化趋势</span>
         </div>
         <div class="home-charts-container">
-          <all-line-chart></all-line-chart>
+          <all-line-chart :graph-data="lineChartsData"></all-line-chart>
         </div>
       </div>
     </div>
@@ -102,8 +102,39 @@ export default {
             }
           ]
         }
-      ]
+      ],
+      searchRules: {
+        area: [
+          { required: true, message: '请选择区域', trigger: 'blur' }
+        ],
+        date: [
+          { required: true, message: '请选择时间', trigger: 'blur' }
+        ]
+      },
+      lineChartsData: null
     }
+  },
+  methods: {
+    submitSearch(formName) {
+      // if(!this.homeForm.area || !this.homeForm.date) {
+      //   return false
+      // }
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.$axios.get('http://localhost:3000/home/search/' + JSON.stringify(this.homeForm)).then(res => {
+            let data = res.data
+          })
+        } else {
+          console.log('error submit')
+          return false
+        }
+      })
+    }
+  },
+  mounted() {
+    this.$axios.get('http://localhost:3000/home/years').then(res => {
+      this.lineChartsData = res
+    })
   }
 }
 </script>
@@ -119,7 +150,7 @@ export default {
   flex-grow: 2;
   height: 100%;
 }
-.home-leftside-inner{
+.home-leftside-inner {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -150,7 +181,7 @@ export default {
   margin: 20px 20px 20px 0;
   padding-top: 10px;
   background-color: #fff;
-  border: 1px solid rgba(192, 191, 191, 0.3)
+  border: 1px solid rgba(192, 191, 191, 0.3);
 }
 
 .top-form {
