@@ -15,18 +15,38 @@ export default {
   data() {
     return {
       polutionRank: [{
-        name: 'test1',
-        location: 'test1',
+        name: 'Y0028152017154',
+        location: '成都后花园二期B区一标段',
         level: '3级',
         trend: '···'
       }, {
-        name: 'test2',
-        location: 'test2',
+        name: '1440-0028-sclw-2859',
+        location: '成都市锦江区娇子立交以南，成龙路以西项目',
+        level: '3级',
+        trend: '···'
+      }, {
+        name: 'Y0028141914002',
+        location: '五横道北延线工程 ',
         level: '2级',
         trend: '···'
       }, {
-        name: 'test3',
-        location: 'test3',
+        name: 'Y0028091510021',
+        location: '成都科学城生态水环境工程项目部EPC总承包',
+        level: '1级',
+        trend: '···'
+      }, {
+        name: '1440-0028-sclw-2814',
+        location: '绿岛筑三标段15号楼',
+        level: '1级',
+        trend: '···'
+      }, {
+        name: 'Y0028152618102',
+        location: '锦巷兰台小区',
+        level: '1级',
+        trend: '···'
+      }, {
+        name: 'XHHB-Y0017040100175',
+        location: '坤力柳河左岸工程（1-5号楼、地下室工程）',
         level: '1级',
         trend: '···'
       }]
