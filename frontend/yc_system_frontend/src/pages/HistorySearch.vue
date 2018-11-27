@@ -14,7 +14,7 @@
           <span class="history-subtitle">历史数据查询</span>
         </div>
         <div class="history-inputs-section">
-          <el-form :model="historyForm" size="mini" :label-position="right">
+          <el-form :model="historyForm" size="mini">
             <el-form-item label="区域" prop="area">
               <el-cascader
                 expand-trigger="hover"
@@ -25,8 +25,14 @@
             </el-form-item>
             <el-form-item label="显示方式" prop="method">
               <el-select v-model="historyForm.method">
-                <el-option v-for="(item,index) in timeMethodOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                <el-option
+                  v-for="(item,index) in timeMethodOptions"
+                  :key="index"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
               </el-select>
+              <!-- <el-cascader v-model="historyForm.method" :options="timeMethodOptions"  expand-trigger="hover" size="mini"></el-cascader> -->
             </el-form-item>
             <el-form-item label="日期" prop="date">
               <el-date-picker
@@ -37,7 +43,7 @@
               ></el-date-picker>
             </el-form-item>
             <el-form-item>
-              <el-button class="home-btn" size="mini" type="primary">查 询</el-button>
+              <el-button class="home-btn" size="mini" type="primary" @click="showMethods">查 询</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -64,22 +70,41 @@ export default {
         date: null,
         method: null
       },
-      timeMethodOptions: [{
-        value: 'day',
-        label: '日'
-      },
-      {
-        value: 'month',
-        label: '月'
-      },
-      {
-        value: 'session',
-        label: '季度'
-      },
-      {
-        value: 'year',
-        label: '年度'
-      }
+      timeMethodOptions: [
+        //   {
+        //   value: 'day',
+        //   label: '日'
+        // },
+        {
+          value: 'month',
+          label: '月'
+        },
+        {
+          value: 'session',
+          label: '季度',
+          children: [
+            {
+              label: '春季',
+              value: 'spring'
+            },
+            {
+              label: '夏季',
+              value: 'summer'
+            },
+            {
+              label: '秋季',
+              value: 'atum'
+            },
+            {
+              label: '冬季',
+              value: 'winter'
+            }
+          ]
+        },
+        {
+          value: 'year',
+          label: '年度'
+        }
       ],
       historyOptions: [
         {
@@ -120,6 +145,10 @@ export default {
           ]
         }
       ]
+    }
+  },
+  methods: {
+    showMethods() {
     }
   }
 }
@@ -184,7 +213,7 @@ export default {
 
 /* 右边表单+图表部分 */
 .history-right-form-container {
-  width:  100%;
+  width: 100%;
   height: 280px;
 }
 .history-bottom-graph {

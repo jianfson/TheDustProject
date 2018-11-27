@@ -23,7 +23,9 @@ export default {
   },
   mounted() {
     this.historyGraph = this.echarts.init(document.getElementById('historyGraphcon'))
-    Axios.get('http://localhost:3000/history/chengdu').then((data) => {
+    Axios.get('http://localhost:3000/history/cdmonth').then((data) => {
+      // 'http://localhost:3000/history/chengdu'
+      console.log(data)
       const historyOption = {
         title: {
           text: '各区域扬尘历史数据',
@@ -41,19 +43,19 @@ export default {
             }
           }
         },
-        dataZoom: [
-          {
-            type: 'slider',
-            show: true,
-            start: 80,
-            end: 100
-          },
-          {
-            type: 'inside',
-            start: 80,
-            end: 100
-          }
-        ],
+        // dataZoom: [
+        //   {
+        //     type: 'slider',
+        //     show: true,
+        //     start: 80,
+        //     end: 100
+        //   },
+        //   {
+        //     type: 'inside',
+        //     start: 80,
+        //     end: 100
+        //   }
+        // ],
         tooltip: {
           trigger: 'axis'
         },
@@ -66,7 +68,7 @@ export default {
         },
         series: [{
           data: data.data.data,
-          type: 'bar'
+          type: 'line'
         }]
       }
       this.historyGraph.setOption(historyOption)

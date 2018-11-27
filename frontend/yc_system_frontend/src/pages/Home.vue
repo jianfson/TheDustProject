@@ -35,7 +35,7 @@
       </div>
       <div class="bottom-graph">
         <div class="title">
-          <span class="subtitle">区域扬尘变化趋势</span>
+          <span class="subtitle">全市扬尘变化趋势</span>
         </div>
         <div class="home-charts-container">
           <all-line-chart :graph-data="lineChartsData"></all-line-chart>
@@ -116,13 +116,11 @@ export default {
   },
   methods: {
     submitSearch(formName) {
-      // if(!this.homeForm.area || !this.homeForm.date) {
-      //   return false
-      // }
       this.$refs[formName].validate(valid => {
         if (valid) {
+          // 请求，查询对应时间的区域的历史数据
           this.$axios.get('http://localhost:3000/home/search/' + JSON.stringify(this.homeForm)).then(res => {
-            let data = res.data
+            // let data = res.data
           })
         } else {
           console.log('error submit')
