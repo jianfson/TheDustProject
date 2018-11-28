@@ -1,45 +1,49 @@
 <template>
   <div class="home-container">
-    <div class="home-leftside">
-      <div class="home-leftside-inner">
-        <div class="home-maptop">
-          <div class="title">
-            <span class="subtitle">监测点位置信息</span>
-          </div>
-        <map-area></map-area>
+    <div class="home-firstline">
+      <div class="home-leftside">
+        <div class="home-leftside-inner">
+          <div class="home-maptop">
+            <div class="title">
+              <span class="subtitle">监测点位置信息</span>
+            </div>
+          <map-area></map-area>
+        </div>
+        </div>
       </div>
+      <div id="rightside-graph">
+        <div class="top-form">
+          <div class="title">
+            <span class="subtitle">查询扬尘情况</span>
+          </div>
+          <div class="inputs-section">
+            <el-form :model="homeForm" size="mini" ref="homeForm" :rules="searchRules">
+              <el-form-item class="home-reaserach" label="区域" prop="area">
+                <el-cascader class="home-reaserach" expand-trigger="hover" :options="researchOptions" v-model="homeForm.area" size="mini"></el-cascader>
+              </el-form-item>
+              <el-form-item label="日期" prop="date">
+                <el-date-picker v-model="homeForm.date" type="daterange" range-separator="至" size="mini"></el-date-picker>
+              </el-form-item>
+              <el-form-item><el-button class="home-btn" size="mini" type="primary" @click="submitSearch('homeForm')">查 询</el-button></el-form-item>
+            </el-form>
+          </div>
+        </div>
+        <div class="bottom-graph">
+          <div class="title">
+            <span class="subtitle">全市扬尘变化趋势</span>
+          </div>
+          <div class="home-charts-container">
+            <all-line-chart :graph-data="lineChartsData"></all-line-chart>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="home-secondline">
       <div class="home-rankbottom">
         <div class="title">
           <span class="subtitle">监测点污染等级</span>
         </div>
         <rank-table></rank-table>
-      </div>
-      </div>
-    </div>
-    <div id="rightside-graph">
-      <div class="top-form">
-        <div class="title">
-          <span class="subtitle">查询扬尘情况</span>
-        </div>
-        <div class="inputs-section">
-          <el-form :model="homeForm" size="mini" ref="homeForm" :rules="searchRules">
-            <el-form-item class="home-reaserach" label="区域" prop="area">
-              <el-cascader class="home-reaserach" expand-trigger="hover" :options="researchOptions" v-model="homeForm.area" size="mini"></el-cascader>
-            </el-form-item>
-            <el-form-item label="日期" prop="date">
-              <el-date-picker v-model="homeForm.date" type="daterange" range-separator="至" size="mini"></el-date-picker>
-            </el-form-item>
-            <el-form-item><el-button class="home-btn" size="mini" type="primary" @click="submitSearch('homeForm')">查 询</el-button></el-form-item>
-          </el-form>
-        </div>
-      </div>
-      <div class="bottom-graph">
-        <div class="title">
-          <span class="subtitle">全市扬尘变化趋势</span>
-        </div>
-        <div class="home-charts-container">
-          <all-line-chart :graph-data="lineChartsData"></all-line-chart>
-        </div>
       </div>
     </div>
   </div>
@@ -139,14 +143,16 @@ export default {
 
 <style>
 .home-container {
-  height: 100%;
+  width: 100%;
+  background-color: rgba(243, 243, 243, 0.712);
+}
+.home-firstline {
   width: 100%;
   display: flex;
-  background-color: rgba(243, 243, 243, 0.712);
+  height: 600px;
 }
 .home-leftside {
   flex-grow: 2;
-  height: 100%;
 }
 .home-leftside-inner {
   display: flex;
@@ -161,12 +167,12 @@ export default {
   background-color: #fff;
   border: 1px solid rgba(192, 191, 191, 0.3);
 }
+
+/* 污染等级表 */
 .home-rankbottom {
-  flex-grow: 1;
-  height: 300px;
   background-color: #fff;
   border: 1px solid rgba(192, 191, 191, 0.3);
-  padding: 0 10px;
+  padding: 20px;
   margin: 0 20px 20px 20px;
   /* box-shadow: 1px 1px 7px rgba(84, 92, 100, 0.6); */
 }

@@ -29,12 +29,12 @@ export default {
       const historyOption = {
         title: {
           text: '各区域扬尘历史数据',
-          padding: [5, 20],
-          subtext: '全市',
-          subtextStyle: {
-            color: 'rgba(0,0,0,0.8)',
-            fontWeight: 'normal'
-          }
+          padding: [5, 20]
+          // subtext: '全市',
+          // subtextStyle: {
+          //   color: 'rgba(0,0,0,0.8)',
+          //   fontWeight: 'normal'
+          // }
         },
         toolbox: {
           feature: {
@@ -64,10 +64,12 @@ export default {
           data: data.data.category
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          name: 'μg/m³'
         },
         series: [{
           data: data.data.data,
+          // data: data.data.spring,
           type: 'line'
         }]
       }
