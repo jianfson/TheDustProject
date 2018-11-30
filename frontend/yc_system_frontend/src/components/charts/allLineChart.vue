@@ -26,7 +26,7 @@ export default {
     //   this.initdata = data.data
     // })
     Axios.get('http://localhost:3000/home/chengdu').then((data) => {
-      console.log(data)
+      // console.log(data)
       this.grapmaker(data.data)
       this.initdata = data.data
     })
@@ -60,15 +60,15 @@ export default {
         this.selectedList[para.name] = !this.selectedList[para.name]
       })
       const option = {
-        title: {
-          // text: '区域扬尘变化趋势',
-          padding: [5, 20],
-          subtext: whichYear,
-          subtextStyle: {
-            color: 'rgba(0,0,0,0.8)',
-            fontWeight: 'normal'
-          }
-        },
+        // title: {
+        //   text: '区域扬尘变化趋势',
+        //   padding: [5, 20],
+        //   subtext: whichYear,
+        //   subtextStyle: {
+        //     color: 'rgba(0,0,0,0.8)',
+        //     fontWeight: 'normal'
+        //   }
+        // },
         tooltip: {
           trigger: 'axis'
         },
