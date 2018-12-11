@@ -7,8 +7,8 @@
             <div class="title">
               <span class="subtitle">监测点位置信息</span>
             </div>
-          <map-area></map-area>
-        </div>
+            <map-area></map-area>
+          </div>
         </div>
       </div>
       <div id="rightside-graph">
@@ -19,12 +19,25 @@
           <div class="inputs-section">
             <el-form :model="homeForm" size="mini" ref="homeForm" :rules="searchRules">
               <el-form-item class="home-reaserach" label="区域" prop="area">
-                <el-cascader class="home-reaserach" expand-trigger="hover" :options="researchOptions" v-model="homeForm.area" size="mini"></el-cascader>
+                <el-cascader
+                  class="home-reaserach"
+                  expand-trigger="hover"
+                  :options="researchOptions"
+                  v-model="homeForm.area"
+                ></el-cascader>
               </el-form-item>
               <el-form-item label="日期" prop="date">
-                <el-date-picker v-model="homeForm.date" type="daterange" range-separator="至" size="mini"></el-date-picker>
+                <el-date-picker v-model="homeForm.date.startMonth" type="month"></el-date-picker>&nbsp;-
+                <el-date-picker type="month" v-model="homeForm.date.endMonth"></el-date-picker>
               </el-form-item>
-              <el-form-item><el-button class="home-btn" size="mini" type="primary" @click="submitSearch('homeForm')">查 询</el-button></el-form-item>
+              <el-form-item>
+                <el-button
+                  class="home-btn"
+                  size="mini"
+                  type="primary"
+                  @click="submitSearch('homeForm')"
+                >查 询</el-button>
+              </el-form-item>
             </el-form>
           </div>
         </div>
@@ -62,10 +75,33 @@ export default {
     allLineChart
   },
   data() {
+    const datepickerRule = function (rule, value, callback) {
+      let start = new Date(value.startMonth)
+      let end = new Date(value.endMonth)
+      if (!value.startMonth) {
+        return callback(new Error('开始日期不能为空'))
+      } else if (!value.endMonth) {
+        return callback(new Error('结束日期不能为空'))
+      } else if (start >= end) {
+        return callback(new Error('开始日期必须小于结束日期'))
+      } else {
+        callback()
+      }
+    }
+    const areapickerRule = function (rule, value, callback) {
+      if (!value) {
+        callback(new Error('区域不能为空'))
+      } else {
+        callback()
+      }
+    }
     return {
       homeForm: {
         area: null,
-        date: null
+        date: {
+          startMonth: null,
+          endMonth: null
+        }
       },
       selectedOptions: null,
       researchOptions: [
@@ -89,30 +125,17 @@ export default {
               label: '金牛区', value: 'jingniu'
             }
           ]
-        }, {
-          value: 'points',
-          label: '点位查询',
-          children: [
-            {
-              label: '0x123', value: '0x123'
-            }, {
-              label: '0x124', value: '0x123'
-            }, {
-              label: '0x153', value: '0x123'
-            }, {
-              label: '0x1x3', value: '0x123'
-            }, {
-              label: '0x1v3', value: '0x123'
-            }
-          ]
         }
       ],
       searchRules: {
         area: [
-          { required: true, message: '请选择区域', trigger: 'blur' }
+          { validator: areapickerRule, trigger: 'blur' }
         ],
         date: [
-          { required: true, message: '请选择时间', trigger: 'blur' }
+          {
+            validator: datepickerRule,
+            trigger: 'blur'
+          }
         ]
       },
       lineChartsData: null

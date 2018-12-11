@@ -9,9 +9,9 @@ export default {
     var map = new window.BMap.Map('allmap')
     // var point = new window.BMap.Point(104.02795346, 30.62994585)
     map.centerAndZoom('成都', 13)
-    map.setMapStyle({style:'googlelite'})
+    map.setMapStyle({ style: 'googlelite' })
     map.enableScrollWheelZoom(true)
-    this.$axios.get('http://localhost:3000/map').then(res=> {
+    this.$axios.get('http://localhost:3000/map').then(res => {
       res.data.data.forEach(element => {
         let point = new window.BMap.Point(element.positionX, element.positionY)
         let options = {

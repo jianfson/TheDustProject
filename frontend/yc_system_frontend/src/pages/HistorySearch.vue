@@ -35,12 +35,15 @@
               <!-- <el-cascader v-model="historyForm.method" :options="timeMethodOptions"  expand-trigger="hover" size="mini"></el-cascader> -->
             </el-form-item>
             <el-form-item label="日期" prop="date">
-              <el-date-picker
+              <!-- <el-date-picker
                 v-model="historyForm.date"
                 type="daterange"
                 range-separator="至"
                 size="mini"
-              ></el-date-picker>
+              ></el-date-picker> -->
+            </el-form-item>
+            <el-form-item>
+              <el-date-picker type="month"></el-date-picker>
             </el-form-item>
             <el-form-item>
               <el-button class="home-btn" size="mini" type="primary" @click="showMethods">查 询</el-button>
