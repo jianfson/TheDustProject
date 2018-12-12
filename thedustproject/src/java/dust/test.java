@@ -37,9 +37,9 @@ public class test {
 
         try {
             Class.forName(drive);
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/dust?user=root&password=1");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/dust?characterEncoding=utf-8&user=root&password=1");
             System.out.println("数据库连接成功");
-            String sql = "select id,lng,lat from device ";
+            String sql = "select lng,lat,id from device ";
             stmt = conn.prepareStatement(sql);
             rs = stmt.executeQuery();
 
@@ -60,7 +60,9 @@ public class test {
                     //System.out.println(allAdd);
                     String arr[] = allAdd.split(",");
                     System.out.println("省:" + arr[0] + "\n市:" + arr[1] + "\n区:" + arr[2]);
-                    String sql_insert = "update device set location='\"+arr[2]+\"' where id='\"+id+\"' ";
+                    String location = arr[2];
+                    String sql_insert = "update device set location='"+location+"' where id="+id;
+                    //String sql_insert = "update device set location='\"+arr[2]+\"' ";
                     stmt_insert = conn.prepareStatement(sql_insert);
                     stmt_insert.executeUpdate();
                     stmt_insert.close();
