@@ -1,17 +1,18 @@
 <template>
-  <div id="correcDateGraph">
-    <div id="datePicker">
+  <!-- <div id="correcDateGraph"> -->
+  <!-- <div id="datePicker">
       <el-date-picker type="daterange" v-model="pickedDate" range-separator="至" @change="drawWithDate"></el-date-picker>
-    </div>
-    <div id="grapContainer"></div>
-  </div>
+  </div>-->
+  <div id="grapContainer"></div>
+  <!-- </div> -->
 </template>
 
 <script>
+import qs from 'qs'
 export default {
   data() {
     return {
-      pickedDate: null,
+      // pickedDate: null,
       correctPie: null
     }
   },
@@ -19,39 +20,48 @@ export default {
     this.correctPie = this.echarts.init(document.getElementById('grapContainer'))
   },
   methods: {
-    drawWithDate() {
-      let startDate = new Date(this.pickedDate[0])
-      let time = (this.pickedDate[1].getTime() - this.pickedDate[0].getTime()) / (1000 * 60 * 60 * 24)
-      let category = [this.dealDate(startDate)]
-
-      let mockData = {
-        predictData: [103],
-        realData: [140]
-      }
-
-      for (let i = 0; i < time; i++) {
-        startDate.setDate(startDate.getDate() + 1)
-        category.push(this.dealDate(startDate))
-        mockData.predictData.push(Math.floor(Math.random() * 200))
-        mockData.realData.push(Math.floor(Math.random() * 200))
-      }
-      // console.log(category)
-      this.correctPie.setOption({
-        xAxis: {
-          type: 'category',
-          data: category
-        },
-        yAxis: {
-          type: 'value'
-        },
-        series: [{
-          data: mockData.predictData,
-          type: 'line'
-        },
-        {
-          data: mockData.realData,
-          type: 'line'
-        }]
+    drawWithDate(spotMessage) {
+      // console.log(spotMessage)
+      // 请求数据的格式
+      //  spotMessage = {
+      //       id: 点位的id String,
+      //       method: 显示方式（月度，季度，年度）,
+      //       date: 所选的时间段，String , "2018-12-31T16:00:00.000Z",只有选择月度的时候才有这个值
+      //     }
+      this.$axios.post('http://localhost:3000/correction', qs.stringify(spotMessage)).then(data => {
+        this.correctPie.setOption({
+          tooltip: {
+            trigger: 'axis'
+          },
+          xAxis: {
+            type: 'category',
+            // data: category
+            data: data.data.category
+          },
+          yAxis: {
+            type: 'value',
+            name: 'μg/m³'
+          },
+          legend: {
+            data: ['原始数据', '国控点数据', '修正后数据']
+          },
+          series: [{
+            // data: mockData.predictData,
+            name: '原始数据',
+            data: data.data.originData,
+            type: 'line'
+          },
+          {
+            // data: mockData.realData,
+            name: '国控点数据',
+            data: data.data.nationControl,
+            type: 'line'
+          }, {
+            name: '修正后数据',
+            data: data.data.correction,
+            type: 'line'
+          }]
+        })
       })
     },
     dealDate(date) {
@@ -65,11 +75,11 @@ export default {
 </script>
 
 <style>
-#correcDateGraph {
+/* #correcDateGraph {
   padding: 20px;
   width: 100%;
   height: 100%;
-}
+} */
 #grapContainer {
   width: 100%;
   height: calc(100% - 20px);

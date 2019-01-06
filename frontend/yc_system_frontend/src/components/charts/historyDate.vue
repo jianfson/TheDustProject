@@ -1,3 +1,13 @@
+/*
+ * @Author: yang
+ * @Date: 2018-12-23 14:18:18
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2018-12-24 20:40:47
+ * description: 此组件是用于综合查询页面的折线图组件
+ * 初始页面时，默认加载的是全市按年度的历史数据（2015-2018）
+ * 向父组件传drawGraph方法，通过此方法实现切换区域，对应的折线图相应变化。
+ */
+
 <template>
   <div class="historyDate">
     <div id="historyGraphcon"></div>
@@ -5,14 +15,15 @@
 </template>
 
 <script>
-import Axios from 'axios'
+import qs from 'qs'
 export default {
   data() {
     return {
       zoneRadio: 'allchengdu',
       pickedDate: null,
       historyGraph: null,
-      showedArea: null
+      showedArea: null,
+      graphOption: null
     }
   },
   computed: {
@@ -23,19 +34,14 @@ export default {
   },
   mounted() {
     this.historyGraph = this.echarts.init(document.getElementById('historyGraphcon'))
-    Axios.get('http://localhost:3000/history/cdmonth').then((data) => {
-      // 'http://localhost:3000/history/chengdu'
-      console.log(data)
+    // 页面初始化时，向后端请求： 2015-2018全市年度数据
+    this.$axios.get('http://localhost:3000/history/init').then((data) => {
+      // console.log(data)
       const historyOption = {
-        title: {
-          text: '各区域扬尘历史数据',
-          padding: [5, 20]
-          // subtext: '全市',
-          // subtextStyle: {
-          //   color: 'rgba(0,0,0,0.8)',
-          //   fontWeight: 'normal'
-          // }
-        },
+        // title: {
+        //   text: '扬尘历史数据',
+        //   padding: [5, 20]
+        // },
         toolbox: {
           feature: {
             dataZoom: {
@@ -43,19 +49,6 @@ export default {
             }
           }
         },
-        // dataZoom: [
-        //   {
-        //     type: 'slider',
-        //     show: true,
-        //     start: 80,
-        //     end: 100
-        //   },
-        //   {
-        //     type: 'inside',
-        //     start: 80,
-        //     end: 100
-        //   }
-        // ],
         tooltip: {
           trigger: 'axis'
         },
@@ -73,117 +66,74 @@ export default {
           type: 'line'
         }]
       }
+      this.graphOption = historyOption
       this.historyGraph.setOption(historyOption)
     })
   },
   methods: {
-    submitHistory() {
-      switch (this.zoneRadio) {
-        case 'allchengdu':
-          // console.log(this.pickedDate[0])
-          this.drawGraph(`http://localhost:3000/history/all/${this.pickedDate[0]}/${this.pickedDate[1]}`)
-          console.log(`http://localhost:3000/history/all/${this.pickedDate[0]}/${this.pickedDate[1]}`)
-          break
-        case 'particalArea':
-          this.drawGraph('http://localhost:3000/history/zones/' + this.pickedDate[0] + '/' + this.pickedDate[1])
-          break
-        case 'particalSpot':
-          this.drawGraph('http://localhost:3000/history/spots/' + this.pickedDate[0] + '/' + this.pickedDate[1])
-          break
-      }
-    },
-    drawGraph(url) {
-      Axios.get(url).then(data => {
-        var realseries = null
-        var realLegend = null
-        if (data.data.name === 'allcityByTime') {
-          realseries = [{
-            data: data.data.data,
-            type: 'bar'
-          }]
-        } else if (data.data.name === 'eachZones') {
-          realLegend = {
-            data: ['成华区', '高新区', '双流区', '金牛区', '武侯区', '青羊区'],
-            left: '30%'
-          }
-          realseries = [{
-            name: '成华区',
-            data: data.data.data.chenghua,
-            type: 'bar'
-          },
-          {
-            name: '高新区',
-            data: data.data.data.gaoxing,
-            type: 'bar'
-          },
-          {
-            name: '双流区',
-            data: data.data.data.shuangliu,
-            type: 'bar'
-          },
-          {
-            name: '金牛区',
-            data: data.data.data.jinniu,
-            type: 'bar'
-          },
-          {
-            name: '武侯区',
-            data: data.data.data.wuhou,
-            type: 'bar'
-          },
-          {
-            name: '青羊区',
-            data: data.data.data.qingyang,
-            type: 'bar'
-          }]
-        } else if (data.data.name === 'eachSpots') {
-          realseries = [{
-            // 逻辑还没确定
-          }]
-        }
+    /*
+    * drawGraph(area|string, date|string, method)
+    * area: 所选区域，
+    * date: 时间范围，
+    * method： 显示方式（按年度，季度，月度）
+    * return null
+    */
+    drawGraph(formdata) {
+      this.$axios.post('http://localhost:3000/history', qs.stringify(formdata)).then(data => {
+        /*
+        * formdata: {
+        *  area: string,所选区域
+        *  date: Date,时间，当method为年度和季度时，为空
+        *  method: string 显示方式
+        * }
+        * 向后端请求，返回的数据格式：
+        * 其中的category最好由后端提供，之前考虑了前端计算出来，但是问题是，当我们选取显示方式为季度和年度的时候，
+        * 实际上要显示的是所有年份的均值，或者是所有某个季节的均值，所以具体包括哪些年份前端并没有办法独立判断，所
+        * 以不如后端直接给出横轴的坐标（数组方式）。
+        * {
+        * ...
+        * data: {
+        * data: [pm10值, ...],
+        * category: [2015，2016,2017]
+        * }
+        * ...
+        * }
+        */
+        // console.log(data)
         const historyOption = {
           xAxis: {
             type: 'category',
             data: data.data.category
           },
-          legend: realLegend,
-          dataZoom: [
-            {
-              type: 'slider',
-              show: true,
-              start: 0,
-              end: 100
-            },
-            {
-              type: 'inside',
-              start: 0,
-              end: 100
-            }
-          ],
           yAxis: {
             type: 'value'
           },
-          series: realseries
+          series: [{
+            name: '成华区',
+            data: data.data.data,
+            type: 'line'
+          }]
         }
         this.historyGraph.setOption(historyOption)
       })
-    },
-    xAxisNamesCompute(datestr) {
-      let inputDate = new Date(datestr)
-      let week = [this.dealDate(inputDate)]
-
-      for (let i = 0; i < 6; i++) {
-        inputDate.setDate(inputDate.getDate() - 1)
-        week.push(this.dealDate(inputDate))
-      }
-      return week.reverse()
-    },
-    dealDate(date) {
-      return date.getFullYear() + '-' + this.addZero(date.getMonth() + 1) + '-' + this.addZero(date.getDate())
-    },
-    addZero(num) {
-      return num < 10 ? '0' + num : num
     }
+    // 横轴category的计算方法，后端返回横轴category数组，此方法废弃。
+    // xAxisNamesCompute(datestr) {
+    //   let inputDate = new Date(datestr)
+    //   let week = [this.dealDate(inputDate)]
+
+    //   for (let i = 0; i < 6; i++) {
+    //     inputDate.setDate(inputDate.getDate() - 1)
+    //     week.push(this.dealDate(inputDate))
+    //   }
+    //   return week.reverse()
+    // },
+    // dealDate(date) {
+    //   return date.getFullYear() + '-' + this.addZero(date.getMonth() + 1) + '-' + this.addZero(date.getDate())
+    // },
+    // addZero(num) {
+    //   return num < 10 ? '0' + num : num
+    // }
   }
 }
 </script>

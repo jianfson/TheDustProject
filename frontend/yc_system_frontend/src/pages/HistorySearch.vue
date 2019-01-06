@@ -2,10 +2,10 @@
   <div id="historySearch">
     <div class="history-left-container">
       <div class="history-right-form-title history-left-top-container">
-        <span class="history-subtitle">点位信息</span>
+        <span class="history-subtitle">{{ pickedArea }}点位信息</span>
       </div>
       <div class="history-map-left">
-        <map-area></map-area>
+        <map-area ref="historyPoints"></map-area>
       </div>
     </div>
     <div class="history-right-container">
@@ -24,26 +24,15 @@
               ></el-cascader>
             </el-form-item>
             <el-form-item label="显示方式" prop="method">
-              <el-select v-model="historyForm.method">
-                <el-option
-                  v-for="(item,index) in timeMethodOptions"
-                  :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-              <!-- <el-cascader v-model="historyForm.method" :options="timeMethodOptions"  expand-trigger="hover" size="mini"></el-cascader> -->
+              <el-cascader
+                v-model="historyForm.method"
+                @change="whichMethod"
+                :options="timeMethodOptions"
+                expand-trigger="hover"
+              ></el-cascader>
             </el-form-item>
-            <el-form-item label="日期" prop="date">
-              <!-- <el-date-picker
-                v-model="historyForm.date"
-                type="daterange"
-                range-separator="至"
-                size="mini"
-              ></el-date-picker> -->
-            </el-form-item>
-            <el-form-item>
-              <el-date-picker type="month"></el-date-picker>
+            <el-form-item label="日期" prop="date" v-if="monthSelected">
+              <el-date-picker type="month" v-model="historyForm.date"></el-date-picker>
             </el-form-item>
             <el-form-item>
               <el-button class="home-btn" size="mini" type="primary" @click="showMethods">查 询</el-button>
@@ -52,7 +41,10 @@
         </div>
       </div>
       <div class="history-bottom-graph">
-        <history-date></history-date>
+        <div class="history-right-form-title history-left-top-container">
+        <span class="history-subtitle">{{ pickedArea }}区域扬尘历史数据</span>
+      </div>
+        <history-date ref="historyLineChart"></history-date>
       </div>
     </div>
   </div>
@@ -68,16 +60,14 @@ export default {
   },
   data() {
     return {
+      pickedArea: '全市',
+      monthSelected: false, // 显示方式为月份是为true
       historyForm: {
         area: null,
         date: null,
         method: null
       },
       timeMethodOptions: [
-        //   {
-        //   value: 'day',
-        //   label: '日'
-        // },
         {
           value: 'month',
           label: '月'
@@ -96,7 +86,7 @@ export default {
             },
             {
               label: '秋季',
-              value: 'atum'
+              value: 'autumn'
             },
             {
               label: '冬季',
@@ -130,28 +120,60 @@ export default {
               label: '金牛区', value: 'jingniu'
             }
           ]
-        }, {
-          value: 'points',
-          label: '点位查询',
-          children: [
-            {
-              label: '0x123', value: '0x123'
-            }, {
-              label: '0x124', value: '0x123'
-            }, {
-              label: '0x153', value: '0x123'
-            }, {
-              label: '0x1x3', value: '0x123'
-            }, {
-              label: '0x1v3', value: '0x123'
-            }
-          ]
         }
       ]
     }
   },
   methods: {
     showMethods() {
+      // 格式化向子组件传递的参数
+      const dataTransform = {}
+      dataTransform.area = this.historyForm.area[1] ? this.historyForm.area[1] : this.historyForm.area[0]
+      dataTransform.method = this.historyForm.method[1] ? this.historyForm.method[1] : this.historyForm.method[0]
+      if (this.historyForm.date) {
+        dataTransform.date = this.historyForm.date
+      }
+
+      // 引用折线图组件的方法，根据所选，绘出折线图。
+      this.$refs.historyLineChart.drawGraph(dataTransform)
+
+      // 点位切换到对应的区域, 目前参数存在一点问题
+      this.$refs.historyPoints.showPoints(dataTransform.area, dataTransform.method)
+
+      // 切换本页面的标题
+      this.pickedArea = this.areaTransform(dataTransform.area)
+    },
+    areaTransform(str) {
+      let Zh = null
+      switch (str) {
+        case 'allcity':
+          Zh = '全市'
+          break
+        case 'wuhou':
+          Zh = '武侯区'
+          break
+        case 'chenghua':
+          Zh = '成华区'
+          break
+        case 'gaoxin':
+          Zh = '高新区'
+          break
+        case 'shuangliu':
+          Zh = '双流区'
+          break
+        case 'jingniu':
+          Zh = '金牛区'
+          break
+      }
+      return Zh
+    },
+    // 判断当前选中的显示方式，确定是否显示日期选择器
+    whichMethod(el) {
+      if (el[0] === 'month') {
+        this.monthSelected = true
+      } else {
+        this.monthSelected = false
+      }
     }
   }
 }

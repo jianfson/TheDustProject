@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var randomData = require('./randomData')
+
 router.all('*', function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -22,7 +23,69 @@ router.all('*', function (req, res, next) {
 //       data
 //     })
 //   }
-// });
+// });(
+
+var  areaTransform = function(str) {
+    let Zh = null
+    switch (str) {
+      case 'spring':
+        Zh = '春'
+        break
+      case 'summer':
+        Zh = '夏'
+        break
+      case 'autumn':
+        Zh = '秋'
+        break
+      case 'winter':
+        Zh = '冬'
+        break
+    }
+    return Zh
+  }
+  
+router.post('/', function(req, res) {
+  // console.log(req.body)
+  var area = req.body.area
+  var method = req.body.method
+  var date = new Date(req.body.date)
+  var session = ['spring' ,'summer' ,'autumn' ,'winter']
+  console.log(req.body.area)
+  console.log(req.body.method)
+  console.log(req.body.date)
+  console.log('************************8')
+  if (method === 'year') {
+    console.log('选择了年')
+
+      res.json({
+        category: ['2015', '2016', '2017', '2018'],
+        data: randomData.randomArr(100, 500, 4)
+      })
+    } else if(session.indexOf(method) != -1) {
+      console.log('选择了季度')
+      method = areaTransform(method)
+      res.json({
+      category: ['2015'+ '-' + method, '2016'+ '-' + method, '2017'+ '-' + method, '2018'+ '-' + method],
+      data: randomData.randomArr(100, 500, 4)
+    })
+    } else if(method === 'month') {
+
+      // 选择的时间为月，产生一个月的数据
+      console.log('选择了月')
+
+      var start = new Date(date)
+      var end = new Date(new Date(date.setMonth(date.getMonth() + 1)).setDate(-1))
+      var length = (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24) + 1
+
+      res.json({
+        category: randomData.createDateArr(start, end),
+        data: randomData.randomArr(100, 500, length)
+
+      })
+    }
+    
+  
+})
 router.get('/cdmonth', function (req, res) {
   let datetime = randomData.createDateArr('2016-03-01', '2016-03-31')
   res.json({
@@ -154,4 +217,11 @@ router.get('/zones/:start/:end', function (req, res) {
   })
 })
 
+
+router.get('/init', function(req, res) {
+  res.json({
+    category:['2015','2016','2017','2018'],
+    data:[251.28, 123.2217,102.4321,51.22345]
+  })
+})
 module.exports = router;

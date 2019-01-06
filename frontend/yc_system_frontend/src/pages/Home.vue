@@ -5,9 +5,9 @@
         <div class="home-leftside-inner">
           <div class="home-maptop">
             <div class="title">
-              <span class="subtitle">监测点位置信息</span>
+              <span class="subtitle">{{currentArea}}监测点位置信息</span>
             </div>
-            <map-area></map-area>
+            <map-area ref="homeMap"></map-area>
           </div>
         </div>
       </div>
@@ -26,9 +26,18 @@
                   v-model="homeForm.area"
                 ></el-cascader>
               </el-form-item>
-              <el-form-item label="日期" prop="date">
-                <el-date-picker v-model="homeForm.date.startMonth" type="month"></el-date-picker>&nbsp;-
-                <el-date-picker type="month" v-model="homeForm.date.endMonth"></el-date-picker>
+              <el-form-item label="日期" prop="date" style="min-width:320px">
+                <el-col :span="10">
+                  <el-date-picker
+                    v-model="homeForm.date.startMonth"
+                    type="month"
+                    style="width: 100%"
+                  ></el-date-picker>
+                </el-col>
+                <el-col :span="1" style="text-align: center">-</el-col>
+                <el-col :span="10">
+                  <el-date-picker type="month" v-model="homeForm.date.endMonth" style="width: 100%"></el-date-picker>
+                </el-col>
               </el-form-item>
               <el-form-item>
                 <el-button
@@ -43,10 +52,10 @@
         </div>
         <div class="bottom-graph">
           <div class="title">
-            <span class="subtitle">全市扬尘变化趋势</span>
+            <span class="subtitle">{{ currentArea }}扬尘变化趋势</span>
           </div>
           <div class="home-charts-container">
-            <all-line-chart :graph-data="lineChartsData"></all-line-chart>
+            <all-line-chart :graph-data="lineChartsData" ref="homeLineChart"></all-line-chart>
           </div>
         </div>
       </div>
@@ -54,7 +63,7 @@
     <div class="home-secondline">
       <div class="home-rankbottom">
         <div class="title">
-          <span class="subtitle">监测点污染等级</span>
+          <span class="subtitle">{{currentArea}}监测点污染等级</span>
         </div>
         <rank-table></rank-table>
       </div>
@@ -75,6 +84,7 @@ export default {
     allLineChart
   },
   data() {
+    // 2个表单验证规则
     const datepickerRule = function (rule, value, callback) {
       let start = new Date(value.startMonth)
       let end = new Date(value.endMonth)
@@ -96,6 +106,7 @@ export default {
       }
     }
     return {
+      currentArea: '全市',
       homeForm: {
         area: null,
         date: {
@@ -145,10 +156,18 @@ export default {
     submitSearch(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          // 请求，查询对应时间的区域的历史数据
-          this.$axios.get('http://localhost:3000/home/search/' + JSON.stringify(this.homeForm)).then(res => {
-            // let data = res.data
+          // 1.请求，查询对应时间的区域的历史数据,精度月
+          let area = !this.homeForm.area[1] ? this.homeForm.area[0] : this.homeForm.area[1]
+          let date = this.homeForm.date
+          this.$axios.get('http://localhost:3000/home/search/' + area + '/' + JSON.stringify(date)).then(res => {
+            let data = res.data
+            this.currentArea = data.area
+            // 调用子组件linechart的事件
+            this.$refs.homeLineChart.grapmaker(data.data, data.category)
           })
+
+          // 2.地图的点位切换到对应的区域，对应的时间段，点位的信息。
+          this.$refs.homeMap.showPoints(area, JSON.stringify(date))
         } else {
           console.log('error submit')
           return false
@@ -203,7 +222,6 @@ export default {
   width: 40%;
   right: 0;
   top: 0;
-  height: calc(100% - 40px);
   /* background-color: #545c64; */
   margin: 20px 20px 20px 0;
   padding-top: 10px;
@@ -259,14 +277,12 @@ export default {
 .inputs-section {
   padding: 0 30px;
 }
-.el-form-item.home-reaserach label {
-}
 .el-button.home-btn {
   margin: 0 0 0 40px;
   width: 180px;
 }
 .home-charts-container {
-  padding: 20px 5px 0 5px;
+  padding: 0px 5px 0 5px;
   width: 100%;
   height: 100%;
   min-height: 300px;

@@ -1,0 +1,722 @@
+[
+  {
+    "location": "xx-路-号",
+    "pm10": 41,
+    "color": "orange",
+    "id": "xy-m89x1167sc",
+    "positionX": 104.05346411,
+    "positionY": 30.70108445,
+    "area": "双流区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 42,
+    "color": "blue",
+    "id": "xy-m89x9573sc",
+    "positionX": 104.12235706,
+    "positionY": 30.65563032,
+    "area": "双流区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 124,
+    "color": "blue",
+    "id": "xy-m89x7798sc",
+    "positionX": 104.16736875,
+    "positionY": 30.63591186,
+    "area": "金牛区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 30,
+    "color": "orange",
+    "id": "xy-m89x942sc",
+    "positionX": 104.09516002,
+    "positionY": 30.68608409,
+    "area": "双流区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 171,
+    "color": "yellow",
+    "id": "xy-m89x2796sc",
+    "positionX": 104.12320587,
+    "positionY": 30.69876738,
+    "area": "金牛区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 117,
+    "color": "orange",
+    "id": "xy-m89x1346sc",
+    "positionX": 104.17549292,
+    "positionY": 30.69882708,
+    "area": "高新区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 190,
+    "color": "blue",
+    "id": "xy-m89x2248sc",
+    "positionX": 104.15523918,
+    "positionY": 30.6276719,
+    "area": "成华区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 55,
+    "color": "blue",
+    "id": "xy-m89x8807sc",
+    "positionX": 104.09394569,
+    "positionY": 30.69563063,
+    "area": "高新区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 134,
+    "color": "orange",
+    "id": "xy-m89x6422sc",
+    "positionX": 104.08560697,
+    "positionY": 30.70062706,
+    "area": "高新区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 14,
+    "color": "yellow",
+    "id": "xy-m89x8644sc",
+    "positionX": 104.10148246,
+    "positionY": 30.66582654,
+    "area": "武侯区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 107,
+    "color": "orange",
+    "id": "xy-m89x7961sc",
+    "positionX": 104.13930494,
+    "positionY": 30.64529532,
+    "area": "高新区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 5,
+    "color": "red",
+    "id": "xy-m89x1997sc",
+    "positionX": 104.16118503,
+    "positionY": 30.68278904,
+    "area": "成华区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 31,
+    "color": "orange",
+    "id": "xy-m89x3261sc",
+    "positionX": 104.08952336,
+    "positionY": 30.6248405,
+    "area": "双流区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 31,
+    "color": "red",
+    "id": "xy-m89x5838sc",
+    "positionX": 104.12882071,
+    "positionY": 30.65091404,
+    "area": "成华区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 80,
+    "color": "yellow",
+    "id": "xy-m89x7572sc",
+    "positionX": 104.06736234,
+    "positionY": 30.69538355,
+    "area": "双流区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 82,
+    "color": "red",
+    "id": "xy-m89x398sc",
+    "positionX": 104.14575467,
+    "positionY": 30.65420102,
+    "area": "双流区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 172,
+    "color": "orange",
+    "id": "xy-m89x2968sc",
+    "positionX": 104.11943184,
+    "positionY": 30.68849183,
+    "area": "成华区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 45,
+    "color": "orange",
+    "id": "xy-m89x2855sc",
+    "positionX": 104.02902662,
+    "positionY": 30.65355336,
+    "area": "武侯区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 82,
+    "color": "blue",
+    "id": "xy-m89x9204sc",
+    "positionX": 104.05052328,
+    "positionY": 30.64510481,
+    "area": "武侯区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 159,
+    "color": "yellow",
+    "id": "xy-m89x7221sc",
+    "positionX": 104.07904319,
+    "positionY": 30.6859018,
+    "area": "双流区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 141,
+    "color": "orange",
+    "id": "xy-m89x9522sc",
+    "positionX": 104.05022443,
+    "positionY": 30.68330674,
+    "area": "金牛区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 68,
+    "color": "orange",
+    "id": "xy-m89x7198sc",
+    "positionX": 104.04808189,
+    "positionY": 30.68382302,
+    "area": "双流区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 152,
+    "color": "yellow",
+    "id": "xy-m89x9869sc",
+    "positionX": 104.10618346,
+    "positionY": 30.68942462,
+    "area": "金牛区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 150,
+    "color": "yellow",
+    "id": "xy-m89x8073sc",
+    "positionX": 104.07757756,
+    "positionY": 30.67032131,
+    "area": "高新区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 178,
+    "color": "red",
+    "id": "xy-m89x1710sc",
+    "positionX": 104.10662166,
+    "positionY": 30.6422407,
+    "area": "武侯区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 54,
+    "color": "orange",
+    "id": "xy-m89x5599sc",
+    "positionX": 104.04518675,
+    "positionY": 30.68301658,
+    "area": "金牛区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 97,
+    "color": "red",
+    "id": "xy-m89x3796sc",
+    "positionX": 104.12667818,
+    "positionY": 30.65549147,
+    "area": "金牛区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 6,
+    "color": "red",
+    "id": "xy-m89x8514sc",
+    "positionX": 104.14216371,
+    "positionY": 30.66465019,
+    "area": "高新区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 154,
+    "color": "orange",
+    "id": "xy-m89x8280sc",
+    "positionX": 104.07283815,
+    "positionY": 30.68360729,
+    "area": "武侯区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 92,
+    "color": "blue",
+    "id": "xy-m89x2447sc",
+    "positionX": 104.03752379,
+    "positionY": 30.64447724,
+    "area": "金牛区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 58,
+    "color": "red",
+    "id": "xy-m89x9175sc",
+    "positionX": 104.05712894,
+    "positionY": 30.70807834,
+    "area": "双流区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 69,
+    "color": "blue",
+    "id": "xy-m89x8508sc",
+    "positionX": 104.12421933,
+    "positionY": 30.64519081,
+    "area": "高新区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 65,
+    "color": "blue",
+    "id": "xy-m89x4581sc",
+    "positionX": 104.06709436,
+    "positionY": 30.69950189,
+    "area": "武侯区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 17,
+    "color": "yellow",
+    "id": "xy-m89x3752sc",
+    "positionX": 104.05747106,
+    "positionY": 30.65242038,
+    "area": "武侯区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 39,
+    "color": "red",
+    "id": "xy-m89x3926sc",
+    "positionX": 104.07911797,
+    "positionY": 30.66649159,
+    "area": "武侯区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 72,
+    "color": "orange",
+    "id": "xy-m89x5902sc",
+    "positionX": 104.01961175,
+    "positionY": 30.62755279,
+    "area": "双流区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 172,
+    "color": "red",
+    "id": "xy-m89x4606sc",
+    "positionX": 104.12104857,
+    "positionY": 30.68806014,
+    "area": "武侯区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 181,
+    "color": "yellow",
+    "id": "xy-m89x8579sc",
+    "positionX": 104.09050736,
+    "positionY": 30.63500661,
+    "area": "成华区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 24,
+    "color": "red",
+    "id": "xy-m89x7957sc",
+    "positionX": 104.07546984,
+    "positionY": 30.6282897,
+    "area": "双流区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 51,
+    "color": "red",
+    "id": "xy-m89x5016sc",
+    "positionX": 104.11186814,
+    "positionY": 30.62262315,
+    "area": "武侯区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 2,
+    "color": "blue",
+    "id": "xy-m89x6009sc",
+    "positionX": 104.06297823,
+    "positionY": 30.63123136,
+    "area": "武侯区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 47,
+    "color": "yellow",
+    "id": "xy-m89x269sc",
+    "positionX": 104.05456249,
+    "positionY": 30.65133729,
+    "area": "成华区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 160,
+    "color": "blue",
+    "id": "xy-m89x4252sc",
+    "positionX": 104.1014673,
+    "positionY": 30.6328133,
+    "area": "高新区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 32,
+    "color": "yellow",
+    "id": "xy-m89x709sc",
+    "positionX": 104.10969561,
+    "positionY": 30.63785764,
+    "area": "双流区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 42,
+    "color": "red",
+    "id": "xy-m89x3293sc",
+    "positionX": 104.02429666,
+    "positionY": 30.67069789,
+    "area": "双流区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 105,
+    "color": "orange",
+    "id": "xy-m89x449sc",
+    "positionX": 104.13562521,
+    "positionY": 30.65225989,
+    "area": "金牛区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 130,
+    "color": "yellow",
+    "id": "xy-m89x2463sc",
+    "positionX": 104.11399285,
+    "positionY": 30.65560734,
+    "area": "双流区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 172,
+    "color": "yellow",
+    "id": "xy-m89x8895sc",
+    "positionX": 104.11800262,
+    "positionY": 30.64212721,
+    "area": "双流区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 113,
+    "color": "orange",
+    "id": "xy-m89x5827sc",
+    "positionX": 104.07336325,
+    "positionY": 30.62957278,
+    "area": "金牛区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 194,
+    "color": "red",
+    "id": "xy-m89x5253sc",
+    "positionX": 104.09344539,
+    "positionY": 30.70491272,
+    "area": "双流区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 126,
+    "color": "blue",
+    "id": "xy-m89x6194sc",
+    "positionX": 104.12020894,
+    "positionY": 30.65387311,
+    "area": "成华区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 187,
+    "color": "orange",
+    "id": "xy-m89x988sc",
+    "positionX": 104.03710564,
+    "positionY": 30.69163769,
+    "area": "金牛区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 92,
+    "color": "blue",
+    "id": "xy-m89x6476sc",
+    "positionX": 104.13523808,
+    "positionY": 30.66629531,
+    "area": "双流区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 128,
+    "color": "orange",
+    "id": "xy-m89x8801sc",
+    "positionX": 104.08661339,
+    "positionY": 30.6900911,
+    "area": "武侯区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 141,
+    "color": "yellow",
+    "id": "xy-m89x7240sc",
+    "positionX": 104.06960787,
+    "positionY": 30.66095925,
+    "area": "金牛区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 44,
+    "color": "yellow",
+    "id": "xy-m89x2207sc",
+    "positionX": 104.11451578,
+    "positionY": 30.62556615,
+    "area": "高新区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 183,
+    "color": "yellow",
+    "id": "xy-m89x9434sc",
+    "positionX": 104.10529801,
+    "positionY": 30.6938338,
+    "area": "高新区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 200,
+    "color": "yellow",
+    "id": "xy-m89x8133sc",
+    "positionX": 104.13143547,
+    "positionY": 30.69376717,
+    "area": "双流区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 23,
+    "color": "blue",
+    "id": "xy-m89x4482sc",
+    "positionX": 104.12467997,
+    "positionY": 30.64169059,
+    "area": "双流区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 23,
+    "color": "orange",
+    "id": "xy-m89x9133sc",
+    "positionX": 104.16306341,
+    "positionY": 30.66614681,
+    "area": "金牛区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 192,
+    "color": "blue",
+    "id": "xy-m89x3447sc",
+    "positionX": 104.12541462,
+    "positionY": 30.63412186,
+    "area": "金牛区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 114,
+    "color": "orange",
+    "id": "xy-m89x8729sc",
+    "positionX": 104.05753996,
+    "positionY": 30.62734729,
+    "area": "金牛区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 119,
+    "color": "blue",
+    "id": "xy-m89x3654sc",
+    "positionX": 104.10121723,
+    "positionY": 30.64443242,
+    "area": "武侯区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 101,
+    "color": "yellow",
+    "id": "xy-m89x2293sc",
+    "positionX": 104.11470913,
+    "positionY": 30.62961359,
+    "area": "成华区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 200,
+    "color": "yellow",
+    "id": "xy-m89x2716sc",
+    "positionX": 104.13538059,
+    "positionY": 30.66074354,
+    "area": "成华区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 49,
+    "color": "blue",
+    "id": "xy-m89x5269sc",
+    "positionX": 104.10839755,
+    "positionY": 30.67826771,
+    "area": "高新区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 192,
+    "color": "blue",
+    "id": "xy-m89x7576sc",
+    "positionX": 104.16043566,
+    "positionY": 30.66184725,
+    "area": "高新区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 164,
+    "color": "blue",
+    "id": "xy-m89x7431sc",
+    "positionX": 104.01821383,
+    "positionY": 30.65826227,
+    "area": "武侯区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 31,
+    "color": "orange",
+    "id": "xy-m89x2571sc",
+    "positionX": 104.09361394,
+    "positionY": 30.68948261,
+    "area": "武侯区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 47,
+    "color": "orange",
+    "id": "xy-m89x7974sc",
+    "positionX": 104.08987186,
+    "positionY": 30.68945945,
+    "area": "高新区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 150,
+    "color": "red",
+    "id": "xy-m89x4559sc",
+    "positionX": 104.11293789,
+    "positionY": 30.65601271,
+    "area": "武侯区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 116,
+    "color": "yellow",
+    "id": "xy-m89x7889sc",
+    "positionX": 104.12293881,
+    "positionY": 30.6636985,
+    "area": "双流区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 140,
+    "color": "red",
+    "id": "xy-m89x1262sc",
+    "positionX": 104.12305926,
+    "positionY": 30.66323512,
+    "area": "武侯区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 105,
+    "color": "red",
+    "id": "xy-m89x5934sc",
+    "positionX": 104.09904048,
+    "positionY": 30.65567906,
+    "area": "双流区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 195,
+    "color": "red",
+    "id": "xy-m89x8919sc",
+    "positionX": 104.07336501,
+    "positionY": 30.69499266,
+    "area": "武侯区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 67,
+    "color": "blue",
+    "id": "xy-m89x8447sc",
+    "positionX": 104.03002801,
+    "positionY": 30.68432074,
+    "area": "高新区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 159,
+    "color": "red",
+    "id": "xy-m89x2448sc",
+    "positionX": 104.07704475,
+    "positionY": 30.70713175,
+    "area": "高新区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 190,
+    "color": "red",
+    "id": "xy-m89x4908sc",
+    "positionX": 104.09053103,
+    "positionY": 30.70871913,
+    "area": "武侯区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 157,
+    "color": "blue",
+    "id": "xy-m89x7938sc",
+    "positionX": 104.03581398,
+    "positionY": 30.63034678,
+    "area": "双流区"
+  },
+  {
+    "location": "xx-路-号",
+    "pm10": 113,
+    "color": "orange",
+    "id": "xy-m89x9067sc",
+    "positionX": 104.11355236,
+    "positionY": 30.70110412,
+    "area": "武侯区"
+  }
+]

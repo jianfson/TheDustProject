@@ -1,19 +1,37 @@
 <template>
   <div>
-    <el-table :data="polutionRank" :row-class-name="tableRowClassName" size="mini" border>
+    <el-table
+      :data="polutionRank"
+      :row-class-name="tableRowClassName"
+      size="mini"
+      border
+      @expand-change="drawInnerGraph"
+    >
       <el-table-column label="点位名称" prop="name"></el-table-column>
       <el-table-column label="工程位置" prop="location"></el-table-column>
       <el-table-column label="污染等级" prop="level"></el-table-column>
       <el-table-column label="变化趋势" prop="trend"></el-table-column>
+      <el-table-column type="expand">
+        <template>
+          <div class="expand-graph-contaienr">
+            <expanded-line-chart :chart-data="expandedChartData"></expanded-line-chart>
+          </div>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
 
 <script>
+import expandedLineChart from './charts/expandedLineChart'
 export default {
   name: 'rankTable',
+  components: {
+    expandedLineChart
+  },
   data() {
     return {
+      expandedChartData: null, // 展开表格的数数据
       polutionRank: [{
         name: 'Y0028152017154',
         location: '成都后花园二期B区一标段',
@@ -53,7 +71,7 @@ export default {
     }
   },
   methods: {
-    tableRowClassName({row, rowIndex}) {
+    tableRowClassName({ row, rowIndex }) {
       let level = this.polutionRank[rowIndex].level
       let result
       switch (level) {
@@ -66,6 +84,22 @@ export default {
       }
       // console.log(result)
       return result
+    },
+    drawInnerGraph(row) {
+      // row.name 是请求innergraph的id值，
+      // console.log(row.name)
+      // setTimeout(() => {
+      //   this.$refs.expandLineChart.drawLineChart({
+      //     data: [1, 2, 3],
+      //     category: [1, 2, 3]
+      //   })
+      // }, 1000)
+      this.expandedChartData = {
+        data: [1, 2, 3],
+        category: [1, 2, 3]
+      }
+      // this.$axios.get('http://localhost:3000/home/search/' + row.name + '时间段').then(res => {
+      // })
     }
   }
 }
@@ -80,5 +114,9 @@ export default {
 }
 .el-table .level1-row {
   background-color: yellow;
+}
+.expand-graph-contaienr {
+  width: 75%;
+  height: 300px;
 }
 </style>

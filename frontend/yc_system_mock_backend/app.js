@@ -9,7 +9,14 @@ var usersRouter = require('./routes/users');
 var homeRouter = require('./routes/home');
 var historyRouter = require('./routes/history');
 var mapRouter = require('./routes/map');
+var correction = require('./routes/correction');
+var control = require('./routes/control');
+var predict = require('./routes/predict')
+var contribution = require('./routes/contribution')
+var relation = require('./routes/relation')
 
+
+var bodyParser = require('body-parser')
 
 var app = express();
 
@@ -22,12 +29,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/home', homeRouter)
 app.use('/history', historyRouter)
 app.use('/map', mapRouter)
+app.use('/correction', correction)
+app.use('/control', control)
+app.use('/predict', predict)
+app.use('/contribution', contribution)
+app.use('/relation', relation)
+
+
 
 
 // catch 404 and forward to error handler

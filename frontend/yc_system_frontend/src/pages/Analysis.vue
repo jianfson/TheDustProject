@@ -1,58 +1,89 @@
 <template>
   <div class="analysis-container">
     <div class="analysis-predict-container">
-      <span class="predict-title">全市预测趋势</span>
+      <span class="predict-title">{{pickedArea}}预测趋势</span>
       <div class="predict-left">
-        <div class="inputs-section">
-          <el-form :model="analysisPredictForm">
+        <div class="predict-form">
+          <el-form
+            :model="analysisPredictForm"
+            size="mini"
+            label-position="left"
+            label-width="70px"
+          >
             <el-form-item label="区域" prop="area">
-              <el-cascader expand-trigger="hover" :options="analysisOptions" v-model="analysisPredictForm.area"></el-cascader>
+              <el-cascader
+                expand-trigger="hover"
+                :options="analysisOptions"
+                v-model="analysisPredictForm.area"
+              ></el-cascader>
             </el-form-item>
-            <!-- <el-form-item label="日期" prop="date">
-              <el-date-picker v-model="analysisPredictForm.date" type="daterange" range-separator="至" size="mini"></el-date-picker>
-            </el-form-item> -->
-            <el-form-item><el-button class="predict-btn" type="primary">提交</el-button></el-form-item>
+            <el-form-item label="预测时间" prop="range">
+              <el-tooltip effect="dark" content="预测趋势折线图的预测范围" placement="right-start">
+                <el-cascader
+                  v-model="analysisPredictForm.range"
+                  :options="timeMethodOptions"
+                  expand-trigger="hover"
+                ></el-cascader>
+              </el-tooltip>
+            </el-form-item>
+            <el-form-item>
+              <el-button class="predict-btn" @click="showPredict" type="primary">提交</el-button>
+            </el-form-item>
           </el-form>
         </div>
       </div>
       <div class="predict-middle">
-        <all-predict></all-predict>
+        <span>{{pickedArea}}随季节变化趋势预测</span>
+        <all-predict ref="allPredict"></all-predict>
       </div>
       <div class="predict-right">
-        <week-predict></week-predict>
+        <span>{{pickedArea}}随时间变化趋势预测</span>
+        <week-predict ref="weekPredict"></week-predict>
       </div>
     </div>
     <div class="analysis-contribute-container">
       <span class="predict-title">区域排放贡献比重</span>
       <div class="contribute-left-container">
+        <contribution-year></contribution-year>
+      </div>
+      <div class="contribute-middle-container">
         <contribution-session></contribution-session>
       </div>
       <div class="contribute-right-container">
-        <contribution-day></contribution-day>
+        <contribution-month></contribution-month>
       </div>
     </div>
     <div class="analysis-relation-container">
       <span class="predict-title">区域间关联性</span>
-      <div class="realtion-left">
+      <div class="relation-firstline">
         <div class="relation-inputs-section">
-          <el-form :model="analysisRelationForm">
+          <el-form :model="analysisRelationForm" size="mini" :inline="true">
             <el-form-item label="区域" prop="area">
-              <el-select v-model="analysisRelationForm.area">
-                <el-option v-for="item in analysisRelationOptions" :key="item.label" :label="item.lebel" :value="item.value"></el-option>
+              <el-select v-model="analysisRelationForm.area" placeholder="请选择">
+                <el-option
+                  v-for="item in analysisRelationOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
               </el-select>
             </el-form-item>
-            <!-- <el-form-item label="日期" prop="date">
-              <el-date-picker v-model="analysisPredictForm.date" type="daterange" range-separator="至" size="mini"></el-date-picker>
-            </el-form-item> -->
-            <el-form-item><el-button class="relation-btn" type="primary">提交</el-button></el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="changeRelationArea">提交</el-button>
+            </el-form-item>
           </el-form>
         </div>
       </div>
-      <div class="relation-middle-container">
-        <relation-seasion></relation-seasion>
-      </div>
-      <div class="relation-right-container">
-        <relation-day></relation-day>
+      <div class="relation-secondline">
+        <div class="realtion-left">
+          <relation-year ref='relationYear'></relation-year>
+        </div>
+        <div class="relation-middle-container">
+          <relation-seasion ref="relationSession"></relation-seasion>
+        </div>
+        <div class="relation-right-container">
+          <relation-month ref="relationMonth"></relation-month>
+        </div>
       </div>
     </div>
   </div>
@@ -62,28 +93,49 @@
 import allPredict from '../components/charts/allpredict'
 import weekPredict from '../components/charts/weekPredict'
 import contributionSession from '../components/charts/contributionSession'
-import contributionDay from '../components/charts/contributionDay'
-import relationDay from '../components/charts/relationDay'
+import contributionMonth from '../components/charts/contributionMonth'
+import contributionYear from '../components/charts/contributionYear'
+import relationMonth from '../components/charts/relationMonth'
 import relationSeasion from '../components/charts/relationSeasion'
+import relationYear from '../components/charts/relationYear'
+import qs from 'qs'
 
 export default {
   components: {
     allPredict,
     weekPredict,
+    contributionYear,
     contributionSession,
-    contributionDay,
-    relationDay,
+    contributionMonth,
+    relationYear,
+    relationMonth,
     relationSeasion
   },
   data() {
     return {
+      pickedArea: '全市',
+      pickedRelationArea: null,
       analysisPredictForm: {
         area: null,
-        date: null
+        range: null
       },
       analysisRelationForm: {
         area: null
       },
+      timeMethodOptions: [
+        {
+          value: 'month',
+          label: '未来一个月'
+        },
+        {
+          value: 'year',
+          label: '未来一年'
+        },
+        {
+          value: 'threeyear',
+          label: '未来三年'
+        }
+      ],
       analysisRelationOptions: [
         {
           label: '成华区', value: 'chenghua'
@@ -120,6 +172,127 @@ export default {
           ]
         }
       ]
+    }
+  },
+  methods: {
+    areaTransform(str) {
+      let Zh = null
+      switch (str) {
+        case 'allcity':
+          Zh = '全市'
+          break
+        case 'wuhou':
+          Zh = '武侯区'
+          break
+        case 'chenghua':
+          Zh = '成华区'
+          break
+        case 'gaoxin':
+          Zh = '高新区'
+          break
+        case 'shuangliu':
+          Zh = '双流区'
+          break
+        case 'jingniu':
+          Zh = '金牛区'
+          break
+      }
+      return Zh
+    },
+    showPredict() {
+      let area = this.analysisPredictForm.area[1] ? this.analysisPredictForm.area[1] : this.analysisPredictForm.area[0]
+      let range = this.analysisPredictForm.range[0]
+      // console.log(area)
+      /* 发请求，POST，提交的选择的区域，返回当前区域，未来两年的数据（按季度），用于柱状体显示
+      ** 返回的数据格式:
+      ** {
+      **  category: ['2018', '2019'], 始终返回的是未来两年的，密度为季度
+      **  spring: [123,251],
+      **  summer: [321,134],
+      **  autumn: [233,412,100],
+      **  winter: [321,123]
+      }
+      */
+      this.$axios.post('http://localhost:3000/predict/bar', qs.stringify({ area: area })).then(res => {
+        this.$refs.allPredict.drawAllPredict(res.data)
+        this.pickedArea = this.areaTransform(area)
+      })
+      /* POST，提交选择的区域和预测的时间，用于折线图显示
+      ** 返回的数据格式:
+      **
+      */
+      this.$axios.post('http://localhost:3000/predict/line', qs.stringify({ area, range })).then(res => {
+        // console.log(res)
+        this.$refs.weekPredict.drawLinePredict(res.data)
+        this.pickedArea = this.areaTransform(area)
+      })
+    },
+    changeRelationArea() {
+      if (!this.analysisRelationForm.area) {
+        this.$message({
+          showClose: true,
+          message: '选取了区域之后才能提交查看区域关系',
+          type: 'error'
+        })
+      } else if (this.analysisRelationForm.area === this.pickedRelationArea) {
+        this.$message({
+          showClose: true,
+          message: '区域选择没有变化，无效提交',
+          type: 'warning'
+        })
+      } else {
+        this.pickedRelationArea = this.analysisRelationForm.area // 记录当前选择的区域（区域关联性部分)
+        // 当前情况下，为正常提交情况，
+        /* 发情请求，POST，携带参数为选择的区域，返回的是在此区域下默认显示的随年度变化，季节变化，月份变化的关联性。
+        ** 其中默认显示的时间由后端确定（可以是最近时间的时间段）
+        ** 数据格式： {
+        **  year: {
+              date: '2018',
+              data: [
+                { value: 0.66, name: '成华区' },
+                {0.15, name: '双流区' },
+                {0.15, name: '高新区' },
+                {0.15, name: '武侯区' },
+                {0.15, name: '青羊区' },
+                {0.15, name: '金牛区' },
+                {0.15, name: '天府新区' }
+              ]
+            },
+            session: {
+              date: ['2018', 'spring'],
+              data: [
+                { value: 0.33, name: '成华区' },
+                {0.15, name: '双流区' },
+                {0.15, name: '高新区' },
+                {0.15, name: '武侯区' },
+                {0.15, name: '青羊区' },
+                {0.15, name: '金牛区' },
+                {0.15, name: '天府新区' }
+              ]
+            },
+            month: {
+              date: '2018-01',
+              data: [
+                { value: 0.33, name: '成华区' },
+                {0.15, name: '双流区' },
+                {0.15, name: '高新区' },
+                {0.15, name: '武侯区' },
+                {0.15, name: '青羊区' },
+                {0.15, name: '金牛区' },
+                {0.15, name: '天府新区' }
+              ]
+            }
+        ** }
+        */
+        this.$axios.post('http://localhost:3000/relation/init', qs.stringify({ area: this.pickedRelationArea })).then(res => {
+          const year = res.data.year
+          const month = res.data.month
+          const session = res.data.session
+          this.$refs.relationYear.drawGraphYear(year)
+          this.$refs.relationSession.drawGraphSession(session)
+          this.$refs.relationMonth.drawGraphMonth(month)
+        })
+      }
     }
   }
 }
@@ -161,24 +334,31 @@ export default {
   top: 25px;
   left: -20px;
 }
-.inputs-section {
+.predict-form {
   margin-top: 40px;
-}
-.predict-btn {
-  margin-left: 40px;
-  width: 200px;
 }
 .predict-middle {
   flex-grow: 2;
   /* background-color: yellow; */
-  margin: 20px 20px 0 0;
+  margin: 20px 0 0 0;
+}
+.predict-middle > span {
+  display: block;
+  margin-bottom: 10px;
+  width: 80%;
+  text-align: center;
 }
 .predict-right {
   flex-grow: 2;
-  margin: 20px 0 0 0;
+  margin: 20px 0 10px 0;
   /* background-color: yellow; */
 }
-
+.predict-right > span {
+  display: block;
+  margin-bottom: 10px;
+  width: 80%;
+  text-align: center;
+}
 /* 第二行 */
 .analysis-contribute-container {
   width: 100%;
@@ -192,6 +372,13 @@ export default {
   position: relative;
 }
 .contribute-left-container {
+  height: 100%;
+  margin-right: 20px;
+  /* background-color: rgb(146, 127, 255); */
+  flex-basis: 300px;
+  flex-grow: 1;
+}
+.contribute-middle-container {
   height: 100%;
   margin-right: 20px;
   /* background-color: rgb(146, 127, 255); */
@@ -215,23 +402,47 @@ export default {
   padding: 20px;
   padding-top: 40px;
   position: relative;
+  /* display: flex; */
+}
+.relation-firstline {
+  width: 100%;
+  height: 20px;
+}
+.relation-secondline {
+  width: 100%;
   display: flex;
+  height: 350px;
+  margin-top: 10px;
+  justify-content: space-between;
+}
+.relation-firstline::after {
+  content: "";
+  height: 1px;
+  width: 100%;
+  background-color: rgba(192, 191, 191, 0.3);
+  position: absolute;
+  top: 100px;
+  left: 0;
 }
 .relation-inputs-section {
-  margin-top: 40px;
+  margin-top: 20px;
 }
 .relation-btn {
   margin-left: 40px;
   width: 200px;
 }
 .realtion-left {
-  width: 300px;
   margin: 0 20px 0 0;
+  flex-basis: 300px;
+  height: 100%;
 }
 .relation-middle-container {
-  flex-grow: 2;
+  margin-right: 20px;
+  flex-basis: 300px;
+  height: 100%;
 }
 .relation-right-container {
-  flex-grow: 2;
+  flex-basis: 300px;
+  height: 100%;
 }
 </style>

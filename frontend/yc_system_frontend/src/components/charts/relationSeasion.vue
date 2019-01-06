@@ -1,20 +1,30 @@
 <template>
   <div id="relationSeasion">
     <div class="relationSessionSelector">
-      <el-cascader @change="changePieSession" :options="selectOptions" v-model="selectedInit"></el-cascader>
+      <el-cascader
+        @change="changePieSession"
+        :options="selectOptions"
+        v-model="selectedInit"
+        size="mini"
+      ></el-cascader>
     </div>
     <div id="relationSeasionGraph"></div>
   </div>
 </template>
 
 <script>
+/* 现在时间选择器的时间是写死的，注意应该根据时间变换而发生变化
+**
+*/
+import qs from 'qs'
 export default {
   data() {
-    const seletChildren = [{ value: 'spring', label: '春季' }, { value: 'summer', label: '夏季' }, { value: 'atum', label: '秋季' }, { value: 'winter', label: '冬季' }]
+    const seletChildren = [{ value: 'spring', label: '春季' }, { value: 'summer', label: '夏季' }, { value: 'autumn', label: '秋季' }, { value: 'winter', label: '冬季' }]
     return {
       PieGraphObj: null,
       grapOptionsInit: null,
-      selectedInit: ['2017', 'spring'],
+      selectedInit: null,
+      currentArea: null,
       selectOptions: [
         {
           value: '2010',
@@ -55,18 +65,28 @@ export default {
           value: '2017',
           label: '2017',
           children: seletChildren
+        },
+        {
+          value: '2018',
+          label: '2018',
+          children: seletChildren
+        },
+        {
+          value: '2019',
+          label: '2019',
+          children: seletChildren
         }
       ]
     }
   },
   mounted() {
-    this.PieGraphObj = this.echarts.init(document.getElementById('relationSeasionGraph'))
+    this.sessionPieGraphObj = this.echarts.init(document.getElementById('relationSeasionGraph'))
     this.grapOptionsInit = {
       title: {
         text: '随季节变化的关联性',
         left: 'center',
         top: 20,
-        subtext: this.selectedInit[0] + this.formatSession(this.selectedInit[1])
+        subtext: null
       },
 
       tooltip: {
@@ -131,24 +151,37 @@ export default {
         }
       ]
     }
-    this.PieGraphObj.setOption(this.grapOptionsInit)
   },
   methods: {
     changePieSession(pieRequest) {
+      console.log(pieRequest)
       // 获取选取的时间点，发出请求，更新饼图
-      var session = this.formatSession(pieRequest[1])
-      const currentOption = JSON.parse(JSON.stringify(this.grapOptionsInit))
-      currentOption.title.subtext = pieRequest[0] + '/' + session
-      currentOption.series[0].data = [
-        { value: Math.floor(Math.random() * 100) / 100, name: '成华区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '双流区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '高新区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '武侯区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '青羊区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '金牛区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '天府新区' }
-      ].sort(function (a, b) { return a.value - b.value })
-      this.PieGraphObj.setOption(currentOption)
+      // 获取选取的时间点，发出请求，更新饼图
+      /* 时间选择器的时间发生变化，发起请求，POST，携带时间戳
+      ** 返回数据的格式 {
+      **   data: data: [
+            { value: 0.079, name: '成华区' },
+            { value: 0.252, name: '双流区' },
+            { value: 0.07, name: '高新区' },
+            { value: 0.16, name: '武侯区' },
+            { value: 0.08, name: '青羊区' },
+            { value: 0.058, name: '金牛区' }
+          ]
+      ** }
+      */
+      this.$axios.post('http://localhost:3000/relation/session/', qs.stringify({ date: pieRequest })).then(res => {
+        this.grapOptionsInit.title.subtext = pieRequest[0] + this.formatSession(pieRequest[1])
+        this.grapOptionsInit.series[0].data = res.data.data
+        this.sessionPieGraphObj.setOption(this.grapOptionsInit)
+      })
+    },
+    drawGraphSession(res) {
+      let date = res.date[0] + this.formatSession(res.date[1])
+      let data = res.data
+      this.selectedInit = res.date
+      this.grapOptionsInit.title.subtext = date
+      this.grapOptionsInit.series[0].data = data
+      this.sessionPieGraphObj.setOption(this.grapOptionsInit)
     },
     formatSession(str) {
       var result = null
@@ -174,6 +207,7 @@ export default {
 
 <style>
 #relationSeasion {
+  margin: 20px 0 0 0;
   width: 100%;
   height: 100%;
 }
@@ -181,7 +215,7 @@ export default {
   width: 100%;
   height: 100%;
 }
-.relationSessionSelector{
+.relationSessionSelector {
   height: 50px;
   line-height: 40px;
   text-align: center;
