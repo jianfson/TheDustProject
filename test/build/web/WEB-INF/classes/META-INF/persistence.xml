@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="testPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>database.Dayavg</class>
+    <class>database.Device</class>
+    <class>database.National</class>
+    <class>database.Company</class>
+    <class>database.NationalInfo</class>
+    <class>database.Houravg</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <!-- 配置JPA实现产品的属性，即hibernate的属性 -->
+      <property name="hibernate.format_sql" value="true"/>
+      <!-- 是否格式化sql语句 -->
+      <property name="hibernate.show_sql" value="true"/>
+      <!-- 是否在控制台打印sql语句 -->
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/dust?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="1"/>
+    </properties>
+  </persistence-unit>
+</persistence>
