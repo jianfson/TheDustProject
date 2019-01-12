@@ -15,13 +15,13 @@ router.post('/year', function(req, res) {
   res.json(
     {
       data: [
-        { value: 0.66, name: '成华区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '双流区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '高新区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '武侯区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '青羊区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '金牛区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '天府新区' }
+        { value: 0.66, name: '成华区' ,workSite:  Math.floor(Math.random() * 20)},
+        { value: Math.floor(Math.random() * 100) / 100, name: '双流区', workSite:  Math.floor(Math.random() * 20)},
+        { value: Math.floor(Math.random() * 100) / 100, name: '高新区',workSite:  Math.floor(Math.random() * 20) },
+        { value: Math.floor(Math.random() * 100) / 100, name: '武侯区',workSite:  Math.floor(Math.random() * 20) },
+        { value: Math.floor(Math.random() * 100) / 100, name: '青羊区',workSite:  Math.floor(Math.random() * 20) },
+        { value: Math.floor(Math.random() * 100) / 100, name: '金牛区',workSite:  Math.floor(Math.random() * 20) },
+        { value: Math.floor(Math.random() * 100) / 100, name: '天府新区',workSite:  Math.floor(Math.random() * 20) }
       ].sort(function (a, b) { return a.value - b.value })
     }
   )
@@ -32,13 +32,13 @@ router.post('/session', function(req, res) {
   res.json(
     {
       data: [
-        { value: 0.33, name: '成华区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '双流区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '高新区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '武侯区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '青羊区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '金牛区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '天府新区' }
+        { value: 0.33, name: '成华区' ,workSite:  Math.floor(Math.random() * 20)},
+        { value: Math.floor(Math.random() * 100) / 100, name: '双流区' ,workSite:  Math.floor(Math.random() * 20)},
+        { value: Math.floor(Math.random() * 100) / 100, name: '高新区' ,workSite:  Math.floor(Math.random() * 20)},
+        { value: Math.floor(Math.random() * 100) / 100, name: '武侯区' ,workSite:  Math.floor(Math.random() * 20)},
+        { value: Math.floor(Math.random() * 100) / 100, name: '青羊区' ,workSite:  Math.floor(Math.random() * 20)},
+        { value: Math.floor(Math.random() * 100) / 100, name: '金牛区' ,workSite:  Math.floor(Math.random() * 20)},
+        { value: Math.floor(Math.random() * 100) / 100, name: '天府新区' ,workSite:  Math.floor(Math.random() * 20)}
       ].sort(function (a, b) { return a.value - b.value })
     }
   )
@@ -49,13 +49,13 @@ router.post('/month', function(req, res) {
   res.json(
     {
       data: [
-        { value: 0.33, name: '成华区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '双流区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '高新区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '武侯区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '青羊区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '金牛区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '天府新区' }
+        { value: 0.33, name: '成华区' ,workSite:  Math.floor(Math.random() * 20)},
+        { value: Math.floor(Math.random() * 100) / 100, name: '双流区' ,workSite:  Math.floor(Math.random() * 20)},
+        { value: Math.floor(Math.random() * 100) / 100, name: '高新区' ,workSite:  Math.floor(Math.random() * 20)},
+        { value: Math.floor(Math.random() * 100) / 100, name: '武侯区' ,workSite:  Math.floor(Math.random() * 20)},
+        { value: Math.floor(Math.random() * 100) / 100, name: '青羊区' ,workSite:  Math.floor(Math.random() * 20)},
+        { value: Math.floor(Math.random() * 100) / 100, name: '金牛区' ,workSite:  Math.floor(Math.random() * 20)},
+        { value: Math.floor(Math.random() * 100) / 100, name: '天府新区' ,workSite:  Math.floor(Math.random() * 20)}
       ].sort(function (a, b) { return a.value - b.value })
     }
   )

@@ -36,6 +36,13 @@ export default {
           type: 'pie',
           radius: '55%',
           center: ['50%', '50%'],
+          // data: [
+          //   { value: 335, name: '直接访问', label: { formatter: '区域：{b}' + '\n' + '开工数：' + '22' } },
+          //   { value: 310, name: '邮件营销' },
+          //   { value: 274, name: '联盟广告' },
+          //   { value: 235, name: '视频广告' },
+          //   { value: 400, name: '搜索引擎' }
+          // ],
           data: null,
           roseType: 'radius',
           label: {
@@ -51,8 +58,8 @@ export default {
                 color: 'rgba(0,0,0,0.7)'
               },
               smooth: 0.2,
-              length: 10,
-              length2: 20
+              length: 7,
+              length2: 12
             }
           },
           itemStyle: {
@@ -73,12 +80,13 @@ export default {
   },
   methods: {
     changePieDay(pieRequest) {
+      // 应需求变化，接口修改,需要返回对应区域的开工数量 2019-1-9
       // 获取选取的时间点，发出请求，更新饼图
-      console.log(pieRequest.getFullYear())
+      // console.log(pieRequest.getFullYear())
       /* 时间选择器的时间发生变化，发起请求，POST，携带时间戳
       ** 返回数据的格式 {
       **   data: data: [
-            { value: 0.079, name: '成华区' },
+            { value: 0.079, name: '成华区', 'workSite': 12 } **（改）,
             { value: 0.252, name: '双流区' },
             { value: 0.07, name: '高新区' },
             { value: 0.16, name: '武侯区' },
@@ -88,8 +96,16 @@ export default {
       ** }
       */
       this.$axios.post('http://localhost:3000/contribution/year/', qs.stringify({ date: pieRequest })).then(res => {
+        let dataAddLabel = null
+
         this.grapOptionsInit.title.subtext = pieRequest.getFullYear() + '年度'
-        this.grapOptionsInit.series[0].data = res.data.data
+        dataAddLabel = res.data.data
+        for (let i = 0; i < dataAddLabel.length; i++) {
+          let currentWork = dataAddLabel[i].workSite
+          dataAddLabel[i].label = { formatter: '{b}' + '\n' + '开工数:' + currentWork }
+        }
+        this.grapOptionsInit.series[0].data = dataAddLabel
+        // this.grapOptionsInit.series[0].data = res.data.data
         this.yearPieGraphObj.setOption(this.grapOptionsInit)
       })
     }

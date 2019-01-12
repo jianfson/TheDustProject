@@ -15,7 +15,7 @@ export default {
       monthPieGraphObj: null,
       grapOptionsInit: null,
       MonthSelect: null,
-      currentArea: null,
+      currentArea: null
     }
   },
   mounted() {
