@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -60,16 +61,32 @@ public class DeviceFacadeREST extends AbstractFacade<Device> {
 
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces(MediaType.APPLICATION_JSON)
     public Device find(@PathParam("id") Integer id) {
-        return super.find(id);
+        //return super.find(id);
+        return em.find(Device.class, id);
     }
 
     @GET
     @Override
     @Produces(MediaType.APPLICATION_JSON)
     public List<Device> findAll() {
+        //String jpql = "FROM device";
+        //javax.persistence.Query q = em.createQuery(jpql);
+        //return q.getResultList();
         return super.findAll();
+    }
+    
+    @GET
+    @Path("region/{regionalId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Device> findByRegionalId(@PathParam("regionalId") Integer regionalId) {
+        //javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+        //cq.select(cq.from(Device.class));
+        Query query =  em.createNamedQuery("Device.findByRegionalId");
+        //Query query = em.createNativeQuery(Device.findByDeviceId,Device.class);
+        query.setParameter("regionalId", regionalId); 
+        return query.getResultList();
     }
 
     @GET
