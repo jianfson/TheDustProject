@@ -6,6 +6,9 @@
 package database.service;
 
 import database.Device;
+import java.lang.reflect.Constructor;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -88,6 +91,25 @@ public class DeviceFacadeREST extends AbstractFacade<Device> {
         query.setParameter("regionalId", regionalId); 
         return query.getResultList();
     }
+    
+    @GET
+    @Path("table/{regionalId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Device> findByRegionalIdForTable(@PathParam("regionalId") Integer regionalId) {
+        Query query =  em.createNamedQuery("Device.findByRegionalIdForTable");
+        query.setParameter("regionalId", regionalId);
+        //return query.getResultList();
+
+        List<Object[]> list = (List<Object[]>)query.getResultList();
+        List<Device> deList = null;
+        try 
+        {
+            deList = castEntity(list, Device.class);    
+        }catch (Exception e) {    
+            System.out.println("error in castEntity,and e is " + e.getMessage());    
+        }
+        return deList;
+    }
 
     @GET
     @Path("{from}/{to}")
@@ -107,5 +129,32 @@ public class DeviceFacadeREST extends AbstractFacade<Device> {
     protected EntityManager getEntityManager() {
         return em;
     }
+    
+    /** 
+     * 通用实体转换方法,将JPA返回的数组转化成对应的实体集合,这里通过泛型和反射实现 
+     * @param <T> 
+     * @param list 
+     * @param clazz 需要转化后的类型 
+     * @return  
+     * @throws Exception 
+     */  
+    @SuppressWarnings("unchecked")  
+    private static <T> List<T> castEntity(List<Object[]> list, Class<T> clazz) throws Exception {  
+        List<T> returnList = new ArrayList<T>();
+        Object[] co = list.get(0);
+        Class[] c2 = new Class[co.length];
+          
+        //确定构造方法  
+        for(int i = 0; i < co.length; i++){  
+            c2[i] = co[i].getClass();  
+        }  
+          
+        for(Object[] o : list){  
+            Constructor<T> constructor = clazz.getConstructor(c2);  
+            returnList.add(constructor.newInstance(o)); 
+        }  
+          
+        return returnList;  
+    }  
     
 }

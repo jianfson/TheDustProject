@@ -9,12 +9,19 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
 import javax.persistence.Entity;
+import javax.persistence.EntityResult;
+import javax.persistence.FieldResult;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SqlResultSetMapping;
+import javax.persistence.SqlResultSetMappings;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,6 +43,21 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Device.findByLng", query = "SELECT d FROM Device d WHERE d.lng = :lng")
     , @NamedQuery(name = "Device.findByLat", query = "SELECT d FROM Device d WHERE d.lat = :lat")
     , @NamedQuery(name = "Device.findByRegionalId", query = "SELECT d FROM Device d WHERE d.regionalId = :regionalId")})
+@NamedNativeQueries({
+    @NamedNativeQuery(name = "Device.findByRegionalIdForTable", query = "SELECT d.device_id, d.device_name FROM device d where d.regional_id=?regionalId", resultSetMapping = "forTable")
+})
+@SqlResultSetMappings(
+{
+    @SqlResultSetMapping(
+            name="forTable",
+            entities = {},  
+            columns = {  
+                @ColumnResult(name = "device_id"),  
+                @ColumnResult(name = "device_name") 
+            }  
+    )      
+})
+
 public class Device implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -63,6 +85,11 @@ public class Device implements Serializable {
 
     public Device(Integer id) {
         this.id = id;
+    }
+    
+    public Device(String deviceId, String deviceName) {
+        this.deviceId = deviceId;
+        this.deviceName = deviceName;
     }
 
     public Integer getId() {

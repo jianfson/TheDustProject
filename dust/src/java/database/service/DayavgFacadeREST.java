@@ -7,11 +7,14 @@ package database.service;
 
 import database.Dayavg;
 import database.DayavgPK;
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -96,6 +99,37 @@ public class DayavgFacadeREST extends AbstractFacade<Dayavg> {
     public List<Dayavg> findAll() {
         return super.findAll();
     }
+    
+    @GET
+    @Path("region/{regionalId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Dayavg> findByRegionalId(@PathParam("regionalId") Integer regionalId) {
+        Query query =  em.createNamedQuery("Dayavg.findByRegionalId");
+        query.setParameter("regionalId", regionalId);
+        return query.getResultList();
+    }
+    
+    @GET
+    @Path("month/{from}/{to}/{regionalId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Dayavg> findByRegionalIdForMonth(
+            @PathParam("from") Integer from,
+            @PathParam("to") Integer to,
+            @PathParam("regionalId") Integer regionalId) 
+    {
+        Query query =  em.createNamedQuery("Dayavg.findByRegionalIdForMonth");
+        query.setParameter("regionalId", regionalId);
+        List<Object[]> list = (List<Object[]>)query.getResultList();
+        List<Dayavg> deList = null;
+        try 
+        {
+            deList = castEntity(list, Dayavg.class);
+        }catch (Exception e) {
+            System.out.println("error in castEntity,and e is " + e.getMessage());    
+        }
+        return deList;
+        //return query.getResultList();
+    }
 
     @GET
     @Path("{from}/{to}")
@@ -114,6 +148,41 @@ public class DayavgFacadeREST extends AbstractFacade<Dayavg> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+    
+    /** 
+     * 通用实体转换方法,将JPA返回的数组转化成对应的实体集合,这里通过泛型和反射实现 
+     * @param <T> 
+     * @param list 
+     * @param clazz 需要转化后的类型 
+     * @return  
+     * @throws Exception 
+     */  
+    @SuppressWarnings("unchecked")  
+    private static <T> List<T> castEntity(List<Object[]> list, Class<T> clazz) throws Exception {  
+        List<T> returnList = new ArrayList<T>();
+        Object[] co = list.get(0);
+        Class[] c2 = new Class[co.length];
+        
+        //System.out.println("List.length is   " + list.size());
+        //System.out.println("new Class[co.length] is   " + co.length);
+          
+        //确定构造方法  
+        for(int i = 0; i < co.length; i++){
+            c2[i] = co[i].getClass();
+            
+        }  
+
+        int j = 1;
+        for(Object[] o : list){
+            //System.out.println("o[0].getClass() is   " + o[0].getClass().toString());
+            //System.out.println("o[1].getClass() is   " + o[1].getClass().toString());
+            Constructor<T> constructor = clazz.getConstructor(c2);
+            //o[0] = Double(o[0]);
+            returnList.add(constructor.newInstance(o));
+        }  
+          
+        return returnList;  
     }
     
 }

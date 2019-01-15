@@ -9,10 +9,15 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SqlResultSetMapping;
+import javax.persistence.SqlResultSetMappings;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -50,6 +55,27 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Dayavg.findByDataType", query = "SELECT d FROM Dayavg d WHERE d.dataType = :dataType")
     , @NamedQuery(name = "Dayavg.findByCreateTime", query = "SELECT d FROM Dayavg d WHERE d.dayavgPK.createTime = :createTime")
     , @NamedQuery(name = "Dayavg.findByAvgTime", query = "SELECT d FROM Dayavg d WHERE d.avgTime = :avgTime")})
+
+@NamedNativeQueries({
+    @NamedNativeQuery(name = "Dayavg.findByRegionalIdForMonth"
+            , query = "SELECT AVG(d.pm10) as pm, DATE(d.avg_time) as date FROM dayavg d\n" +
+                        "WHERE (d.avg_time >= '2016-01-01' AND d.avg_time < '2017-01-07')\n" +
+                        "AND d.regional_id =?regionalId\n" +
+                        "GROUP BY date"
+            , resultSetMapping = "forMonth")
+})
+@SqlResultSetMappings(
+{
+    @SqlResultSetMapping(
+            name="forMonth",
+            entities = {},
+            columns = {
+                @ColumnResult(name = "pm"),  
+                @ColumnResult(name = "date")
+            }  
+    )      
+})
+
 public class Dayavg implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -108,6 +134,11 @@ public class Dayavg implements Serializable {
     public Dayavg() {
     }
 
+    public Dayavg(Double pm, java.sql.Date date) {
+        this.pm10 = pm;
+        this.avgTime = new java.util.Date(date.getTime());
+    }
+    
     public Dayavg(DayavgPK dayavgPK) {
         this.dayavgPK = dayavgPK;
     }
