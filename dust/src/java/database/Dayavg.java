@@ -6,6 +6,7 @@
 package database;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -59,7 +60,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedNativeQueries({
     @NamedNativeQuery(name = "Dayavg.findByRegionalIdForMonth"
             , query = "SELECT AVG(d.pm10) as pm, DATE(d.avg_time) as date FROM dayavg d\n" +
-                        "WHERE (d.avg_time >= '2016-01-01' AND d.avg_time < '2017-01-07')\n" +
+                        "WHERE (d.avg_time >= ?from AND d.avg_time < ?to)\n" +
                         "AND d.regional_id =?regionalId\n" +
                         "GROUP BY date"
             , resultSetMapping = "forMonth")
@@ -81,16 +82,16 @@ public class Dayavg implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected DayavgPK dayavgPK;
-    @Basic(optional = false)
-    @Column(name = "company_id")
+    @Basic(optional = true)
+    @Column(name = "company_id",nullable=true)
     private int companyId;
-    @Basic(optional = false)
+    @Basic(optional = true)
     @Column(name = "regional_id")
     private int regionalId;
-    @Basic(optional = false)
+    @Basic(optional = true)
     @Column(name = "units_id")
     private int unitsId;
-    @Basic(optional = false)
+    @Basic(optional = true)
     @Column(name = "device_id")
     private String deviceId;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -126,10 +127,12 @@ public class Dayavg implements Serializable {
     private Double valid;
     @Column(name = "dataType")
     private Boolean dataType;
-    @Basic(optional = false)
+    @Basic(optional = true)
     @Column(name = "avg_time")
     @Temporal(TemporalType.DATE)
     private Date avgTime;
+    
+    //private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
 
     public Dayavg() {
     }

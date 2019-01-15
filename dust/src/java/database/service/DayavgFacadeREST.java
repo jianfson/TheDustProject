@@ -7,7 +7,9 @@ package database.service;
 
 import database.Dayavg;
 import database.DayavgPK;
+import database.MonthQuery;
 import java.lang.reflect.Constructor;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -110,20 +112,25 @@ public class DayavgFacadeREST extends AbstractFacade<Dayavg> {
     }
     
     @GET
-    @Path("month/{from}/{to}/{regionalId}")
+    @Path("month/{regionalId}/{from}/{to}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Dayavg> findByRegionalIdForMonth(
-            @PathParam("from") Integer from,
-            @PathParam("to") Integer to,
-            @PathParam("regionalId") Integer regionalId) 
+    public List<MonthQuery> findByRegionalIdForMonth(
+            @PathParam("regionalId") Integer regionalId,
+            @PathParam("from") Date from,
+            @PathParam("to") Date to)
     {
         Query query =  em.createNamedQuery("Dayavg.findByRegionalIdForMonth");
         query.setParameter("regionalId", regionalId);
+        query.setParameter("from", from);
+        query.setParameter("to", to);
+        //System.out.println("from is " + from);
+        //System.out.println("to is " + to);
         List<Object[]> list = (List<Object[]>)query.getResultList();
-        List<Dayavg> deList = null;
+        List<MonthQuery> deList = null;
         try 
         {
-            deList = castEntity(list, Dayavg.class);
+            //deList = castEntity(list, Dayavg.class);
+            deList = castEntity(list, MonthQuery.class);
         }catch (Exception e) {
             System.out.println("error in castEntity,and e is " + e.getMessage());    
         }
@@ -178,7 +185,6 @@ public class DayavgFacadeREST extends AbstractFacade<Dayavg> {
             //System.out.println("o[0].getClass() is   " + o[0].getClass().toString());
             //System.out.println("o[1].getClass() is   " + o[1].getClass().toString());
             Constructor<T> constructor = clazz.getConstructor(c2);
-            //o[0] = Double(o[0]);
             returnList.add(constructor.newInstance(o));
         }  
           
