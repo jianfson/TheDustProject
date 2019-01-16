@@ -11,7 +11,7 @@ router.all('*', function (req, res, next) {
   next();
 })
 
-router.post('/init', function(req, res) {
+router.post('/init', function (req, res) {
   res.json({
     year: {
       date: '2018',
@@ -51,52 +51,86 @@ router.post('/init', function(req, res) {
     }
   })
 })
-router.post('/year', function(req, res) {
+router.get('/year', function (req, res) {
+  console.log(req.query)
   res.json(
     {
       data: [
-        { value: 0.66, name: '成华区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '双流区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '高新区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '武侯区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '青羊区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '金牛区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '天府新区' }
-      ].sort(function (a, b) { return a.value - b.value })
+        {
+          "ID": " 510104",
+          "relation": 0.2,
+        },
+        {
+          "ID": " 510105",
+          "relation": 0.5,
+        },
+        {
+          "ID": " 510106",
+          "relation": 0.1,
+        }, {
+          "ID": " 510107",
+          "relation": 0.2,
+        }, {
+          "ID": " 510108",
+          "relation": 0.3,
+        }
+      ]
     }
   )
 })
 
-router.post('/session', function(req, res) {
-  console.log(req.body)
+router.get('/season', function (req, res) {
+  console.log(req.query)
   res.json(
     {
       data: [
-        { value: 0.33, name: '成华区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '双流区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '高新区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '武侯区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '青羊区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '金牛区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '天府新区' }
-      ].sort(function (a, b) { return a.value - b.value })
+        {
+          "ID": " 510104",
+          "relation": 0.2,
+        },
+        {
+          "ID": " 510105",
+          "relation": 0.5,
+        },
+        {
+          "ID": " 510106",
+          "relation": 0.1,
+        }, {
+          "ID": " 510107",
+          "relation": 0.2,
+        }, {
+          "ID": " 510108",
+          "relation": 0.3,
+        }
+      ]
     }
   )
 })
 
-router.post('/month', function(req, res) {
-  console.log(req.body)
+router.get('/month', function (req, res) {
+  console.log(req.query)
   res.json(
     {
       data: [
-        { value: 0.33, name: '成华区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '双流区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '高新区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '武侯区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '青羊区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '金牛区' },
-        { value: Math.floor(Math.random() * 100) / 100, name: '天府新区' }
-      ].sort(function (a, b) { return a.value - b.value })
+        {
+          "ID": " 510104",
+          "relation": 0.2,
+        },
+        {
+          "ID": " 510105",
+          "relation": 0.5,
+        },
+        {
+          "ID": " 510106",
+          "relation": 0.1,
+        }, {
+          "ID": " 510107",
+          "relation": 0.2,
+        }, {
+          "ID": " 510108",
+          "relation": 0.3,
+        }
+      ]
     }
   )
 })

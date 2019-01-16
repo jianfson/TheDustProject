@@ -29,11 +29,11 @@ var areaTransform = function (str) {
   }
   return Zh
 }
-router.post('/', function (req, res) {
+router.get('/', function (req, res) {
   var session = ['spring', 'summer', 'autumn', 'winter']
-  var id = req.body.id
-  var time = req.body.date
-  var method = req.body.method
+  var id = req.query.id
+  var time = req.query.date
+  var method = req.query.method
   var result = {
     category: null,
     originData: null,

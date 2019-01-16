@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import qs from 'qs'
 export default {
+  props: ['selectedArea'],
   data() {
     return {
       monthPieGraphObj: null,
@@ -34,7 +34,7 @@ export default {
       },
       series: [
         {
-          name: '访问来源',
+          name: '关联性',
           type: 'pie',
           radius: '55%',
           center: ['50%', '50%'],
@@ -75,14 +75,42 @@ export default {
     }
   },
   methods: {
+    dateFormateMonth(date) {
+      var baseDate = new Date(date)
+      let Y = baseDate.getFullYear()
+      let M = baseDate.getMonth() + 1
+      M = M < 10 ? '0' + M : M
+      return Y + '-' + M
+    },
     changePieMonth(pieRequest) {
       // 获取选取的时间点，发出请求，更新饼图
-      console.log(pieRequest)
-      this.$axios.post('http://localhost:3000/relation/month/', qs.stringify({ date: pieRequest })).then(res => {
-        this.grapOptionsInit.title.subtext = this.dealDate(pieRequest)
-        this.grapOptionsInit.series[0].data = res.data.data
-        this.monthPieGraphObj.setOption(this.grapOptionsInit)
-      })
+      if (this.selectedArea) {
+        let dateAfterFormat = this.dateFormateMonth(pieRequest)
+        this.$axios.get('/dust/webresourcses/relation/month/', {
+          params: {
+            area: this.selectedArea,
+            date: dateAfterFormat
+          }
+        }).then(res => {
+          let dateAfterFormat = []
+          let dataAddLabel = null
+          this.grapOptionsInit.title.subtext = this.dealDate(pieRequest)
+          dataAddLabel = res.data.data
+          for (let i = 0; i < dataAddLabel.length; i++) {
+            let currentName = this.$areaBelong(Number(dataAddLabel[i].ID))
+            let currenValue = dataAddLabel[i].relation
+            // 解析成饼图可用的数据
+            dateAfterFormat.push({
+              name: currentName, value: currenValue
+            })
+          }
+          this.grapOptionsInit.series[0].data = dateAfterFormat.sort(function (a, b) {
+            return a.value - b.value
+          })
+          this.grapOptionsInit.series[0].data = dateAfterFormat
+          this.monthPieGraphObj.setOption(this.grapOptionsInit)
+        })
+      }
     },
     drawGraphMonth(res) {
       let date = new Date(res.date)

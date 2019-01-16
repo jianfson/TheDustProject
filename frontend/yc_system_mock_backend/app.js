@@ -14,6 +14,7 @@ var control = require('./routes/control');
 var predict = require('./routes/predict')
 var contribution = require('./routes/contribution')
 var relation = require('./routes/relation')
+var effect = require('./routes/effect')
 
 
 var bodyParser = require('body-parser')
@@ -35,14 +36,16 @@ app.use(bodyParser.json())
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/home', homeRouter)
-app.use('/history', historyRouter)
+app.use('/database.device', homeRouter)
+app.use('/database.dayavg', historyRouter)
 app.use('/map', mapRouter)
 app.use('/correction', correction)
 app.use('/control', control)
 app.use('/predict', predict)
 app.use('/contribution', contribution)
 app.use('/relation', relation)
+app.use('/effect', effect)
+
 
 
 

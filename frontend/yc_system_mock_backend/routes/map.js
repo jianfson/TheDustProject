@@ -16,148 +16,28 @@ router.all('*', function (req, res, next) {
 
 
 // 创建点位信息，并保存为json文件，用于调用，每次运行默认不运行
-// var randomSettedPoints = (function () {
+// var create = function () {
 //   let result = []
-//   var colors = ['yellow','red','orange', 'blue']
-//   var areas = ['双流区', '武侯区', '金牛区', '高新区', '成华区']
+//   var colors = ['yellow', 'red', 'orange', 'blue']
+//   var areas = [510104, 510105, 510106, 510107, 510108]
 //   var maxWidth = 10417795346 - 10401795346
 //   var maxHeight = 3070994585 - 3061994585
 //   for (var i = 0; i < 80; i++) {
 //     result.push({
-
-//       location: 'xx-路-号',
-//       pm10: Math.floor(Math.random() * 200) + 1,
+//       deviceAddress: "成华区圣灯街道办事处圣灯村二组",
+//       deviceName: "成华区圣灯街道办事处（朗基少东家）",
 //       color: colors[Math.floor(Math.random() * 4)],
-//       id: 'xy-m89x'+ Math.floor(Math.random() * 10000)+'sc',
-//       positionX: (10401795346 + Math.floor(Math.random() * maxWidth) +1) / 100000000 ,
-//       positionY: (3061994585 + Math.floor(Math.random() * maxHeight) + 1) / 100000000,
-//       area: areas[Math.floor(Math.random() * 5)]
+//       deviceId: 'xy-m89x' + Math.floor(Math.random() * 10000) + 'sc',
+//       lng: (10401795346 + Math.floor(Math.random() * maxWidth) + 1) / 100000000,
+//       lat: (3061994585 + Math.floor(Math.random() * maxHeight) + 1) / 100000000,
+//       regionalId: areas[Math.floor(Math.random() * 5)]
 //     })
 //   }
-//   fs.writeFile('./points.json',JSON.stringify(result))
+//   fs.writeFile('./points.json', JSON.stringify(result))
 //   return result
-// })()
+// }
+// create()
 
-// 临时用的点位信息
-var locations = [{
-  "device_id": "1440-0028-sclw-2803",
-  "lng": 104.13328828752,
-  "lat": 30.628542467496,
-  "location": "成华区",
-  "pm10": 218.5
-},
-{
-  "device_id": "1440-0028-sclw-2804",
-  "lng": 104.13028962697,
-  "lat": 30.67376220597,
-  "location": "成华区",
-  "pm10": 263.3
-},
-{
-  "device_id": "1440-0028-sclw-2803",
-  "lng": 104.13328828752,
-  "lat": 30.628542467496,
-  "location": "成华区",
-  "pm10": 174.3
-},
-{
-  "device_id": "1440-0028-sclw-2804",
-  "lng": 104.13028962697,
-  "lat": 30.67376220597,
-  "location": "成华区",
-  "pm10": 212.8
-},
-{
-  "device_id": "1440-0028-sclw-2803",
-  "lng": 104.13328828752,
-  "lat": 30.628542467496,
-  "location": "成华区",
-  "pm10": 159.9
-},
-{
-  "device_id": "1440-0028-sclw-2804",
-  "lng": 104.13028962697,
-  "lat": 30.67376220597,
-  "location": "成华区",
-  "pm10": 197.9
-},
-{
-  "device_id": "1440-0028-sclw-2803",
-  "lng": 104.13328828752,
-  "lat": 30.628542467496,
-  "location": "成华区",
-  "pm10": 138.2
-},
-{
-  "device_id": "1440-0028-sclw-2804",
-  "lng": 104.13028962697,
-  "lat": 30.67376220597,
-  "location": "成华区",
-  "pm10": 151.4
-},
-{
-  "device_id": "1440-0028-sclw-2803",
-  "lng": 104.13328828752,
-  "lat": 30.628542467496,
-  "location": "成华区",
-  "pm10": 152.7
-},
-{
-  "device_id": "1440-0028-sclw-2804",
-  "lng": 104.13028962697,
-  "lat": 30.67376220597,
-  "location": "成华区",
-  "pm10": 190.5
-},
-{
-  "device_id": "1440-0028-sclw-2803",
-  "lng": 104.13328828752,
-  "lat": 30.628542467496,
-  "location": "成华区",
-  "pm10": 149.2
-},
-{
-  "device_id": "1440-0028-sclw-2804",
-  "lng": 104.13028962697,
-  "lat": 30.67376220597,
-  "location": "成华区",
-  "pm10": 189.8
-},
-{
-  "device_id": "1440-0028-sclw-2803",
-  "lng": 104.13328828752,
-  "lat": 30.628542467496,
-  "location": "成华区",
-  "pm10": 163.5
-},
-{
-  "device_id": "1440-0028-sclw-2804",
-  "lng": 104.13028962697,
-  "lat": 30.67376220597,
-  "location": "成华区",
-  "pm10": 213.9
-},
-{
-  "device_id": "1440-0028-sclw-2803",
-  "lng": 104.13328828752,
-  "lat": 30.628542467496,
-  "location": "成华区",
-  "pm10": 82.3
-},
-{
-  "device_id": "1440-0028-sclw-2804",
-  "lng": 104.13028962697,
-  "lat": 30.67376220597,
-  "location": "成华区",
-  "pm10": 117.3
-},
-{
-  "device_id": "1440-0028-sclw-2803",
-  "lng": 104.13328828752,
-  "lat": 30.628542467496,
-  "location": "成华区",
-  "pm10": 114.4
-}]
 
 router.get('/init', function (req, res) {
   var data = fs.readFile('./points.json', function (err, data) {
@@ -192,7 +72,7 @@ var areaTransform = function (str) {
 }
 
 router.get('/spec/:area/*', function (req, res) {
-  if (req.params.area === 'allcity') {
+  if (req.params.area == 'allcity') {
     var data = fs.readFile('./points.json', function (err, data) {
       var toStr = JSON.parse(data)
       res.json(
@@ -200,7 +80,6 @@ router.get('/spec/:area/*', function (req, res) {
       )
     })
   } else {
-    var area = areaTransform(req.params.area)
     var resultData = []
     var data = fs.readFile('./points.json', function (err, data) {
       var toStr = JSON.parse(data)
@@ -208,7 +87,7 @@ router.get('/spec/:area/*', function (req, res) {
         return console.log(err)
       }
       toStr.forEach(item => {
-        if (item.area == area) {
+        if (item.location == req.params.area) {
           resultData.push(item)
         }
       })

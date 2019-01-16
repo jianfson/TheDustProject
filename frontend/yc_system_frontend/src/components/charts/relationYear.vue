@@ -1,21 +1,44 @@
 <template>
   <div id="relationYear">
     <div class="yearSelector">
-      <el-date-picker @change="changePieYear" v-model="pickedYear" type="year" size="mini"></el-date-picker>
+      <el-form :rules="relationRule" :model="relationForm" ref="relationForm">
+        <el-form-item prop="pickedYear">
+          <el-date-picker
+            @change="changePieYear"
+            v-model="relationForm.pickedYear"
+            type="year"
+            size="mini"
+          ></el-date-picker>
+        </el-form-item>
+      </el-form>
     </div>
     <div id="relationGraphYear"></div>
   </div>
 </template>
 
 <script>
-import qs from 'qs'
 export default {
+  props: ['selectedArea'],
   data() {
+    var validatePass = (rule, value, callback) => {
+      if (!this.selectedArea) {
+        callback(new Error('请先选择区域并提交'))
+      } else {
+        callback()
+      }
+    }
     return {
       yearPieGraphObj: null,
       grapOptionsInit: null,
-      pickedYear: null,
-      currentArea: null
+      relationForm: {
+        pickedYear: null
+      },
+      currentArea: null,
+      relationRule: {
+        pickedYear: [
+          { validator: validatePass, trigger: 'change' }
+        ]
+      }
     }
   },
   mounted() {
@@ -33,7 +56,7 @@ export default {
       },
       series: [
         {
-          name: '访问来源',
+          name: '关联性',
           type: 'pie',
           radius: '55%',
           center: ['50%', '50%'],
@@ -73,6 +96,11 @@ export default {
     }
   },
   methods: {
+    dateFormateYear(date) {
+      var baseDate = new Date(date)
+      let Y = baseDate.getFullYear()
+      return Y
+    },
     changePieYear(pieRequest) {
       // 获取选取的时间点，发出请求，更新饼图
       /* 时间选择器的时间发生变化，发起请求，POST，携带时间戳,和选取的地区！！！！！
@@ -87,11 +115,33 @@ export default {
           ]
       ** }
       */
-      this.$axios.post('http://localhost:3000/relation/year/', qs.stringify({ date: pieRequest })).then(res => {
-        this.grapOptionsInit.title.subtext = pieRequest.getFullYear() + '年度'
-        this.grapOptionsInit.series[0].data = res.data.data
-        this.yearPieGraphObj.setOption(this.grapOptionsInit)
-      })
+      // 首先要验证区域是否已经选择上了，如果没有选择区域不做处理
+      if (this.selectedArea) {
+        let dateAfterFormate = this.dateFormateYear(this.selectedArea)
+        this.$axios.get('/dust/webresourcses/relation/year', {
+          params: {
+            area: this.selectedArea,
+            date: dateAfterFormate
+          }
+        }).then(res => {
+          let dateAfterFormat = []
+          let dataAddLabel = null
+          this.grapOptionsInit.title.subtext = pieRequest.getFullYear() + '年度'
+          dataAddLabel = res.data.data
+          for (let i = 0; i < dataAddLabel.length; i++) {
+            let currentName = this.$areaBelong(Number(dataAddLabel[i].ID))
+            let currenValue = dataAddLabel[i].relation
+            // 解析成饼图可用的数据
+            dateAfterFormat.push({
+              name: currentName, value: currenValue
+            })
+          }
+          this.grapOptionsInit.series[0].data = dateAfterFormat.sort(function (a, b) {
+            return a.value - b.value
+          })
+          this.yearPieGraphObj.setOption(this.grapOptionsInit)
+        })
+      }
     },
     drawGraphYear(res) {
       let date = new Date(res.date).getFullYear()

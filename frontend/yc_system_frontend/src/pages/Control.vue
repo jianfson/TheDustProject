@@ -286,17 +286,18 @@
 </template>
 
 <script>
-import allPredict from '../components/charts/allpredict'
-import weekPredict from '../components/charts/weekPredict'
-import contributionSession from '../components/charts/contributionSession'
-import relationSeasion from '../components/charts/relationSeasion'
+// 这些组件并没有用，待删除
+// import allPredict from '../components/charts/allpredict'
+// import weekPredict from '../components/charts/weekPredict'
+// import contributionSession from '../components/charts/contributionSession'
+// import relationSeasion from '../components/charts/relationSeasion'
 
 export default {
   components: {
-    allPredict,
-    weekPredict,
-    contributionSession,
-    relationSeasion
+    // allPredict,
+    // weekPredict,
+    // contributionSession,
+    // relationSeasion
   },
   data() {
     return {
@@ -489,7 +490,7 @@ export default {
     }
     **
     */
-    this.$axios.get('http://localhost:3000/control/init').then(data => {
+    this.$axios.get('/dust/webresourcses/control/init').then(data => {
       console.log(data.data.gaoxin)
       this.currentDate = data.data.date
       this.chengdu = data.data.chengdu

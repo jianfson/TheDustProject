@@ -4,7 +4,7 @@
       <el-cascader
         @change="changePieSession"
         :options="selectOptions"
-        v-model="selectedInit"
+        v-model="pickedSeason"
         size="mini"
       ></el-cascader>
     </div>
@@ -16,41 +16,16 @@
 /* 现在时间选择器的时间是写死的，注意应该根据时间变换而发生变化
 **
 */
-import qs from 'qs'
 export default {
+  props: ['selectedArea'],
   data() {
     const seletChildren = [{ value: 'spring', label: '春季' }, { value: 'summer', label: '夏季' }, { value: 'autumn', label: '秋季' }, { value: 'winter', label: '冬季' }]
     return {
       PieGraphObj: null,
       grapOptionsInit: null,
-      selectedInit: null,
+      pickedSeason: null,
       currentArea: null,
       selectOptions: [
-        {
-          value: '2010',
-          label: '2010',
-          children: seletChildren
-        },
-        {
-          value: '2011',
-          label: '2011',
-          children: seletChildren
-        },
-        {
-          value: '2012',
-          label: '2012',
-          children: seletChildren
-        },
-        {
-          value: '2013',
-          label: '2013',
-          children: seletChildren
-        },
-        {
-          value: '2014',
-          label: '2014',
-          children: seletChildren
-        },
         {
           value: '2015',
           label: '2015',
@@ -104,19 +79,11 @@ export default {
       // },
       series: [
         {
-          name: '访问来源',
+          name: '关联性',
           type: 'pie',
           radius: '55%',
           center: ['50%', '50%'],
-          data: [
-            { value: 0.25, name: '成华区' },
-            { value: 0.172, name: '双流区' },
-            { value: 0.22, name: '高新区' },
-            { value: 0.13, name: '武侯区' },
-            { value: 0.12, name: '青羊区' },
-            { value: 0.028, name: '金牛区' },
-            { value: 0.09, name: '天府新区' }
-          ].sort(function (a, b) { return a.value - b.value }),
+          data: null,
           roseType: 'radius',
           label: {
             normal: {
@@ -154,7 +121,6 @@ export default {
   },
   methods: {
     changePieSession(pieRequest) {
-      console.log(pieRequest)
       // 获取选取的时间点，发出请求，更新饼图
       // 获取选取的时间点，发出请求，更新饼图
       /* 时间选择器的时间发生变化，发起请求，POST，携带时间戳
@@ -169,16 +135,38 @@ export default {
           ]
       ** }
       */
-      this.$axios.post('http://localhost:3000/relation/session/', qs.stringify({ date: pieRequest })).then(res => {
-        this.grapOptionsInit.title.subtext = pieRequest[0] + this.formatSession(pieRequest[1])
-        this.grapOptionsInit.series[0].data = res.data.data
-        this.sessionPieGraphObj.setOption(this.grapOptionsInit)
-      })
+      if (this.selectedArea) {
+        this.$axios.get('/dust/webresourcses/relation/season/', {
+          params: {
+            area: this.selectedArea,
+            date: pieRequest[0],
+            season: pieRequest[1]
+          }
+        }).then(res => {
+          let dateAfterFormat = []
+          let dataAddLabel = null
+          this.grapOptionsInit.title.subtext = pieRequest[0] + this.formatSession(pieRequest[1])
+          dataAddLabel = res.data.data
+          for (let i = 0; i < dataAddLabel.length; i++) {
+            let currentName = this.$areaBelong(Number(dataAddLabel[i].ID))
+            let currenValue = dataAddLabel[i].relation
+            // 解析成饼图可用的数据
+            dateAfterFormat.push({
+              name: currentName, value: currenValue
+            })
+          }
+          this.grapOptionsInit.series[0].data = dateAfterFormat.sort(function (a, b) {
+            return a.value - b.value
+          })
+          this.grapOptionsInit.series[0].data = dateAfterFormat
+          this.sessionPieGraphObj.setOption(this.grapOptionsInit)
+        })
+      }
     },
     drawGraphSession(res) {
       let date = res.date[0] + this.formatSession(res.date[1])
       let data = res.data
-      this.selectedInit = res.date
+      this.relationForm.pickedSeason = res.date
       this.grapOptionsInit.title.subtext = date
       this.grapOptionsInit.series[0].data = data
       this.sessionPieGraphObj.setOption(this.grapOptionsInit)

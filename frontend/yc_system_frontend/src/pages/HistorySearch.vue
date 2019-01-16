@@ -42,8 +42,8 @@
       </div>
       <div class="history-bottom-graph">
         <div class="history-right-form-title history-left-top-container">
-        <span class="history-subtitle">{{ pickedArea }}区域扬尘历史数据</span>
-      </div>
+          <span class="history-subtitle">{{ pickedArea }}区域扬尘历史数据</span>
+        </div>
         <history-date ref="historyLineChart"></history-date>
       </div>
     </div>
@@ -109,15 +109,15 @@ export default {
           label: '区域查询',
           children: [
             {
-              label: '成华区', value: 'chenghua'
+              label: '成华区', value: 510108
             }, {
-              label: '武侯区', value: 'wuhou'
+              label: '武侯区', value: 510107
             }, {
-              label: '高新区', value: 'gaoxin'
+              label: '锦江区', value: 510104
             }, {
-              label: '双流区', value: 'shuangliu'
+              label: '青羊区', value: 510105
             }, {
-              label: '金牛区', value: 'jingniu'
+              label: '金牛区', value: 510106
             }
           ]
         }
@@ -136,12 +136,11 @@ export default {
 
       // 引用折线图组件的方法，根据所选，绘出折线图。
       this.$refs.historyLineChart.drawGraph(dataTransform)
-
       // 点位切换到对应的区域, 目前参数存在一点问题
-      this.$refs.historyPoints.showPoints(dataTransform.area, dataTransform.method)
+      this.$refs.historyPoints.showPoints(dataTransform.area)
 
       // 切换本页面的标题
-      this.pickedArea = this.areaTransform(dataTransform.area)
+      this.pickedArea = this.$areaBelong(dataTransform.area)
     },
     areaTransform(str) {
       let Zh = null

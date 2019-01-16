@@ -71,18 +71,21 @@
             <el-form-item>
               <el-button type="primary" @click="changeRelationArea">提交</el-button>
             </el-form-item>
+            <el-form-item label>
+              <span>当前区域：{{currentAreaCN}}</span>
+            </el-form-item>
           </el-form>
         </div>
       </div>
       <div class="relation-secondline">
         <div class="realtion-left">
-          <relation-year ref='relationYear'></relation-year>
+          <relation-year ref="relationYear" :selectedArea="pickedRelationArea"></relation-year>
         </div>
         <div class="relation-middle-container">
-          <relation-seasion ref="relationSession"></relation-seasion>
+          <relation-seasion ref="relationSession" :selectedArea="pickedRelationArea"></relation-seasion>
         </div>
         <div class="relation-right-container">
-          <relation-month ref="relationMonth"></relation-month>
+          <relation-month ref="relationMonth" :selectedArea="pickedRelationArea"></relation-month>
         </div>
       </div>
     </div>
@@ -98,7 +101,6 @@ import contributionYear from '../components/charts/contributionYear'
 import relationMonth from '../components/charts/relationMonth'
 import relationSeasion from '../components/charts/relationSeasion'
 import relationYear from '../components/charts/relationYear'
-import qs from 'qs'
 
 export default {
   components: {
@@ -138,15 +140,15 @@ export default {
       ],
       analysisRelationOptions: [
         {
-          label: '成华区', value: 'chenghua'
+          label: '成华区', value: 510108
         }, {
-          label: '武侯区', value: 'wuhou'
+          label: '武侯区', value: 510107
         }, {
-          label: '高新区', value: 'gaoxin'
+          label: '青羊区', value: 510105
         }, {
-          label: '双流区', value: 'shuangliu'
+          label: '锦江区', value: 510104
         }, {
-          label: '金牛区', value: 'jingniu'
+          label: '金牛区', value: 510106
         }
       ],
       analysisOptions: [
@@ -200,10 +202,10 @@ export default {
       return Zh
     },
     showPredict() {
-      let area = this.analysisPredictForm.area[1] ? this.analysisPredictForm.area[1] : this.analysisPredictForm.area[0]
+      let area = this.analysisPredictForm.area[1] ? this.analysisPredictForm.area[1] : null
       let range = this.analysisPredictForm.range[0]
       // console.log(area)
-      /* 发请求，POST，提交的选择的区域，返回当前区域，未来两年的数据（按季度），用于柱状体显示
+      /* 发请求，POST，提交的选择的区域，返回当前区域，未来两年的数据（按季度），用于柱状体显示,修改为get
       ** 返回的数据格式:
       ** {
       **  category: ['2018', '2019'], 始终返回的是未来两年的，密度为季度
@@ -213,19 +215,80 @@ export default {
       **  winter: [321,123]
       }
       */
-      this.$axios.post('http://localhost:3000/predict/bar', qs.stringify({ area: area })).then(res => {
-        this.$refs.allPredict.drawAllPredict(res.data)
+      this.$axios.get('/dust/webresourcses/database.dayavg/predict/season/' + area).then(res => {
+        let dataAfterFormat = {
+          category: [],
+          spring: [],
+          summer: [],
+          autumn: [],
+          winter: []
+        }
+        // 因为后端规定的返回的数据格式不合适，需要转化。
+        res.data.data.forEach(element => {
+          switch (element.season) {
+            case 'spring':
+              dataAfterFormat.category.push(element.year)
+              dataAfterFormat.spring.push(element.pm10)
+              break
+            case 'summer':
+              dataAfterFormat.summer.push(element.pm10)
+              break
+            case 'autumn':
+              dataAfterFormat.autumn.push(element.pm10)
+              break
+            case 'winter':
+              dataAfterFormat.winter.push(element.pm10)
+              break
+          }
+        })
+        // this.$refs.allPredict.drawAllPredict(res.data)
+        this.$refs.allPredict.drawAllPredict(dataAfterFormat)
         this.pickedArea = this.areaTransform(area)
       })
-      /* POST，提交选择的区域和预测的时间，用于折线图显示
+      /* POST，提交选择的区域和预测的时间，用于折线图显示，修改为get
+      ** 判断选择的预测时间，然后分别请求三个接口
       ** 返回的数据格式:
       **
       */
-      this.$axios.post('http://localhost:3000/predict/line', qs.stringify({ area, range })).then(res => {
-        // console.log(res)
-        this.$refs.weekPredict.drawLinePredict(res.data)
-        this.pickedArea = this.areaTransform(area)
-      })
+      if (range === 'month') {
+        this.$axios.get('/dust/webresourcses/database.dayavg/predict/month/' + area).then(res => {
+          // console.log(res)
+          let predictByMonth = {
+            category: [],
+            data: []
+          }
+          res.data.data.forEach(ele => {
+            predictByMonth.category.push(ele.year + '-' + ele.month + '-' + ele.day)
+            predictByMonth.data.push(ele.pm10)
+          })
+          this.$refs.weekPredict.drawLinePredict(predictByMonth)
+          // this.pickedArea = this.areaTransform(area)
+        })
+      } else if (range === 'year') {
+        this.$axios.get('/dust/webresourcses/database.dayavg/predict/year/' + area).then(res => {
+          let predictByYear = {
+            category: [],
+            data: []
+          }
+          res.data.data.forEach(ele => {
+            predictByYear.category.push(ele.year + '-' + ele.month)
+            predictByYear.data.push(ele.pm10)
+          })
+          this.$refs.weekPredict.drawLinePredict(predictByYear)
+        })
+      } else if (range === 'threeyear') {
+        this.$axios.get('/dust/webresourcses/database.dayavg/predict/year/' + area).then(res => {
+          let predictThreeYear = {
+            category: [],
+            data: []
+          }
+          res.data.data.forEach(ele => {
+            predictThreeYear.category.push(ele.year)
+            predictThreeYear.data.push(ele.pm10)
+          })
+          this.$refs.weekPredict.drawLinePredict(predictThreeYear)
+        })
+      }
     },
     changeRelationArea() {
       if (!this.analysisRelationForm.area) {
@@ -241,11 +304,8 @@ export default {
           type: 'warning'
         })
       } else {
-        this.pickedRelationArea = this.analysisRelationForm.area // 记录当前选择的区域（区域关联性部分)
-        // 当前情况下，为正常提交情况，
-        /* 发情请求，POST，携带参数为选择的区域，返回的是在此区域下默认显示的随年度变化，季节变化，月份变化的关联性。
-        ** 其中默认显示的时间由后端确定（可以是最近时间的时间段）
-        ** 数据格式： {
+        this.pickedRelationArea = this.analysisRelationForm.area
+        /** 数据格式： {
         **  year: {
               date: '2018',
               data: [
@@ -284,15 +344,20 @@ export default {
             }
         ** }
         */
-        this.$axios.post('http://localhost:3000/relation/init', qs.stringify({ area: this.pickedRelationArea })).then(res => {
-          const year = res.data.year
-          const month = res.data.month
-          const session = res.data.session
-          this.$refs.relationYear.drawGraphYear(year)
-          this.$refs.relationSession.drawGraphSession(session)
-          this.$refs.relationMonth.drawGraphMonth(month)
-        })
+        // this.$axios.post('/dust/webresourcses/relation/init', qs.stringify({ area: this.pickedRelationArea })).then(res => {
+        //   const year = res.data.year
+        //   const month = res.data.month
+        //   const session = res.data.session
+        //   this.$refs.relationYear.drawGraphYear(year)
+        //   this.$refs.relationSession.drawGraphSession(session)
+        //   this.$refs.relationMonth.drawGraphMonth(month)
+        // })
       }
+    }
+  },
+  computed: {
+    currentAreaCN: function () {
+      return this.$areaBelong(this.pickedRelationArea)
     }
   }
 }

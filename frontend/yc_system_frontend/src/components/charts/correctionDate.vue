@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import qs from 'qs'
 export default {
   data() {
     return {
@@ -20,6 +19,13 @@ export default {
     this.correctPie = this.echarts.init(document.getElementById('grapContainer'))
   },
   methods: {
+    dateFormateMonth(date) {
+      var baseDate = new Date(date)
+      let Y = baseDate.getFullYear()
+      let M = baseDate.getMonth() + 1
+      M = M < 10 ? '0' + M : M
+      return Y + '-' + M
+    },
     drawWithDate(spotMessage) {
       // console.log(spotMessage)
       // 请求数据的格式
@@ -28,7 +34,13 @@ export default {
       //       method: 显示方式（月度，季度，年度）,
       //       date: 所选的时间段，String , "2018-12-31T16:00:00.000Z",只有选择月度的时候才有这个值
       //     }
-      this.$axios.post('http://localhost:3000/correction', qs.stringify(spotMessage)).then(data => {
+      this.$axios.get('/dust/webresourcses/correction', {
+        params: {
+          id: spotMessage.id,
+          method: spotMessage.method,
+          date: this.dateFormateMonth(spotMessage.date)
+        }
+      }).then(data => {
         this.correctPie.setOption({
           tooltip: {
             trigger: 'axis'

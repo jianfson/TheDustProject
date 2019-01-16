@@ -13,35 +13,14 @@
 </template>
 
 <script>
-import qs from 'qs'
 export default {
   data() {
     const seletChildren = [{ value: 'spring', label: '春季' }, { value: 'summer', label: '夏季' }, { value: 'autumn', label: '秋季' }, { value: 'winter', label: '冬季' }]
     return {
       PieGraphObj: null,
       grapOptionsInit: null,
-      selectedInit: ['2017', 'spring'],
+      selectedInit: null,
       selectOptions: [
-        {
-          value: '2010',
-          label: '2010',
-          children: seletChildren
-        },
-        {
-          value: '2011',
-          label: '2011',
-          children: seletChildren
-        },
-        {
-          value: '2012',
-          label: '2012',
-          children: seletChildren
-        },
-        {
-          value: '2013',
-          label: '2013',
-          children: seletChildren
-        },
         {
           value: '2014',
           label: '2014',
@@ -80,7 +59,7 @@ export default {
       },
       series: [
         {
-          name: '访问来源',
+          name: '区域贡献',
           type: 'pie',
           radius: '55%',
           center: ['50%', '50%'],
@@ -133,18 +112,25 @@ export default {
           ]
       ** }
       */
-      console.log(pieRequest)
-      this.$axios.post('http://localhost:3000/contribution/session/', qs.stringify({ date: pieRequest })).then(res => {
+      this.$axios.get('/dust/webresourcses/effect/season/' + pieRequest[0] + '/' + pieRequest[1]).then(res => {
         let dataAddLabel = null
-
+        let dateAfterFormat = []
         this.grapOptionsInit.title.subtext = pieRequest[0] + this.formatSession(pieRequest[1])
         dataAddLabel = res.data.data
         for (let i = 0; i < dataAddLabel.length; i++) {
           let currentWork = dataAddLabel[i].workSite
-          dataAddLabel[i].label = { formatter: '{b}' + '\n' + '开工数:' + currentWork }
+          let currentName = this.$areaBelong(Number(dataAddLabel[i].ID))
+          let currenValue = dataAddLabel[i].effect
+          // dataAddLabel[i].label = { formatter: '{b}' + '\n' + '开工数:' + currentWork }
+          let currentLabel = { formatter: '{b}' + '\n' + '开工数:' + currentWork }
+          // 解析成饼图可用的数据
+          dateAfterFormat.push({
+            name: currentName, value: currenValue, label: currentLabel
+          })
         }
-        this.grapOptionsInit.series[0].data = dataAddLabel
-        // this.grapOptionsInit.series[0].data = res.data.data
+        this.grapOptionsInit.series[0].data = dateAfterFormat.sort(function (a, b) {
+          return a.value - b.value
+        })
         this.PieGraphObj.setOption(this.grapOptionsInit)
       })
     },

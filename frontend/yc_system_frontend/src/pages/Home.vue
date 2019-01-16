@@ -14,7 +14,7 @@
       <div id="rightside-graph">
         <div class="top-form">
           <div class="title">
-            <span class="subtitle">查询扬尘情况</span>
+            <span class="subtitle">{{currentArea}}扬尘情况</span>
           </div>
           <div class="inputs-section">
             <el-form :model="homeForm" size="mini" ref="homeForm" :rules="searchRules">
@@ -52,7 +52,7 @@
         </div>
         <div class="bottom-graph">
           <div class="title">
-            <span class="subtitle">{{ currentArea }}扬尘变化趋势</span>
+            <span class="subtitle">{{currentArea}}扬尘变化趋势</span>
           </div>
           <div class="home-charts-container">
             <all-line-chart :graph-data="lineChartsData" ref="homeLineChart"></all-line-chart>
@@ -65,7 +65,7 @@
         <div class="title">
           <span class="subtitle">{{currentArea}}监测点污染等级</span>
         </div>
-        <rank-table></rank-table>
+        <rank-table :dataForTable="homeForm" :contextForTable="tableContext"></rank-table>
       </div>
     </div>
   </div>
@@ -73,13 +73,12 @@
 
 <script>
 import mapArea from '../components/mapArea'
-import lineCharts from '../components/lineCharts'
 import rankTable from '../components/rankTable'
 import allLineChart from '../components/charts/allLineChart'
+// import qs from 'qs'
 export default {
   components: {
     mapArea,
-    lineCharts,
     rankTable,
     allLineChart
   },
@@ -125,15 +124,15 @@ export default {
           label: '区域查询',
           children: [
             {
-              label: '成华区', value: 'chenghua'
+              label: '成华区', value: 510108
             }, {
-              label: '武侯区', value: 'wuhou'
+              label: '武侯区', value: 510107
             }, {
-              label: '高新区', value: 'gaoxin'
+              label: '锦江区', value: 510104
             }, {
-              label: '双流区', value: 'shuangliu'
+              label: '青羊区', value: 510105
             }, {
-              label: '金牛区', value: 'jingniu'
+              label: '金牛区', value: 510106
             }
           ]
         }
@@ -149,36 +148,53 @@ export default {
           }
         ]
       },
-      lineChartsData: null
+      lineChartsData: null,
+      tableContext: null
     }
   },
   methods: {
+    dateFormateMonth(date) {
+      var baseDate = new Date(date)
+      let Y = baseDate.getFullYear()
+      let M = baseDate.getMonth() + 1
+      M = M < 10 ? '0' + M : M
+      return Y + '-' + M
+    },
     submitSearch(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           // 1.请求，查询对应时间的区域的历史数据,精度月
           let area = !this.homeForm.area[1] ? this.homeForm.area[0] : this.homeForm.area[1]
-          let date = this.homeForm.date
-          this.$axios.get('http://localhost:3000/home/search/' + area + '/' + JSON.stringify(date)).then(res => {
+          // 根据后端接口要求，将时间戳改成字符串
+          // let date = this.homeForm.date
+          // let postData = {
+          //   'area': area,
+          //   'start': this.homeForm.date.startMonth,
+          //   'end': this.homeForm.date.endMonth
+          // }
+          let start = this.dateFormateMonth(this.homeForm.date.startMonth)
+          let end = this.dateFormateMonth(this.homeForm.date.endMonth)
+          this.$axios.get('/dust/webresourcses/database.device/' + area + '/' + start + '/' + end).then(res => {
             let data = res.data
-            this.currentArea = data.area
+            console.log(res.data)
+            this.currentArea = this.$areaBelong(area)
             // 调用子组件linechart的事件
             this.$refs.homeLineChart.grapmaker(data.data, data.category)
           })
 
-          // 2.地图的点位切换到对应的区域，对应的时间段，点位的信息。
-          this.$refs.homeMap.showPoints(area, JSON.stringify(date))
+          // 2.地图的点位切换到对应的区域，对应的时间段，点位的信息
+          this.$refs.homeMap.showPoints(area, this.homeForm.date)
+
+          // 3.表格切换到对应区域对应时间的数据，通过请求完成。
+          this.$axios.get('dust/webresourcses/database.device/table/' + area).then(res => {
+            this.tableContext = res.data.data
+          })
         } else {
           console.log('error submit')
           return false
         }
       })
     }
-  },
-  mounted() {
-    this.$axios.get('http://localhost:3000/home/years').then(res => {
-      this.lineChartsData = res
-    })
   }
 }
 </script>

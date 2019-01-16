@@ -1,25 +1,16 @@
 <template>
   <div class="correction-container">
-      <!-- <div class="title">
-            <span class="subtitle">监测数据与修正数据对比</span>
-          </div>
-      <correction-date></correction-date>
-    </div>
-    <div class="correction-right-container">
-      <div class="title">
-            <span class="subtitle">监测点位置信息</span>
-          </div>
-      <map-area></map-area> -->
       <correction-map></correction-map>
   </div>
 </template>
 
 <script>
-import correctionDate from '../components/charts/correctionDate'
+// 此组件没有用，待删除
+// import correctionDate from '../components/charts/correctionDate'
 import correctionMap from '../components/correctionMap'
 export default {
   components: {
-    correctionDate,
+    // correctionDate,
     correctionMap
   },
   data() {

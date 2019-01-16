@@ -12,6 +12,23 @@ import axios from 'axios'
 
 Vue.prototype.$axios = axios
 Vue.prototype.echarts = Echarts
+// 区域标号转中文
+Vue.prototype.$areaBelong = function (areaNum) {
+  switch (areaNum) {
+    case 'allcity':
+      return '全市'
+    case 510104:
+      return '锦江区'
+    case 510105:
+      return '青羊区'
+    case 510106:
+      return '金牛区'
+    case 510107:
+      return '武侯区'
+    case 510108:
+      return '成华区'
+  }
+}
 Vue.use(Echarts)
 Vue.use(ElementUI)
 Vue.config.productionTip = false

@@ -1,722 +1,722 @@
 [
   {
-    "location": "xx-路-号",
-    "pm10": 41,
-    "color": "orange",
-    "id": "xy-m89x1167sc",
-    "positionX": 104.05346411,
-    "positionY": 30.70108445,
-    "area": "双流区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 42,
-    "color": "blue",
-    "id": "xy-m89x9573sc",
-    "positionX": 104.12235706,
-    "positionY": 30.65563032,
-    "area": "双流区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 124,
-    "color": "blue",
-    "id": "xy-m89x7798sc",
-    "positionX": 104.16736875,
-    "positionY": 30.63591186,
-    "area": "金牛区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 30,
-    "color": "orange",
-    "id": "xy-m89x942sc",
-    "positionX": 104.09516002,
-    "positionY": 30.68608409,
-    "area": "双流区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 171,
-    "color": "yellow",
-    "id": "xy-m89x2796sc",
-    "positionX": 104.12320587,
-    "positionY": 30.69876738,
-    "area": "金牛区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 117,
-    "color": "orange",
-    "id": "xy-m89x1346sc",
-    "positionX": 104.17549292,
-    "positionY": 30.69882708,
-    "area": "高新区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 190,
-    "color": "blue",
-    "id": "xy-m89x2248sc",
-    "positionX": 104.15523918,
-    "positionY": 30.6276719,
-    "area": "成华区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 55,
-    "color": "blue",
-    "id": "xy-m89x8807sc",
-    "positionX": 104.09394569,
-    "positionY": 30.69563063,
-    "area": "高新区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 134,
-    "color": "orange",
-    "id": "xy-m89x6422sc",
-    "positionX": 104.08560697,
-    "positionY": 30.70062706,
-    "area": "高新区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 14,
-    "color": "yellow",
-    "id": "xy-m89x8644sc",
-    "positionX": 104.10148246,
-    "positionY": 30.66582654,
-    "area": "武侯区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 107,
-    "color": "orange",
-    "id": "xy-m89x7961sc",
-    "positionX": 104.13930494,
-    "positionY": 30.64529532,
-    "area": "高新区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 5,
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
     "color": "red",
-    "id": "xy-m89x1997sc",
-    "positionX": 104.16118503,
-    "positionY": 30.68278904,
-    "area": "成华区"
+    "deviceId": "xy-m89x4108sc",
+    "lng": 104.08237755,
+    "lat": 30.68013385,
+    "regionalId": 510108
   },
   {
-    "location": "xx-路-号",
-    "pm10": 31,
-    "color": "orange",
-    "id": "xy-m89x3261sc",
-    "positionX": 104.08952336,
-    "positionY": 30.6248405,
-    "area": "双流区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 31,
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
     "color": "red",
-    "id": "xy-m89x5838sc",
-    "positionX": 104.12882071,
-    "positionY": 30.65091404,
-    "area": "成华区"
+    "deviceId": "xy-m89x7413sc",
+    "lng": 104.12884314,
+    "lat": 30.65235195,
+    "regionalId": 510104
   },
   {
-    "location": "xx-路-号",
-    "pm10": 80,
-    "color": "yellow",
-    "id": "xy-m89x7572sc",
-    "positionX": 104.06736234,
-    "positionY": 30.69538355,
-    "area": "双流区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 82,
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
     "color": "red",
-    "id": "xy-m89x398sc",
-    "positionX": 104.14575467,
-    "positionY": 30.65420102,
-    "area": "双流区"
+    "deviceId": "xy-m89x2650sc",
+    "lng": 104.16668483,
+    "lat": 30.68419434,
+    "regionalId": 510106
   },
   {
-    "location": "xx-路-号",
-    "pm10": 172,
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
     "color": "orange",
-    "id": "xy-m89x2968sc",
-    "positionX": 104.11943184,
-    "positionY": 30.68849183,
-    "area": "成华区"
+    "deviceId": "xy-m89x4414sc",
+    "lng": 104.099756,
+    "lat": 30.67682618,
+    "regionalId": 510108
   },
   {
-    "location": "xx-路-号",
-    "pm10": 45,
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
     "color": "orange",
-    "id": "xy-m89x2855sc",
-    "positionX": 104.02902662,
-    "positionY": 30.65355336,
-    "area": "武侯区"
+    "deviceId": "xy-m89x4851sc",
+    "lng": 104.13192369,
+    "lat": 30.68452195,
+    "regionalId": 510104
   },
   {
-    "location": "xx-路-号",
-    "pm10": 82,
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "orange",
+    "deviceId": "xy-m89x8125sc",
+    "lng": 104.0934673,
+    "lat": 30.64306248,
+    "regionalId": 510105
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "red",
+    "deviceId": "xy-m89x4518sc",
+    "lng": 104.06743165,
+    "lat": 30.67912121,
+    "regionalId": 510107
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
     "color": "blue",
-    "id": "xy-m89x9204sc",
-    "positionX": 104.05052328,
-    "positionY": 30.64510481,
-    "area": "武侯区"
+    "deviceId": "xy-m89x8594sc",
+    "lng": 104.1577236,
+    "lat": 30.64547274,
+    "regionalId": 510104
   },
   {
-    "location": "xx-路-号",
-    "pm10": 159,
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
     "color": "yellow",
-    "id": "xy-m89x7221sc",
-    "positionX": 104.07904319,
-    "positionY": 30.6859018,
-    "area": "双流区"
+    "deviceId": "xy-m89x7254sc",
+    "lng": 104.08427675,
+    "lat": 30.70746565,
+    "regionalId": 510108
   },
   {
-    "location": "xx-路-号",
-    "pm10": 141,
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "yellow",
+    "deviceId": "xy-m89x6449sc",
+    "lng": 104.07055622,
+    "lat": 30.65878208,
+    "regionalId": 510104
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "yellow",
+    "deviceId": "xy-m89x8464sc",
+    "lng": 104.02374836,
+    "lat": 30.70449818,
+    "regionalId": 510107
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
     "color": "orange",
-    "id": "xy-m89x9522sc",
-    "positionX": 104.05022443,
-    "positionY": 30.68330674,
-    "area": "金牛区"
+    "deviceId": "xy-m89x4572sc",
+    "lng": 104.02619068,
+    "lat": 30.65689047,
+    "regionalId": 510106
   },
   {
-    "location": "xx-路-号",
-    "pm10": 68,
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "blue",
+    "deviceId": "xy-m89x8525sc",
+    "lng": 104.02699114,
+    "lat": 30.62842042,
+    "regionalId": 510107
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
     "color": "orange",
-    "id": "xy-m89x7198sc",
-    "positionX": 104.04808189,
-    "positionY": 30.68382302,
-    "area": "双流区"
+    "deviceId": "xy-m89x5409sc",
+    "lng": 104.05670795,
+    "lat": 30.62393667,
+    "regionalId": 510106
   },
   {
-    "location": "xx-路-号",
-    "pm10": 152,
-    "color": "yellow",
-    "id": "xy-m89x9869sc",
-    "positionX": 104.10618346,
-    "positionY": 30.68942462,
-    "area": "金牛区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 150,
-    "color": "yellow",
-    "id": "xy-m89x8073sc",
-    "positionX": 104.07757756,
-    "positionY": 30.67032131,
-    "area": "高新区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 178,
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
     "color": "red",
-    "id": "xy-m89x1710sc",
-    "positionX": 104.10662166,
-    "positionY": 30.6422407,
-    "area": "武侯区"
+    "deviceId": "xy-m89x7334sc",
+    "lng": 104.06915801,
+    "lat": 30.70284366,
+    "regionalId": 510104
   },
   {
-    "location": "xx-路-号",
-    "pm10": 54,
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
     "color": "orange",
-    "id": "xy-m89x5599sc",
-    "positionX": 104.04518675,
-    "positionY": 30.68301658,
-    "area": "金牛区"
+    "deviceId": "xy-m89x6885sc",
+    "lng": 104.14146394,
+    "lat": 30.63582583,
+    "regionalId": 510104
   },
   {
-    "location": "xx-路-号",
-    "pm10": 97,
-    "color": "red",
-    "id": "xy-m89x3796sc",
-    "positionX": 104.12667818,
-    "positionY": 30.65549147,
-    "area": "金牛区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 6,
-    "color": "red",
-    "id": "xy-m89x8514sc",
-    "positionX": 104.14216371,
-    "positionY": 30.66465019,
-    "area": "高新区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 154,
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
     "color": "orange",
-    "id": "xy-m89x8280sc",
-    "positionX": 104.07283815,
-    "positionY": 30.68360729,
-    "area": "武侯区"
+    "deviceId": "xy-m89x6939sc",
+    "lng": 104.05131055,
+    "lat": 30.67066735,
+    "regionalId": 510105
   },
   {
-    "location": "xx-路-号",
-    "pm10": 92,
-    "color": "blue",
-    "id": "xy-m89x2447sc",
-    "positionX": 104.03752379,
-    "positionY": 30.64447724,
-    "area": "金牛区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 58,
-    "color": "red",
-    "id": "xy-m89x9175sc",
-    "positionX": 104.05712894,
-    "positionY": 30.70807834,
-    "area": "双流区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 69,
-    "color": "blue",
-    "id": "xy-m89x8508sc",
-    "positionX": 104.12421933,
-    "positionY": 30.64519081,
-    "area": "高新区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 65,
-    "color": "blue",
-    "id": "xy-m89x4581sc",
-    "positionX": 104.06709436,
-    "positionY": 30.69950189,
-    "area": "武侯区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 17,
-    "color": "yellow",
-    "id": "xy-m89x3752sc",
-    "positionX": 104.05747106,
-    "positionY": 30.65242038,
-    "area": "武侯区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 39,
-    "color": "red",
-    "id": "xy-m89x3926sc",
-    "positionX": 104.07911797,
-    "positionY": 30.66649159,
-    "area": "武侯区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 72,
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
     "color": "orange",
-    "id": "xy-m89x5902sc",
-    "positionX": 104.01961175,
-    "positionY": 30.62755279,
-    "area": "双流区"
+    "deviceId": "xy-m89x3445sc",
+    "lng": 104.14668987,
+    "lat": 30.69463732,
+    "regionalId": 510105
   },
   {
-    "location": "xx-路-号",
-    "pm10": 172,
-    "color": "red",
-    "id": "xy-m89x4606sc",
-    "positionX": 104.12104857,
-    "positionY": 30.68806014,
-    "area": "武侯区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 181,
-    "color": "yellow",
-    "id": "xy-m89x8579sc",
-    "positionX": 104.09050736,
-    "positionY": 30.63500661,
-    "area": "成华区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 24,
-    "color": "red",
-    "id": "xy-m89x7957sc",
-    "positionX": 104.07546984,
-    "positionY": 30.6282897,
-    "area": "双流区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 51,
-    "color": "red",
-    "id": "xy-m89x5016sc",
-    "positionX": 104.11186814,
-    "positionY": 30.62262315,
-    "area": "武侯区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 2,
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
     "color": "blue",
-    "id": "xy-m89x6009sc",
-    "positionX": 104.06297823,
-    "positionY": 30.63123136,
-    "area": "武侯区"
+    "deviceId": "xy-m89x23sc",
+    "lng": 104.12804543,
+    "lat": 30.67709832,
+    "regionalId": 510108
   },
   {
-    "location": "xx-路-号",
-    "pm10": 47,
-    "color": "yellow",
-    "id": "xy-m89x269sc",
-    "positionX": 104.05456249,
-    "positionY": 30.65133729,
-    "area": "成华区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 160,
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
     "color": "blue",
-    "id": "xy-m89x4252sc",
-    "positionX": 104.1014673,
-    "positionY": 30.6328133,
-    "area": "高新区"
+    "deviceId": "xy-m89x5112sc",
+    "lng": 104.01950163,
+    "lat": 30.67101191,
+    "regionalId": 510104
   },
   {
-    "location": "xx-路-号",
-    "pm10": 32,
-    "color": "yellow",
-    "id": "xy-m89x709sc",
-    "positionX": 104.10969561,
-    "positionY": 30.63785764,
-    "area": "双流区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 42,
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
     "color": "red",
-    "id": "xy-m89x3293sc",
-    "positionX": 104.02429666,
-    "positionY": 30.67069789,
-    "area": "双流区"
+    "deviceId": "xy-m89x3436sc",
+    "lng": 104.11409388,
+    "lat": 30.68679718,
+    "regionalId": 510108
   },
   {
-    "location": "xx-路-号",
-    "pm10": 105,
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "blue",
+    "deviceId": "xy-m89x1454sc",
+    "lng": 104.11500631,
+    "lat": 30.65215073,
+    "regionalId": 510107
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "yellow",
+    "deviceId": "xy-m89x685sc",
+    "lng": 104.08786082,
+    "lat": 30.66628623,
+    "regionalId": 510104
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "red",
+    "deviceId": "xy-m89x1372sc",
+    "lng": 104.17316171,
+    "lat": 30.65003478,
+    "regionalId": 510104
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "red",
+    "deviceId": "xy-m89x9832sc",
+    "lng": 104.08334633,
+    "lat": 30.70057343,
+    "regionalId": 510107
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
     "color": "orange",
-    "id": "xy-m89x449sc",
-    "positionX": 104.13562521,
-    "positionY": 30.65225989,
-    "area": "金牛区"
+    "deviceId": "xy-m89x1427sc",
+    "lng": 104.06239335,
+    "lat": 30.62138646,
+    "regionalId": 510105
   },
   {
-    "location": "xx-路-号",
-    "pm10": 130,
-    "color": "yellow",
-    "id": "xy-m89x2463sc",
-    "positionX": 104.11399285,
-    "positionY": 30.65560734,
-    "area": "双流区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 172,
-    "color": "yellow",
-    "id": "xy-m89x8895sc",
-    "positionX": 104.11800262,
-    "positionY": 30.64212721,
-    "area": "双流区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 113,
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
     "color": "orange",
-    "id": "xy-m89x5827sc",
-    "positionX": 104.07336325,
-    "positionY": 30.62957278,
-    "area": "金牛区"
+    "deviceId": "xy-m89x9932sc",
+    "lng": 104.11207606,
+    "lat": 30.62716011,
+    "regionalId": 510108
   },
   {
-    "location": "xx-路-号",
-    "pm10": 194,
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "yellow",
+    "deviceId": "xy-m89x4351sc",
+    "lng": 104.12760839,
+    "lat": 30.68740205,
+    "regionalId": 510108
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "yellow",
+    "deviceId": "xy-m89x8222sc",
+    "lng": 104.11338538,
+    "lat": 30.63453248,
+    "regionalId": 510107
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "blue",
+    "deviceId": "xy-m89x3874sc",
+    "lng": 104.07699034,
+    "lat": 30.68733259,
+    "regionalId": 510106
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "blue",
+    "deviceId": "xy-m89x5536sc",
+    "lng": 104.13571204,
+    "lat": 30.62757461,
+    "regionalId": 510104
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "orange",
+    "deviceId": "xy-m89x6026sc",
+    "lng": 104.03497802,
+    "lat": 30.68860372,
+    "regionalId": 510106
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "orange",
+    "deviceId": "xy-m89x6540sc",
+    "lng": 104.02887007,
+    "lat": 30.68839166,
+    "regionalId": 510107
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
     "color": "red",
-    "id": "xy-m89x5253sc",
-    "positionX": 104.09344539,
-    "positionY": 30.70491272,
-    "area": "双流区"
+    "deviceId": "xy-m89x157sc",
+    "lng": 104.12718949,
+    "lat": 30.67698695,
+    "regionalId": 510107
   },
   {
-    "location": "xx-路-号",
-    "pm10": 126,
-    "color": "blue",
-    "id": "xy-m89x6194sc",
-    "positionX": 104.12020894,
-    "positionY": 30.65387311,
-    "area": "成华区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 187,
-    "color": "orange",
-    "id": "xy-m89x988sc",
-    "positionX": 104.03710564,
-    "positionY": 30.69163769,
-    "area": "金牛区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 92,
-    "color": "blue",
-    "id": "xy-m89x6476sc",
-    "positionX": 104.13523808,
-    "positionY": 30.66629531,
-    "area": "双流区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 128,
-    "color": "orange",
-    "id": "xy-m89x8801sc",
-    "positionX": 104.08661339,
-    "positionY": 30.6900911,
-    "area": "武侯区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 141,
-    "color": "yellow",
-    "id": "xy-m89x7240sc",
-    "positionX": 104.06960787,
-    "positionY": 30.66095925,
-    "area": "金牛区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 44,
-    "color": "yellow",
-    "id": "xy-m89x2207sc",
-    "positionX": 104.11451578,
-    "positionY": 30.62556615,
-    "area": "高新区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 183,
-    "color": "yellow",
-    "id": "xy-m89x9434sc",
-    "positionX": 104.10529801,
-    "positionY": 30.6938338,
-    "area": "高新区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 200,
-    "color": "yellow",
-    "id": "xy-m89x8133sc",
-    "positionX": 104.13143547,
-    "positionY": 30.69376717,
-    "area": "双流区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 23,
-    "color": "blue",
-    "id": "xy-m89x4482sc",
-    "positionX": 104.12467997,
-    "positionY": 30.64169059,
-    "area": "双流区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 23,
-    "color": "orange",
-    "id": "xy-m89x9133sc",
-    "positionX": 104.16306341,
-    "positionY": 30.66614681,
-    "area": "金牛区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 192,
-    "color": "blue",
-    "id": "xy-m89x3447sc",
-    "positionX": 104.12541462,
-    "positionY": 30.63412186,
-    "area": "金牛区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 114,
-    "color": "orange",
-    "id": "xy-m89x8729sc",
-    "positionX": 104.05753996,
-    "positionY": 30.62734729,
-    "area": "金牛区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 119,
-    "color": "blue",
-    "id": "xy-m89x3654sc",
-    "positionX": 104.10121723,
-    "positionY": 30.64443242,
-    "area": "武侯区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 101,
-    "color": "yellow",
-    "id": "xy-m89x2293sc",
-    "positionX": 104.11470913,
-    "positionY": 30.62961359,
-    "area": "成华区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 200,
-    "color": "yellow",
-    "id": "xy-m89x2716sc",
-    "positionX": 104.13538059,
-    "positionY": 30.66074354,
-    "area": "成华区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 49,
-    "color": "blue",
-    "id": "xy-m89x5269sc",
-    "positionX": 104.10839755,
-    "positionY": 30.67826771,
-    "area": "高新区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 192,
-    "color": "blue",
-    "id": "xy-m89x7576sc",
-    "positionX": 104.16043566,
-    "positionY": 30.66184725,
-    "area": "高新区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 164,
-    "color": "blue",
-    "id": "xy-m89x7431sc",
-    "positionX": 104.01821383,
-    "positionY": 30.65826227,
-    "area": "武侯区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 31,
-    "color": "orange",
-    "id": "xy-m89x2571sc",
-    "positionX": 104.09361394,
-    "positionY": 30.68948261,
-    "area": "武侯区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 47,
-    "color": "orange",
-    "id": "xy-m89x7974sc",
-    "positionX": 104.08987186,
-    "positionY": 30.68945945,
-    "area": "高新区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 150,
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
     "color": "red",
-    "id": "xy-m89x4559sc",
-    "positionX": 104.11293789,
-    "positionY": 30.65601271,
-    "area": "武侯区"
+    "deviceId": "xy-m89x167sc",
+    "lng": 104.03961716,
+    "lat": 30.65220149,
+    "regionalId": 510105
   },
   {
-    "location": "xx-路-号",
-    "pm10": 116,
-    "color": "yellow",
-    "id": "xy-m89x7889sc",
-    "positionX": 104.12293881,
-    "positionY": 30.6636985,
-    "area": "双流区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 140,
-    "color": "red",
-    "id": "xy-m89x1262sc",
-    "positionX": 104.12305926,
-    "positionY": 30.66323512,
-    "area": "武侯区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 105,
-    "color": "red",
-    "id": "xy-m89x5934sc",
-    "positionX": 104.09904048,
-    "positionY": 30.65567906,
-    "area": "双流区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 195,
-    "color": "red",
-    "id": "xy-m89x8919sc",
-    "positionX": 104.07336501,
-    "positionY": 30.69499266,
-    "area": "武侯区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 67,
-    "color": "blue",
-    "id": "xy-m89x8447sc",
-    "positionX": 104.03002801,
-    "positionY": 30.68432074,
-    "area": "高新区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 159,
-    "color": "red",
-    "id": "xy-m89x2448sc",
-    "positionX": 104.07704475,
-    "positionY": 30.70713175,
-    "area": "高新区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 190,
-    "color": "red",
-    "id": "xy-m89x4908sc",
-    "positionX": 104.09053103,
-    "positionY": 30.70871913,
-    "area": "武侯区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 157,
-    "color": "blue",
-    "id": "xy-m89x7938sc",
-    "positionX": 104.03581398,
-    "positionY": 30.63034678,
-    "area": "双流区"
-  },
-  {
-    "location": "xx-路-号",
-    "pm10": 113,
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
     "color": "orange",
-    "id": "xy-m89x9067sc",
-    "positionX": 104.11355236,
-    "positionY": 30.70110412,
-    "area": "武侯区"
+    "deviceId": "xy-m89x443sc",
+    "lng": 104.09466054,
+    "lat": 30.63209323,
+    "regionalId": 510107
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "red",
+    "deviceId": "xy-m89x1591sc",
+    "lng": 104.11038788,
+    "lat": 30.70529737,
+    "regionalId": 510108
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "orange",
+    "deviceId": "xy-m89x919sc",
+    "lng": 104.03201008,
+    "lat": 30.66161529,
+    "regionalId": 510104
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "orange",
+    "deviceId": "xy-m89x6219sc",
+    "lng": 104.05111142,
+    "lat": 30.68175726,
+    "regionalId": 510104
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "orange",
+    "deviceId": "xy-m89x4835sc",
+    "lng": 104.12875234,
+    "lat": 30.63808575,
+    "regionalId": 510105
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "orange",
+    "deviceId": "xy-m89x7617sc",
+    "lng": 104.10314998,
+    "lat": 30.64596634,
+    "regionalId": 510107
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "red",
+    "deviceId": "xy-m89x4081sc",
+    "lng": 104.09004088,
+    "lat": 30.66936127,
+    "regionalId": 510107
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "yellow",
+    "deviceId": "xy-m89x3280sc",
+    "lng": 104.06633519,
+    "lat": 30.64595896,
+    "regionalId": 510105
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "blue",
+    "deviceId": "xy-m89x4215sc",
+    "lng": 104.16905184,
+    "lat": 30.70760333,
+    "regionalId": 510105
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "red",
+    "deviceId": "xy-m89x2709sc",
+    "lng": 104.0299011,
+    "lat": 30.70188107,
+    "regionalId": 510107
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "yellow",
+    "deviceId": "xy-m89x9712sc",
+    "lng": 104.04972344,
+    "lat": 30.64908833,
+    "regionalId": 510106
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "orange",
+    "deviceId": "xy-m89x7083sc",
+    "lng": 104.05996257,
+    "lat": 30.68453959,
+    "regionalId": 510106
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "orange",
+    "deviceId": "xy-m89x252sc",
+    "lng": 104.12265733,
+    "lat": 30.64712065,
+    "regionalId": 510108
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "red",
+    "deviceId": "xy-m89x2217sc",
+    "lng": 104.12284354,
+    "lat": 30.64365987,
+    "regionalId": 510107
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "yellow",
+    "deviceId": "xy-m89x9850sc",
+    "lng": 104.07154219,
+    "lat": 30.69562938,
+    "regionalId": 510104
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "blue",
+    "deviceId": "xy-m89x8577sc",
+    "lng": 104.08082632,
+    "lat": 30.65247991,
+    "regionalId": 510107
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "red",
+    "deviceId": "xy-m89x7074sc",
+    "lng": 104.1708328,
+    "lat": 30.65291573,
+    "regionalId": 510105
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "blue",
+    "deviceId": "xy-m89x3917sc",
+    "lng": 104.04552041,
+    "lat": 30.64052797,
+    "regionalId": 510106
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "yellow",
+    "deviceId": "xy-m89x9909sc",
+    "lng": 104.10920078,
+    "lat": 30.67926406,
+    "regionalId": 510105
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "blue",
+    "deviceId": "xy-m89x1850sc",
+    "lng": 104.0760854,
+    "lat": 30.65379084,
+    "regionalId": 510105
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "blue",
+    "deviceId": "xy-m89x8570sc",
+    "lng": 104.14807946,
+    "lat": 30.70548968,
+    "regionalId": 510107
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "yellow",
+    "deviceId": "xy-m89x4002sc",
+    "lng": 104.0683797,
+    "lat": 30.67143252,
+    "regionalId": 510108
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "yellow",
+    "deviceId": "xy-m89x7334sc",
+    "lng": 104.10365249,
+    "lat": 30.68130978,
+    "regionalId": 510107
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "red",
+    "deviceId": "xy-m89x2704sc",
+    "lng": 104.03394472,
+    "lat": 30.68011154,
+    "regionalId": 510105
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "yellow",
+    "deviceId": "xy-m89x2361sc",
+    "lng": 104.12415529,
+    "lat": 30.65688325,
+    "regionalId": 510106
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "yellow",
+    "deviceId": "xy-m89x6854sc",
+    "lng": 104.09921313,
+    "lat": 30.67889113,
+    "regionalId": 510106
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "red",
+    "deviceId": "xy-m89x3890sc",
+    "lng": 104.10827759,
+    "lat": 30.62865264,
+    "regionalId": 510108
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "orange",
+    "deviceId": "xy-m89x498sc",
+    "lng": 104.1469529,
+    "lat": 30.6223429,
+    "regionalId": 510108
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "blue",
+    "deviceId": "xy-m89x5198sc",
+    "lng": 104.02360119,
+    "lat": 30.65860219,
+    "regionalId": 510108
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "yellow",
+    "deviceId": "xy-m89x4525sc",
+    "lng": 104.17535578,
+    "lat": 30.6232227,
+    "regionalId": 510107
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "yellow",
+    "deviceId": "xy-m89x3755sc",
+    "lng": 104.07190106,
+    "lat": 30.62986439,
+    "regionalId": 510107
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "orange",
+    "deviceId": "xy-m89x5985sc",
+    "lng": 104.08565242,
+    "lat": 30.70787884,
+    "regionalId": 510107
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "blue",
+    "deviceId": "xy-m89x8225sc",
+    "lng": 104.03885514,
+    "lat": 30.69857754,
+    "regionalId": 510105
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "red",
+    "deviceId": "xy-m89x4472sc",
+    "lng": 104.11804577,
+    "lat": 30.6441089,
+    "regionalId": 510107
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "blue",
+    "deviceId": "xy-m89x2116sc",
+    "lng": 104.0776086,
+    "lat": 30.67690028,
+    "regionalId": 510106
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "orange",
+    "deviceId": "xy-m89x2711sc",
+    "lng": 104.11919441,
+    "lat": 30.65511778,
+    "regionalId": 510105
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "red",
+    "deviceId": "xy-m89x3306sc",
+    "lng": 104.0189278,
+    "lat": 30.64392238,
+    "regionalId": 510104
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "yellow",
+    "deviceId": "xy-m89x1069sc",
+    "lng": 104.13327955,
+    "lat": 30.67797481,
+    "regionalId": 510108
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "blue",
+    "deviceId": "xy-m89x2111sc",
+    "lng": 104.09399603,
+    "lat": 30.66243672,
+    "regionalId": 510107
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "blue",
+    "deviceId": "xy-m89x4242sc",
+    "lng": 104.01972576,
+    "lat": 30.70301648,
+    "regionalId": 510105
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "yellow",
+    "deviceId": "xy-m89x6988sc",
+    "lng": 104.11441106,
+    "lat": 30.63726972,
+    "regionalId": 510108
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "red",
+    "deviceId": "xy-m89x6665sc",
+    "lng": 104.13590773,
+    "lat": 30.66263871,
+    "regionalId": 510108
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "yellow",
+    "deviceId": "xy-m89x177sc",
+    "lng": 104.121262,
+    "lat": 30.66560972,
+    "regionalId": 510105
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "blue",
+    "deviceId": "xy-m89x553sc",
+    "lng": 104.05451396,
+    "lat": 30.66404223,
+    "regionalId": 510105
+  },
+  {
+    "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+    "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+    "color": "yellow",
+    "deviceId": "xy-m89x9303sc",
+    "lng": 104.15973918,
+    "lat": 30.6920645,
+    "regionalId": 510104
   }
 ]
