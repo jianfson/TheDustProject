@@ -6,7 +6,7 @@
 package database;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -29,16 +29,17 @@ public class MonthQuery {
     private static final long serialVersionUID = 1L;
     private Double pm10;
     @Temporal(TemporalType.DATE)
-    private Date avgTime;
+    private String avgTime;
     
     //private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
 
     public MonthQuery() {
     }
 
-    public MonthQuery(Double pm, java.sql.Date date) {
+    public MonthQuery(Double pm, String date) {
         this.pm10 = pm;
-        this.avgTime = new java.util.Date(date.getTime());
+        //this.avgTime = new java.util.Date(date.getTime());
+        this.avgTime = date;
     }
     
     public Double getPm10() {
@@ -49,11 +50,11 @@ public class MonthQuery {
         this.pm10 = pm10;
     }
 
-    public Date getAvgTime() {
+    public String getAvgTime() {
         return avgTime;
     }
 
-    public void setAvgTime(Date avgTime) {
+    public void setAvgTime(String avgTime) {
         this.avgTime = avgTime;
     }
     

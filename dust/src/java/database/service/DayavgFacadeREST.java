@@ -112,12 +112,36 @@ public class DayavgFacadeREST extends AbstractFacade<Dayavg> {
     }
     
     @GET
+    @Path("month/allcity/{from}/{to}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<MonthQuery> findAllcityForMonth(@PathParam("from") String from,
+                                                @PathParam("to") String to)
+    {
+        Query query =  em.createNamedQuery("Dayavg.findAllcityForMonth");
+        query.setParameter("from", from);
+        query.setParameter("to", to);
+        //System.out.println("from is " + from);
+        //System.out.println("to is " + to);
+        List<Object[]> list = (List<Object[]>)query.getResultList();
+        List<MonthQuery> deList = null;
+        try 
+        {
+            //deList = castEntity(list, Dayavg.class);
+            deList = super.castEntity(list, MonthQuery.class);
+        }catch (Exception e) {
+            System.out.println("error in castEntity,and e is " + e.getMessage());    
+        }
+        return deList;
+        //return query.getResultList();
+    }
+    
+    @GET
     @Path("month/{regionalId}/{from}/{to}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<MonthQuery> findByRegionalIdForMonth(
             @PathParam("regionalId") Integer regionalId,
-            @PathParam("from") Date from,
-            @PathParam("to") Date to)
+            @PathParam("from") String from,
+            @PathParam("to") String to)
     {
         Query query =  em.createNamedQuery("Dayavg.findByRegionalIdForMonth");
         query.setParameter("regionalId", regionalId);
@@ -130,14 +154,147 @@ public class DayavgFacadeREST extends AbstractFacade<Dayavg> {
         try 
         {
             //deList = castEntity(list, Dayavg.class);
-            deList = castEntity(list, MonthQuery.class);
+            deList = super.castEntity(list, MonthQuery.class);
         }catch (Exception e) {
             System.out.println("error in castEntity,and e is " + e.getMessage());    
         }
         return deList;
         //return query.getResultList();
     }
-
+    
+    @GET
+    @Path("day/allcity/{from}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<MonthQuery> findAllcityForDay(@PathParam("from") String from)
+    {
+        Query query =  em.createNamedQuery("Dayavg.findAllcityForDay");
+        query.setParameter("from", from);
+        //System.out.println("from is " + from);
+        //System.out.println("to is " + to);
+        List<Object[]> list = (List<Object[]>)query.getResultList();
+        List<MonthQuery> deList = null;
+        try 
+        {
+            //deList = castEntity(list, Dayavg.class);
+            deList = super.castEntity(list, MonthQuery.class);
+        }catch (Exception e) {
+            System.out.println("error in castEntity,and e is " + e.getMessage());    
+        }
+        return deList;
+        //return query.getResultList();
+    }
+    
+    @GET
+    @Path("day/{regionalId}/{from}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<MonthQuery> findByRegionalIdForDay(
+            @PathParam("regionalId") Integer regionalId,
+            @PathParam("from") String from)
+    {
+        Query query =  em.createNamedQuery("Dayavg.findByRegionalIdForDay");
+        query.setParameter("regionalId", regionalId);
+        query.setParameter("from", from);
+        //System.out.println("from is " + from);
+        //System.out.println("to is " + to);
+        List<Object[]> list = (List<Object[]>)query.getResultList();
+        List<MonthQuery> deList = null;
+        try 
+        {
+            //deList = castEntity(list, Dayavg.class);
+            deList = super.castEntity(list, MonthQuery.class);
+        }catch (Exception e) {
+            System.out.println("error in castEntity,and e is " + e.getMessage());    
+        }
+        return deList;
+        //return query.getResultList();
+    }
+    
+    @GET
+    @Path("season/allcity/{season}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<MonthQuery> findAllcityForSeason(@PathParam("season") String season)
+    {
+        Query query =  em.createNamedQuery("Dayavg.findAllcityForSeason");
+        query.setParameter("season", season);
+        //System.out.println("from is " + from);
+        //System.out.println("to is " + to);
+        List<Object[]> list = (List<Object[]>)query.getResultList();
+        List<MonthQuery> deList = null;
+        try 
+        {
+            //deList = castEntity(list, Dayavg.class);
+            deList = super.castEntity(list, MonthQuery.class);
+        }catch (Exception e) {
+            System.out.println("error in castEntity,and e is " + e.getMessage());    
+        }
+        return deList;
+        //return query.getResultList();
+    }
+    
+    @GET
+    @Path("season/{regionalId}/{season}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<MonthQuery> findByRegionalIdForSeason(
+            @PathParam("regionalId") Integer regionalId,
+            @PathParam("season") String season)
+    {
+        Query query =  em.createNamedQuery("Dayavg.findByRegionalIdForSeason");
+        query.setParameter("regionalId", regionalId);
+        query.setParameter("season", season);
+        //System.out.println("from is " + from);
+        //System.out.println("to is " + to);
+        List<Object[]> list = (List<Object[]>)query.getResultList();
+        List<MonthQuery> deList = null;
+        try 
+        {
+            //deList = castEntity(list, Dayavg.class);
+            deList = super.castEntity(list, MonthQuery.class);
+        }catch (Exception e) {
+            System.out.println("error in castEntity,and e is " + e.getMessage());    
+        }
+        return deList;
+        //return query.getResultList();
+    }
+    
+    @GET
+    @Path("year/allcity")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<MonthQuery> findAllcityForYear()
+    {
+        Query query =  em.createNamedQuery("Dayavg.findAllcityForYear");
+        List<Object[]> list = (List<Object[]>)query.getResultList();
+        List<MonthQuery> deList = null;
+        try 
+        {
+            //deList = castEntity(list, Dayavg.class);
+            deList = super.castEntity(list, MonthQuery.class);
+        }catch (Exception e) {
+            System.out.println("error in castEntity,and e is " + e.getMessage());    
+        }
+        return deList;
+        //return query.getResultList();
+    }
+    
+    @GET
+    @Path("year/{regionalId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<MonthQuery> findByRegionalIdForYear(@PathParam("regionalId") Integer regionalId)
+    {
+        Query query =  em.createNamedQuery("Dayavg.findByRegionalIdForYear");
+        query.setParameter("regionalId", regionalId);
+        List<Object[]> list = (List<Object[]>)query.getResultList();
+        List<MonthQuery> deList = null;
+        try 
+        {
+            //deList = castEntity(list, Dayavg.class);
+            deList = super.castEntity(list, MonthQuery.class);
+        }catch (Exception e) {
+            System.out.println("error in castEntity,and e is " + e.getMessage());    
+        }
+        return deList;
+        //return query.getResultList();
+    }
+    
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -155,40 +312,6 @@ public class DayavgFacadeREST extends AbstractFacade<Dayavg> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
-    }
-    
-    /** 
-     * 通用实体转换方法,将JPA返回的数组转化成对应的实体集合,这里通过泛型和反射实现 
-     * @param <T> 
-     * @param list 
-     * @param clazz 需要转化后的类型 
-     * @return  
-     * @throws Exception 
-     */  
-    @SuppressWarnings("unchecked")  
-    private static <T> List<T> castEntity(List<Object[]> list, Class<T> clazz) throws Exception {  
-        List<T> returnList = new ArrayList<T>();
-        Object[] co = list.get(0);
-        Class[] c2 = new Class[co.length];
-        
-        //System.out.println("List.length is   " + list.size());
-        //System.out.println("new Class[co.length] is   " + co.length);
-          
-        //确定构造方法  
-        for(int i = 0; i < co.length; i++){
-            c2[i] = co[i].getClass();
-            
-        }  
-
-        int j = 1;
-        for(Object[] o : list){
-            //System.out.println("o[0].getClass() is   " + o[0].getClass().toString());
-            //System.out.println("o[1].getClass() is   " + o[1].getClass().toString());
-            Constructor<T> constructor = clazz.getConstructor(c2);
-            returnList.add(constructor.newInstance(o));
-        }  
-          
-        return returnList;  
     }
     
 }

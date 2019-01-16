@@ -5,6 +5,8 @@
  */
 package database.service;
 
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -59,6 +61,41 @@ public abstract class AbstractFacade<T> {
         cq.select(getEntityManager().getCriteriaBuilder().count(rt));
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
+    }
+    
+    /** 
+     * 通用实体转换方法,将JPA返回的数组转化成对应的实体集合,这里通过泛型和反射实现 
+     * @param <T> 
+     * @param list 
+     * @param clazz 需要转化后的类型 
+     * @return  
+     * @throws Exception 
+     */  
+    @SuppressWarnings("unchecked")  
+    public static <T> List<T> castEntity(List<Object[]> list, Class<T> clazz) throws Exception {  
+        List<T> returnList = new ArrayList<T>();
+        Object[] co = list.get(0);
+        Class[] c2 = new Class[co.length];
+        
+        //System.out.println("List.length is   " + list.size());
+        //System.out.println("new Class[co.length] is   " + co.length);
+          
+        //确定构造方法  
+        for(int i = 0; i < co.length; i++){
+            //System.out.println("co[i].getClass() is   " + co[i].getClass().toString());
+            c2[i] = co[i].getClass();
+            
+        }  
+
+        int j = 1;
+        for(Object[] o : list){
+            //System.out.println("o[0].getClass() is   " + o[0].getClass().toString());
+            //System.out.println("o[1].getClass() is   " + o[1].getClass().toString());
+            Constructor<T> constructor = clazz.getConstructor(c2);
+            returnList.add(constructor.newInstance(o));
+        }  
+          
+        return returnList;  
     }
     
 }

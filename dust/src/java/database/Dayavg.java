@@ -58,10 +58,64 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Dayavg.findByAvgTime", query = "SELECT d FROM Dayavg d WHERE d.avgTime = :avgTime")})
 
 @NamedNativeQueries({
-    @NamedNativeQuery(name = "Dayavg.findByRegionalIdForMonth"
-            , query = "SELECT AVG(d.pm10) as pm, DATE(d.avg_time) as date FROM dayavg d\n" +
+    @NamedNativeQuery(name = "Dayavg.findAllcityForMonth"
+            , query = "SELECT AVG(d.pm10) as pm, date_format(d.avg_time,'%Y-%m') as date FROM dayavg d\n" +
+                        "WHERE d.avg_time >= ?from AND d.avg_time < ?to\n" +
+                        "GROUP BY date"
+            , resultSetMapping = "forMonth")
+    , @NamedNativeQuery(name = "Dayavg.findByRegionalIdForMonth"
+            , query = "SELECT AVG(d.pm10) as pm, date_format(d.avg_time,'%Y-%m') as date FROM dayavg d\n" +
                         "WHERE (d.avg_time >= ?from AND d.avg_time < ?to)\n" +
                         "AND d.regional_id =?regionalId\n" +
+                        "GROUP BY date"
+            , resultSetMapping = "forMonth")
+    , @NamedNativeQuery(name = "Dayavg.findAllcityForDay"
+            , query = "SELECT AVG(d.pm10) as pm, date_format(d.avg_time,'%Y-%m-%d') as date FROM dayavg d\n" +
+                        "WHERE date_format(d.avg_time,'%Y-%m') = ?from\n" +
+                        "GROUP BY date"
+            , resultSetMapping = "forMonth")
+    , @NamedNativeQuery(name = "Dayavg.findByRegionalIdForDay"
+            , query = "SELECT AVG(d.pm10) as pm, date_format(d.avg_time,'%Y-%m-%d') as date FROM dayavg d\n" +
+                        "WHERE (date_format(d.avg_time,'%Y-%m') = ?from)\n" +
+                        "AND d.regional_id = ?regionalId\n" +
+                        "GROUP BY date"
+            , resultSetMapping = "forMonth")
+    , @NamedNativeQuery(name = "Dayavg.findAllcityForSeason"
+            , query = "SELECT AVG(d.pm10) as pm, concat(year(d.avg_time),'-',\n" +
+                        "CASE QUARTER(d.avg_time)\n" +
+                        "  WHEN 1 THEN 'spring'\n" +
+                        "  WHEN 2 THEN 'summer' \n" +
+                        "  WHEN 3 THEN 'autumn' \n" +
+                        "  ELSE 'winter' END)  as date FROM dayavg d\n" +
+                        "WHERE CASE QUARTER(d.avg_time)\n" +
+                        "  WHEN 1 THEN 'spring'\n" +
+                        "  WHEN 2 THEN 'summer' \n" +
+                        "  WHEN 3 THEN 'autumn' \n" +
+                        "  ELSE 'winter' END = ?season\n" +
+                        "GROUP BY date"
+            , resultSetMapping = "forMonth")
+    , @NamedNativeQuery(name = "Dayavg.findByRegionalIdForSeason"
+            , query = "SELECT AVG(d.pm10) as pm, concat(year(d.avg_time),'-',\n" +
+                        "CASE QUARTER(d.avg_time)\n" +
+                        "  WHEN 1 THEN 'spring'\n" +
+                        "  WHEN 2 THEN 'summer' \n" +
+                        "  WHEN 3 THEN 'autumn' \n" +
+                        "  ELSE 'winter' END)  as date FROM dayavg d\n" +
+                        "WHERE CASE QUARTER(d.avg_time)\n" +
+                        "  WHEN 1 THEN 'spring'\n" +
+                        "  WHEN 2 THEN 'summer' \n" +
+                        "  WHEN 3 THEN 'autumn' \n" +
+                        "  ELSE 'winter' END = ?season\n" +
+                        "AND d.regional_id = ?regionalId\n" +
+                        "GROUP BY date"
+            , resultSetMapping = "forMonth")
+    , @NamedNativeQuery(name = "Dayavg.findAllcityForYear"
+            , query = "SELECT AVG(d.pm10) as pm, date_format(d.avg_time,'%Y') as date FROM dayavg d\n" +
+                        "GROUP BY date"
+            , resultSetMapping = "forMonth")
+    , @NamedNativeQuery(name = "Dayavg.findByRegionalIdForYear"
+            , query = "SELECT AVG(d.pm10) as pm, date_format(d.avg_time,'%Y') as date FROM dayavg d\n" +
+                        "WHERE d.regional_id = ?regionalId\n" +
                         "GROUP BY date"
             , resultSetMapping = "forMonth")
 })

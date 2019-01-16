@@ -6,8 +6,10 @@
 package database.service;
 
 import database.Device;
+import database.DeviceForMap;
 import java.lang.reflect.Constructor;
 import java.net.URL;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -81,15 +83,49 @@ public class DeviceFacadeREST extends AbstractFacade<Device> {
     }
     
     @GET
-    @Path("region/{regionalId}")
+    @Path("region/{regionalId}/{from}/{to}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Device> findByRegionalId(@PathParam("regionalId") Integer regionalId) {
+    public List<DeviceForMap> findByRegionalIdForMap(@PathParam("regionalId") Integer regionalId,
+                                                @PathParam("from") Date from,
+                                                @PathParam("to") Date to) {
         //javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
         //cq.select(cq.from(Device.class));
-        Query query =  em.createNamedQuery("Device.findByRegionalId");
+        Query query =  em.createNamedQuery("Device.findByRegionalIdForMap");
         //Query query = em.createNativeQuery(Device.findByDeviceId,Device.class);
-        query.setParameter("regionalId", regionalId); 
-        return query.getResultList();
+        query.setParameter("regionalId", regionalId);
+        query.setParameter("from", from);
+        query.setParameter("to", to);
+        List<Object[]> list = (List<Object[]>)query.getResultList();
+        List<DeviceForMap> deList = null;
+        try 
+        {
+            deList = super.castEntity(list, DeviceForMap.class);    
+        }catch (Exception e) {    
+            System.out.println("error in castEntity,and e is " + e.getMessage());    
+        }
+        return deList;
+    }
+    
+    @GET
+    @Path("region/allcity/{from}/{to}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<DeviceForMap> findAllcityForMap(@PathParam("from") Date from,
+                                                @PathParam("to") Date to) {
+        //javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+        //cq.select(cq.from(Device.class));
+        Query query =  em.createNamedQuery("Device.findAllcityForMap");
+        //Query query = em.createNativeQuery(Device.findByDeviceId,Device.class);
+        query.setParameter("from", from);
+        query.setParameter("to", to);
+        List<Object[]> list = (List<Object[]>)query.getResultList();
+        List<DeviceForMap> deList = null;
+        try 
+        {
+            deList = super.castEntity(list, DeviceForMap.class);    
+        }catch (Exception e) {    
+            System.out.println("error in castEntity,and e is " + e.getMessage());    
+        }
+        return deList;
     }
     
     @GET
@@ -104,7 +140,7 @@ public class DeviceFacadeREST extends AbstractFacade<Device> {
         List<Device> deList = null;
         try 
         {
-            deList = castEntity(list, Device.class);    
+            deList = super.castEntity(list, Device.class);    
         }catch (Exception e) {    
             System.out.println("error in castEntity,and e is " + e.getMessage());    
         }
@@ -129,32 +165,5 @@ public class DeviceFacadeREST extends AbstractFacade<Device> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
-    /** 
-     * 通用实体转换方法,将JPA返回的数组转化成对应的实体集合,这里通过泛型和反射实现 
-     * @param <T> 
-     * @param list 
-     * @param clazz 需要转化后的类型 
-     * @return  
-     * @throws Exception 
-     */  
-    @SuppressWarnings("unchecked")  
-    private static <T> List<T> castEntity(List<Object[]> list, Class<T> clazz) throws Exception {  
-        List<T> returnList = new ArrayList<T>();
-        Object[] co = list.get(0);
-        Class[] c2 = new Class[co.length];
-          
-        //确定构造方法  
-        for(int i = 0; i < co.length; i++){  
-            c2[i] = co[i].getClass();  
-        }  
-          
-        for(Object[] o : list){  
-            Constructor<T> constructor = clazz.getConstructor(c2);  
-            returnList.add(constructor.newInstance(o)); 
-        }  
-          
-        return returnList;  
-    }  
-    
+   
 }

@@ -44,11 +44,52 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Device.findByLat", query = "SELECT d FROM Device d WHERE d.lat = :lat")
     , @NamedQuery(name = "Device.findByRegionalId", query = "SELECT d FROM Device d WHERE d.regionalId = :regionalId")})
 @NamedNativeQueries({
-    @NamedNativeQuery(name = "Device.findByRegionalIdForTable", query = "SELECT d.device_id, d.device_name FROM device d where d.regional_id=?regionalId", resultSetMapping = "forTable")
+    @NamedNativeQuery(name = "Device.findByRegionalIdForMap"
+            , query = "SELECT d.device_id as deviceId\n" +
+                    ", ANY_VALUE(d.device_name) as deviceName\n" +
+                    ", ANY_VALUE(d.device_address) as deviceAddress\n" +
+                    ", ANY_VALUE(d.lng) as lng, ANY_VALUE(d.lat) as lat\n" +
+                    ",AVG(da.pm10) as pm10\n" +
+                    "FROM device d LEFT JOIN dayavg da\n" +
+                    "on d.device_id = da.device_id\n" +
+                    "where\n" +
+                    "d.regional_id=?regionalId\n" +
+                    "AND da.avg_time >= ?from\n" +
+                    "AND da.avg_time < ?to\n" +
+                    "GROUP BY d.device_id;"
+            , resultSetMapping = "forMap")
+    , @NamedNativeQuery(name = "Device.findAllcityForMap"
+            , query = "SELECT d.device_id as deviceId\n" +
+                    ", ANY_VALUE(d.device_name) as deviceName\n" +
+                    ", ANY_VALUE(d.device_address) as deviceAddress\n" +
+                    ", ANY_VALUE(d.lng) as lng, ANY_VALUE(d.lat) as lat\n" +
+                    ",AVG(da.pm10) as pm10\n" +
+                    "FROM device d LEFT JOIN dayavg da\n" +
+                    "on d.device_id = da.device_id\n" +
+                    "where\n" +
+                    "da.avg_time >= ?from\n" +
+                    "AND da.avg_time < ?to\n" +
+                    "GROUP BY d.device_id;"
+            , resultSetMapping = "forMap")
+    , @NamedNativeQuery(name = "Device.findByRegionalIdForTable"
+            , query = "SELECT d.device_id, d.device_name FROM device d where d.regional_id=?regionalId"
+            , resultSetMapping = "forTable")
 })
 @SqlResultSetMappings(
 {
     @SqlResultSetMapping(
+            name="forMap",
+            entities = {},  
+            columns = {  
+                @ColumnResult(name = "deviceId"),  
+                @ColumnResult(name = "deviceName"),
+                @ColumnResult(name = "deviceAddress"),
+                @ColumnResult(name = "lng"),
+                @ColumnResult(name = "lat"),
+                @ColumnResult(name = "pm10")
+            }  
+    )
+    , @SqlResultSetMapping(
             name="forTable",
             entities = {},  
             columns = {  

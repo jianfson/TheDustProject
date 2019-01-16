@@ -17,8 +17,10 @@ public class Pollution_level {
 
     ReturnPack_of_PollutionLevel RP = new ReturnPack_of_PollutionLevel();
 
+    public Pollution_level() {
+    }
 
-    public  ReturnPack_of_PollutionLevel Pollution_level_Caculate(int pm10_value) {
+    public ReturnPack_of_PollutionLevel Pollution_level_Caculate(int pm10_value) {
 
             if (pm10_value < 0) {
 
