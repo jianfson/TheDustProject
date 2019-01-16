@@ -7,6 +7,7 @@ package database.service;
 
 import database.Device;
 import database.DeviceForMap;
+import database.DeviceWithPM10;
 import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.sql.Date;
@@ -85,9 +86,9 @@ public class DeviceFacadeREST extends AbstractFacade<Device> {
     @GET
     @Path("region/{regionalId}/{from}/{to}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<DeviceForMap> findByRegionalIdForMap(@PathParam("regionalId") Integer regionalId,
-                                                @PathParam("from") Date from,
-                                                @PathParam("to") Date to) {
+    public List<DeviceWithPM10> findByRegionalIdForMap(@PathParam("regionalId") Integer regionalId,
+                                                @PathParam("from") String from,
+                                                @PathParam("to") String to) {
         //javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
         //cq.select(cq.from(Device.class));
         Query query =  em.createNamedQuery("Device.findByRegionalIdForMap");
@@ -96,10 +97,10 @@ public class DeviceFacadeREST extends AbstractFacade<Device> {
         query.setParameter("from", from);
         query.setParameter("to", to);
         List<Object[]> list = (List<Object[]>)query.getResultList();
-        List<DeviceForMap> deList = null;
+        List<DeviceWithPM10> deList = null;
         try 
         {
-            deList = super.castEntity(list, DeviceForMap.class);    
+            deList = super.castEntity(list, DeviceWithPM10.class);    
         }catch (Exception e) {    
             System.out.println("error in castEntity,and e is " + e.getMessage());    
         }
@@ -109,8 +110,8 @@ public class DeviceFacadeREST extends AbstractFacade<Device> {
     @GET
     @Path("region/allcity/{from}/{to}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<DeviceForMap> findAllcityForMap(@PathParam("from") Date from,
-                                                @PathParam("to") Date to) {
+    public List<DeviceWithPM10> findAllcityForMap(@PathParam("from") String from,
+                                                @PathParam("to") String to) {
         //javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
         //cq.select(cq.from(Device.class));
         Query query =  em.createNamedQuery("Device.findAllcityForMap");
@@ -118,10 +119,10 @@ public class DeviceFacadeREST extends AbstractFacade<Device> {
         query.setParameter("from", from);
         query.setParameter("to", to);
         List<Object[]> list = (List<Object[]>)query.getResultList();
-        List<DeviceForMap> deList = null;
+        List<DeviceWithPM10> deList = null;
         try 
         {
-            deList = super.castEntity(list, DeviceForMap.class);    
+            deList = super.castEntity(list, DeviceWithPM10.class);    
         }catch (Exception e) {    
             System.out.println("error in castEntity,and e is " + e.getMessage());    
         }
@@ -129,22 +130,30 @@ public class DeviceFacadeREST extends AbstractFacade<Device> {
     }
     
     @GET
-    @Path("table/{regionalId}")
+    @Path("find/{regionalId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Device> findByRegionalIdForTable(@PathParam("regionalId") Integer regionalId) {
-        Query query =  em.createNamedQuery("Device.findByRegionalIdForTable");
+    public List<Device> findByRegionalId(@PathParam("regionalId") Integer regionalId) {
+        Query query =  em.createNamedQuery("Device.findByRegionalId");
         query.setParameter("regionalId", regionalId);
-        //return query.getResultList();
+        return query.getResultList();
 
-        List<Object[]> list = (List<Object[]>)query.getResultList();
-        List<Device> deList = null;
-        try 
-        {
-            deList = super.castEntity(list, Device.class);    
-        }catch (Exception e) {    
-            System.out.println("error in castEntity,and e is " + e.getMessage());    
-        }
-        return deList;
+//        List<Object[]> list = (List<Object[]>)query.getResultList();
+//        List<Device> deList = null;
+//        try 
+//        {
+//            deList = super.castEntity(list, Device.class);    
+//        }catch (Exception e) {    
+//            System.out.println("error in castEntity,and e is " + e.getMessage());    
+//        }
+//        return deList;
+    }
+    
+    @GET
+    @Path("find/allcity")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Device> findAllcity() {
+        Query query =  em.createNamedQuery("Device.findAllcity");
+        return query.getResultList();
     }
 
     @GET

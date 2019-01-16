@@ -42,7 +42,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Device.findByDeviceAddress", query = "SELECT d FROM Device d WHERE d.deviceAddress = :deviceAddress")
     , @NamedQuery(name = "Device.findByLng", query = "SELECT d FROM Device d WHERE d.lng = :lng")
     , @NamedQuery(name = "Device.findByLat", query = "SELECT d FROM Device d WHERE d.lat = :lat")
-    , @NamedQuery(name = "Device.findByRegionalId", query = "SELECT d FROM Device d WHERE d.regionalId = :regionalId")})
+    , @NamedQuery(name = "Device.findByRegionalId", query = "SELECT d FROM Device d WHERE d.regionalId = :regionalId")
+    , @NamedQuery(name = "Device.findAllcity", query = "SELECT d FROM Device d WHERE d.regionalId = '510104'\n" +
+                                                                               "OR d.regionalId = '510105'\n" +
+                                                                               "OR d.regionalId = '510106'\n" +
+                                                                               "OR d.regionalId = '510107'\n" +
+                                                                               "OR d.regionalId = '510108'\n")})
 @NamedNativeQueries({
     @NamedNativeQuery(name = "Device.findByRegionalIdForMap"
             , query = "SELECT d.device_id as deviceId\n" +
