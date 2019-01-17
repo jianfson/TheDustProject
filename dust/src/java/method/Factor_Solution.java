@@ -1,11 +1,21 @@
 /*
+类功能：求解某行政区某日/月/季度/年pm10的影响因子
+方法1：Season_Factor_Solution_Calculate
+功能：求解某行政区某季度pm10的影响因子
+输入：
+1.字符串类型的区域名，只能为字符型数组RegionNameCollection中的元素
+2.字符串类型的年份，格式为xxxx，如2017
+3.字符串类型的季节，如Spring,Summer,Autumn,Winter
+输出：
+1.double型的影响因子(范围为 0-1 )
+
+方法2：Factor_Solution_Calculate
 功能：求解某行政区某日/月/年pm10的影响因子
 输入：
 1.字符串类型的区域名，只能为字符型数组RegionNameCollection中的元素
 2.字符型日期，有三种格式。求日均影响因子时为xxxx-xx-xx;求月均影响因子时为xxxx-xx;求年均影响因子时为xxxx
 输出：
 1.double型的影响因子(范围为 0-1 )
-
 */
 package method;
 import database.Dayavg;
@@ -35,10 +45,44 @@ public class Factor_Solution extends AbstractFacade<Dayavg> {
 	private double ChengduTotalArea = 3555;
 	private ArrayList<Double>  Region_pm10 = new ArrayList<Double>();
 	private ArrayList<Double> City_pm10 = new ArrayList<Double>();
+	
 	//SelectdRegional_id数组用来存储选定行政区的regional_id
 	int  SelectdRegional_id = 0,SelectedLabel=-1;
-	
 	double ImpactFactor_Value;
+	
+	//求某行政区某季度pm10影响因子，会调用Factor_Solution_Calculate
+	public double Season_Factor_Solution_Calculate(String Region_name,String Year,String Season) {
+	      String Month1 = new String();
+	      String Month2 = new String();
+	      String Month3 = new String();
+	       ArrayList<Double> temp = new ArrayList<Double>();
+	      if (Season.equals("Spring")) {
+	    	  Month1 = Year + "-03";
+	    	  Month2 = Year + "-04";
+	    	  Month3 = Year + "-05";
+	    	  
+	      } else if(Season.equals("Summer")) {
+	    	  Month1 = Year + "-06";
+	    	  Month2 = Year + "-07";
+	    	  Month3 = Year + "-08";
+	      } else if(Season.equals("Autumn")) {
+	    	  Month1 = Year + "-09";
+	    	  Month2 = Year + "-10";
+	    	  Month3 = Year + "-11";
+	      } else if(Season.equals("Winter")) {
+	    	  Month1 = Year + "-12";
+	    	  Month2 = Integer.toString(Integer.parseInt(Year)+1) + "-01";
+	    	  Month3 = Integer.toString(Integer.parseInt(Year)+1) + "-02";
+	      }
+	      temp.add(Factor_Solution_Calculate(Region_name,Month1));
+	      temp.add(Factor_Solution_Calculate(Region_name,Month2));
+	      temp.add(Factor_Solution_Calculate(Region_name,Month3));
+	      //System.out.println(temp.size());
+	      ImpactFactor_Value = calcAverage(temp);
+	      return ImpactFactor_Value;
+	}
+	
+	// 求解某行政区某日/月/年pm10的影响因子
    public double Factor_Solution_Calculate(String Region_name,String Date) {
 	   //由输入的区域名得到对应的reginal_id
 	   for(int i=0;i<RegionNameCollection.length;i++) {
@@ -57,7 +101,7 @@ public class Factor_Solution extends AbstractFacade<Dayavg> {
 	    try {
 	      Class.forName("com.mysql.cj.jdbc.Driver");     
 	      //Class.forName("org.gjt.mm.mysql.Driver");
-	     System.out.println("Success loading Mysql Driver!");
+	     //System.out.println("Success loading Mysql Driver!");
 	    }
 	    catch (Exception e) {
 	      System.out.print("Error loading Mysql Driver!");
@@ -91,7 +135,7 @@ public class Factor_Solution extends AbstractFacade<Dayavg> {
 		   	    	Region_pm10.add(Region.getDouble("pm10")); //
 		   	    	  
 		   	      }
-		   	      System.out.println("all done1");
+		   	      //System.out.println("all done1");
 		   	      
 		   	 //在dayavg中找寻符合条件的记录，并将pm10数据存储在City_pm10动态数组中
 		   	      PreparedStatement pstmt2 = connect.prepareStatement("select * from dayavg where avg_time between ? and ? ");
@@ -105,7 +149,7 @@ public class Factor_Solution extends AbstractFacade<Dayavg> {
 		   	    	City_pm10.add(City.getDouble("pm10")); //
 		   	    	  
 		   	      }
-		   	      System.out.println("all done2");
+		   	      //System.out.println("all done2");
 		   	      //计算影响因子
 		   	   ImpactFactor_Value = (calcAverage(Region_pm10)*RegionAreaCollection[SelectedLabel]) / (calcAverage(City_pm10)*ChengduTotalArea);
 		   	   return ImpactFactor_Value;
@@ -125,7 +169,7 @@ public class Factor_Solution extends AbstractFacade<Dayavg> {
 		   	          "jdbc:mysql://localhost:3307/dust?characterEncoding=utf8&useSSL=true&serverTimezone=GMT","root","123456");
 		   	           
 
-		   	      System.out.println("Success connect Mysql server!");
+		   	      //System.out.println("Success connect Mysql server!");
 		   	      //Statement stmt = connect.createStatement();
 		   	      
 		   	      //在dayavg中找寻符合条件的记录，并将pm10数据存储在Region_pm10动态数组中
@@ -140,7 +184,7 @@ public class Factor_Solution extends AbstractFacade<Dayavg> {
 		   	    	Region_pm10.add(Region.getDouble("pm10")); //
 		   	    	  
 		   	      }
-		   	      System.out.println("all done1");
+		   	      //System.out.println("all done1");
 		   	      
 		   	 //在dayavg中找寻符合条件的记录，并将pm10数据存储在City_pm10动态数组中
 		   	      PreparedStatement pstmt2 = connect.prepareStatement("select * from dayavg where avg_time between ? and ? ");
@@ -154,7 +198,7 @@ public class Factor_Solution extends AbstractFacade<Dayavg> {
 		   	    	City_pm10.add(City.getDouble("pm10")); //
 		   	    	  
 		   	      }
-		   	      System.out.println("all done2");
+		   	      //System.out.println("all done2");
 		   	      //计算影响因子
 		   	   ImpactFactor_Value = (calcAverage(Region_pm10)*RegionAreaCollection[SelectedLabel]) / (calcAverage(City_pm10)*ChengduTotalArea);
 		   	   return ImpactFactor_Value;
@@ -189,7 +233,7 @@ public class Factor_Solution extends AbstractFacade<Dayavg> {
    	    	Region_pm10.add(Region.getDouble("pm10")); //
    	    	  
    	      }
-   	      System.out.println("all done1");
+   	      //System.out.println("all done1");
    	      
    	 //在dayavg中找寻符合条件的记录，并将pm10数据存储在City_pm10动态数组中
    	      PreparedStatement pstmt2 = connect.prepareStatement("select * from dayavg where avg_time = ? ");
@@ -203,7 +247,7 @@ public class Factor_Solution extends AbstractFacade<Dayavg> {
    	    	City_pm10.add(City.getDouble("pm10")); //
    	    	  
    	      }
-   	      System.out.println("all done2");
+   	      //System.out.println("all done2");
    	      //计算影响因子
    	   ImpactFactor_Value = (calcAverage(Region_pm10)*RegionAreaCollection[SelectedLabel]) / (calcAverage(City_pm10)*ChengduTotalArea);
    	   return ImpactFactor_Value;
@@ -223,8 +267,10 @@ public class Factor_Solution extends AbstractFacade<Dayavg> {
        double sum = 0;
        int cnt = 0;
        for (int i = 0; i < sample.size(); i++) {
-           sum += sample.get(i);
+           if(sample.get(i) !=0) {
+    	   sum += sample.get(i);
            cnt++;
+           }
        }
 
        return (double) sum / cnt;

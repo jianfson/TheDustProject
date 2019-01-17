@@ -16,6 +16,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
+import method.Pm10_Prediction;
 
 /**
  * REST Web Service
@@ -57,10 +58,23 @@ public class PredictFacadeREST {
     @GET
     @Path("month/{regionID}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<MonthQuery> getMonth(@PathParam("regionalId") Integer regionalId) {
+    public List<MonthQuery> getMonth(@PathParam("regionID") Integer regionID) {
         //TODO return proper representation object
-        List<MonthQuery> deList = null;
-        return deList;
+        Pm10_Prediction prediction = new Pm10_Prediction();
+        String date = new String("2019-02");
+        //System.out.print("regionalId:   "+regionID);
+        return prediction.NextMonth_Pm10DayAvg_Prediction_Caculate(regionID, date);
+    }
+    
+    @GET
+    @Path("month/allcity")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<MonthQuery> getMonthAllcity() {
+        //TODO return proper representation object
+        Pm10_Prediction prediction = new Pm10_Prediction();
+        String date = new String("2019-02");
+        //System.out.print("regionalId:   "+regionID);
+        return prediction.NextMonth_Pm10DayAvg_Prediction_Caculate(510101, date);
     }
     
     @GET

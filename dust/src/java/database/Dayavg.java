@@ -118,6 +118,25 @@ import javax.xml.bind.annotation.XmlRootElement;
                         "WHERE d.regional_id = ?regionalId\n" +
                         "GROUP BY date"
             , resultSetMapping = "forMonth")
+    , @NamedNativeQuery(name = "Dayavg.findDayavgForAllcity"
+            , query = "SELECT AVG(da.pm10) as pm, da.avg_time as date\n" +
+                        "FROM dayavg da\n" +
+                        "where\n" +
+                        "da.avg_time >= ?from\n" +
+                        "AND da.avg_time < ?to\n" +
+                        "GROUP BY date\n" +
+                        "ORDER BY date ASC"
+            , resultSetMapping = "forMonth")
+    , @NamedNativeQuery(name = "Dayavg.findDayavgForRegion"
+            , query = "SELECT AVG(da.pm10) as pm, da.avg_time as date\n" +
+                        "FROM dayavg da\n" +
+                        "where\n" +
+                        "da.regional_id = ?regionalId\n" +
+                        "AND da.avg_time >= ?from\n" +
+                        "AND da.avg_time < ?to\n" +
+                        "GROUP BY date\n" +
+                        "ORDER BY date ASC"
+            , resultSetMapping = "forMonth")
 })
 @SqlResultSetMappings(
 {

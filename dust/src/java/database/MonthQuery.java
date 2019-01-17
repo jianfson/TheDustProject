@@ -30,6 +30,7 @@ public class MonthQuery {
     private Double pm10;
     @Temporal(TemporalType.DATE)
     private String avgTime;
+    private String season;
     
     //private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
 
@@ -39,6 +40,12 @@ public class MonthQuery {
     public MonthQuery(Double pm, String date) {
         this.pm10 = pm;
         //this.avgTime = new java.util.Date(date.getTime());
+        this.avgTime = date;
+    }
+    
+    public MonthQuery(Double pm, String date, String season) {
+        this.pm10 = pm;
+        this.season = season;
         this.avgTime = date;
     }
     
@@ -56,6 +63,14 @@ public class MonthQuery {
 
     public void setAvgTime(String avgTime) {
         this.avgTime = avgTime;
+    }
+    
+    public String getSeason() {
+        return season;
+    }
+
+    public void setSeason(String season) {
+        this.season = season;
     }
     
 }

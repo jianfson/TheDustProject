@@ -1,6 +1,13 @@
 /* 类功能:实现下一个月/季度/年的pm10均值预测
  * 
- *方法1：NextMonth_Pm10_Prediction_Caculate;
+ * 方法1：NextMonth_Pm10DayAvg_Prediction_Caculate
+ * 功能：实现某个月的pm10日均值预测
+ * 输入：
+ * 1.字符型device
+ * 2.字符型待预测月份；格式为xxxx-xx；如：2018-12
+ * 输出：
+ * 1.double型数组，存储当月天数个pm10日均值
+ *方法2：NextMonth_Pm10_Prediction_Caculate;
  *功能：实现下一个月的pm10月均值预测
  *输入：
  *1.字符型device
@@ -8,7 +15,7 @@
  *输出：
  *1.double型预测值
  *
- *方法2：NextSeason_Pm10_Prediction_Caculate
+ *方法3：NextSeason_Pm10_Prediction_Caculate
  *功能：实现下一个季节的pm10预测
  *输入：
  *1.字符型device
@@ -17,7 +24,7 @@
  *输出：
  *1.double型预测值
  *
- *方法3：NextYear_Pm10_Prediction_Caculate
+ *方法4：NextYear_Pm10_Prediction_Caculate
  *功能：实现下一年的Pm10预测
  *输入：
  *1.字符型device
@@ -26,15 +33,17 @@
  *1.double型预测值
  */
  
-
 package method;
 import database.Dayavg;
 import database.MonthQuery;
 import database.service.AbstractFacade;
+import java.lang.reflect.Constructor;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -42,9 +51,10 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import java.util.Calendar;
 
 @javax.ejb.Stateless
-public class Pm10_Prediction  extends AbstractFacade<Dayavg> {
+public class Pm10_Prediction extends AbstractFacade<Dayavg> {
     
     String persistenceUnitName = "dustPU"; 
     EntityManagerFactory factory = Persistence.createEntityManagerFactory(persistenceUnitName);
@@ -55,15 +65,187 @@ public class Pm10_Prediction  extends AbstractFacade<Dayavg> {
 
     }
 	
-//    public List<Object[]> findAllcityForSeason(String season)
-//    {
-//        Query query =  em.createNamedQuery("Dayavg.findAllcityForSeason");
-//        query.setParameter("season", season);
-//        //System.out.println("from is " + from);
-//        //System.out.println("to is " + to);
-//        List<Object[]> list = (List<Object[]>)query.getResultList();
-//        return list;
-//    }	
+    private List<Object[]> findDayavgForRegion(Integer regionalId, String from, String to)
+    {
+        Query query =  em.createNamedQuery("Dayavg.findDayavgForRegion");
+        query.setParameter("regionalId", regionalId);
+        query.setParameter("from", from);
+        query.setParameter("to", to);
+        List<Object[]> list = (List<Object[]>)query.getResultList();
+        return list;
+    }
+    
+    private List<Object[]> findDayavgForAllcity(String from, String to)
+    {
+        Query query =  em.createNamedQuery("Dayavg.findDayavgForAllcity");
+        query.setParameter("from", from);
+        query.setParameter("to", to);
+        List<Object[]> list = (List<Object[]>)query.getResultList();
+        return list;
+    }
+
+    //该方法用于预测某月pm10日均值(返回当月天数个pm10日均值)
+    public List<MonthQuery> NextMonth_Pm10DayAvg_Prediction_Caculate(Integer regionalId, String year_month) {
+        List<MonthQuery> returnList = new ArrayList<MonthQuery>();
+        Calendar c = Calendar.getInstance();
+//        c.add(c.MONTH, 1);
+//        SimpleDateFormat dft = new SimpleDateFormat("yyyy-mm");
+//        String year_month = dft.format(c.getTime());
+        //A代表上年度的同一月，BCD分别为待预测月份的前三月
+        String MonthA1,MonthA2;
+        String MonthB1 = new String();
+        String MonthB2 = new String();
+        String MonthC1 = new String();
+        String MonthC2 = new String();
+        String MonthD1 = new String();
+        String MonthD2 = new String();
+        //这四个数组用来存储四个月的pm10日均值
+//        double [] MonthA_pm10 = new double [31];
+//        double [] MonthB_pm10 = new double [31];
+//        double [] MonthC_pm10 = new double [31];
+//        double [] MonthD_pm10 = new double [31];
+        // 如果需要的四个月数据有至少一个月的数据不存在就返回这个数组
+        //double [] Error_pm10 = new double [31];
+        //构成查找条件
+        MonthA1 = Integer.toString(Integer.parseInt(year_month.substring(0,4))-1) + "-" + year_month.substring(5,7)+"-01";
+        MonthA2 = Integer.toString(Integer.parseInt(year_month.substring(0,4))-1) + "-" + year_month.substring(5,7)+"-31";
+
+        if (Integer.parseInt(year_month.substring(5,7))>3){
+            MonthB1 = year_month.substring(0,4) + "-" +Integer.toString(Integer.parseInt(year_month.substring(5,7))-3)+"-01";
+            MonthB2 = year_month.substring(0,4) + "-" +Integer.toString(Integer.parseInt(year_month.substring(5,7))-3)+"-31";
+            MonthC1 = year_month.substring(0,4) + "-" +Integer.toString(Integer.parseInt(year_month.substring(5,7))-2)+"-01";
+            MonthC2 = year_month.substring(0,4) + "-" +Integer.toString(Integer.parseInt(year_month.substring(5,7))-2)+"-31";
+            MonthD1 = year_month.substring(0,4) + "-" +Integer.toString(Integer.parseInt(year_month.substring(5,7))-1)+"-01";
+            MonthD2 = year_month.substring(0,4) + "-" +Integer.toString(Integer.parseInt(year_month.substring(5,7))-1)+"-31";
+        }
+        else if(Integer.parseInt(year_month.substring(5,7))==1){
+            MonthB1 = Integer.toString(Integer.parseInt(year_month.substring(0,4))-1) + "-" +"10"+"-01";
+            MonthB2 = Integer.toString(Integer.parseInt(year_month.substring(0,4))-1) + "-" +"10"+"-31";
+            MonthC1 = Integer.toString(Integer.parseInt(year_month.substring(0,4))-1) + "-" +"11"+"-01";
+            MonthC2 = Integer.toString(Integer.parseInt(year_month.substring(0,4))-1) + "-" +"11"+"-31";
+            MonthD1 = Integer.toString(Integer.parseInt(year_month.substring(0,4))-1) + "-" +"12"+"-01";
+            MonthD2 = Integer.toString(Integer.parseInt(year_month.substring(0,4))-1) + "-" +"12"+"-31";
+        }
+        else if(Integer.parseInt(year_month.substring(5,7))==2){
+            MonthB1 = Integer.toString(Integer.parseInt(year_month.substring(0,4))-1) + "-" +"11"+"-01";
+            MonthB2 = Integer.toString(Integer.parseInt(year_month.substring(0,4))-1) + "-" +"11"+"-31";
+            MonthC1 = Integer.toString(Integer.parseInt(year_month.substring(0,4))-1) + "-" +"12"+"-01";
+            MonthC2 = Integer.toString(Integer.parseInt(year_month.substring(0,4))-1) + "-" +"12"+"-31";
+            MonthD1 = year_month.substring(0,4) + "-" +"01"+"-01";
+            MonthD2 = year_month.substring(0,4) + "-" +"01"+"-31";
+        } else {
+            MonthB1 = Integer.toString(Integer.parseInt(year_month.substring(0,4))-1) + "-" +"12"+"-01";
+            MonthB2 = Integer.toString(Integer.parseInt(year_month.substring(0,4))-1) + "-" +"12"+"-31";
+            MonthC1 = year_month.substring(0,4) + "-" +"01"+"-01";
+            MonthC2 = year_month.substring(0,4) + "-" +"01"+"-31";
+            MonthD1 = year_month.substring(0,4) + "-" +"02"+"-01";
+            MonthD2 = year_month.substring(0,4) + "-" +"02"+"-31";
+        }
+
+        //根据年份和月份获取这个月对应的天数
+        String Str_year = year_month.substring(0,4);//substring( 开始索引(包括) ， 结束索引(不包括) )
+        String Str_month = year_month.substring(5,7);
+        int Target_year = Integer.parseInt(Str_year);
+        int Target_month = Integer.parseInt(Str_month);
+        c.set(Target_year, Target_month, 0); //输入类型为int类型
+        int dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
+        //double [] Predicted_pm10 = new double[dayOfMonth];
+        /*System.out.println("\n MonthB1："+MonthB1);
+        System.out.println("\n MonthB2："+MonthB2);
+        System.out.println("\n MonthC1："+MonthC1);
+        System.out.println("\n MonthC2："+MonthC2);
+        System.out.println("\n MonthD1："+MonthD1);
+        System.out.println("\n MonthD2："+MonthD2);*/
+        
+        List<Object[]> Dayavg1 = null;
+        if(regionalId == 510101)
+            Dayavg1 = findDayavgForAllcity(MonthA1, MonthA2);
+        else
+            Dayavg1 = findDayavgForRegion(regionalId, MonthA1, MonthA2);
+//        int i = 0;
+//        for(Object[] o : Dayavg1){
+//            MonthA_pm10[i] = Double.parseDouble(o[0].toString()); 
+//            i++;
+//        }
+
+//        //求该月的总pm10
+//        for (int j=0;j<MonthA_pm10.length;j++) {
+//            sum += MonthA_pm10[j];
+//        }
+        //如果sum=0说明没有对应月份的数据
+        if (Dayavg1.size() == 0) {
+            System.out.print(" error：01.上年度同月数据不存在，预测结果可能偏离!");
+            //return Error_pm10;
+        }
+        
+        List<Object[]> Dayavg2 = null;
+        if(regionalId == 510101)
+            Dayavg2 = findDayavgForAllcity(MonthB1, MonthB2);
+        else
+            Dayavg2 = findDayavgForRegion(regionalId, MonthB1, MonthB2);
+        if (Dayavg2.size() == 0) {
+            System.out.print(" error：02.同年度前三月数据不存在，预测结果可能偏离!");
+            //return Error_pm10;
+        } 
+        
+        List<Object[]> Dayavg3 = null;
+        if(regionalId == 510101)
+            Dayavg3 = findDayavgForAllcity(MonthC1, MonthC2);
+        else
+            Dayavg3 = findDayavgForRegion(regionalId, MonthC1, MonthC2);
+        if (Dayavg3.size() == 0) {
+            System.out.print(" error：03.同年度前二月数据不存在，预测结果可能偏离!");
+            //return Error_pm10;
+        }
+        
+        List<Object[]> Dayavg4 = null;
+        if(regionalId == 510101)
+            Dayavg4 = findDayavgForAllcity(MonthD1, MonthD2);
+        else
+            Dayavg4 = findDayavgForRegion(regionalId, MonthD1, MonthD2);
+        if (Dayavg4.size() == 0) {
+            System.out.print(" error：04.同年度前一月数据不存在，预测结果可能偏离!");
+            //return Error_pm10;
+        }
+        Double Predicted_pm10 = 0.0;
+        String date = new String();
+//        Class[] c2 = new Class[2];
+//        c2[0] = Predicted_pm10.getClass();
+//        c2[1] = date.getClass();
+        for (int i=0;i < dayOfMonth;i++) {
+            if (i<9)
+                date = year_month+"-0"+(i+1);
+            else
+                date = year_month+"-"+(i+1);
+            if(Dayavg1.size() > i) {
+                Object[] co = Dayavg1.get(i);
+                Predicted_pm10 = Double.parseDouble(co[0].toString())*0.1;
+            }
+            if(Dayavg2.size() > i) {
+                Object[] co = Dayavg2.get(i);
+                Predicted_pm10 = Double.parseDouble(co[0].toString())*0.2;
+            }
+            if(Dayavg3.size() > i) {
+                Object[] co = Dayavg3.get(i);
+                Predicted_pm10 = Double.parseDouble(co[0].toString())*0.3;
+            }
+            if(Dayavg4.size() > i) {
+                Object[] co = Dayavg4.get(i);
+                Predicted_pm10 = Double.parseDouble(co[0].toString())*0.4;
+            }
+            Predicted_pm10 = Predicted_pm10 * 0.85;
+            //System.out.println(date+":    "+Predicted_pm10);
+            //Object[] co = new Object[2];
+            //co[0] = Predicted_pm10;
+            //co[1] = date;
+            MonthQuery data = new MonthQuery(Predicted_pm10,date);
+            //Constructor<MonthQuery> constructor = MonthQuery.class.getConstructor(c2);
+            returnList.add(data);
+            //Predicted_pm10 [i] = (MonthA_pm10 [i]*0.1 + MonthB_pm10 [i]*0.2 + MonthC_pm10 [i]*0.3 + MonthD_pm10 [i]*0.4)*0.85;
+        }
+        return returnList;
+
+    }
     
     //该方法用于预测某月pm10均值
     public double NextMonth_Pm10_Prediction_Caculate(String device,String year_month) {
