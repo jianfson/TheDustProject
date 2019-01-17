@@ -1,4 +1,4 @@
 # TheDustProject
-Install step (ubuntu):
-step1:
-    install mysql
+Install step (ubuntu):  
+step1:  
+    install mysql  
