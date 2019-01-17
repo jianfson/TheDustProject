@@ -30,13 +30,18 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(database.service.CompanyFacadeREST.class);
+        resources.add(database.service.ControlFacadeREST.class);
+        resources.add(database.service.CorrectionFacadeREST.class);
         resources.add(database.service.DayavgFacadeREST.class);
         resources.add(database.service.DeviceFacadeREST.class);
+        resources.add(database.service.FactorFacadeREST.class);
         resources.add(database.service.HouravgFacadeREST.class);
         resources.add(database.service.MinuteauditavgFacadeREST.class);
         resources.add(database.service.MinuteavgTempFacadeREST.class);
         resources.add(database.service.NationalFacadeREST.class);
         resources.add(database.service.NationalInfoFacadeREST.class);
+        resources.add(database.service.PredictFacadeREST.class);
+        resources.add(database.service.RelationFacadeREST.class);
     }
     
 }

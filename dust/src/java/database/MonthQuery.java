@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author jiangxin
+ * @author jasonley
  */
 
 //@Entity

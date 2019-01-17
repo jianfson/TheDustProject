@@ -12,7 +12,7 @@ import javax.persistence.EntityManager;
 
 /**
  *
- * @author root
+ * @author jasonley
  */
 public abstract class AbstractFacade<T> {
 
@@ -82,7 +82,7 @@ public abstract class AbstractFacade<T> {
           
         //确定构造方法  
         for(int i = 0; i < co.length; i++){
-            //System.out.println("co[i].getClass() is   " + co[i].getClass().toString());
+            //System.out.println("co[i].getClass() is   " + co[1].getClass().toString());
             c2[i] = co[i].getClass();
             
         }  
