@@ -8,13 +8,27 @@
 
 */
 package method;
+import database.Dayavg;
+import database.service.AbstractFacade;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
-public class Factor_Solution {
+@javax.ejb.Stateless
+public class Factor_Solution extends AbstractFacade<Dayavg> {
+    String persistenceUnitName = "dustPU"; 
+    EntityManagerFactory factory = Persistence.createEntityManagerFactory(persistenceUnitName);
+    private EntityManager em = factory.createEntityManager();
+    
+    public Factor_Solution() {
+        super(Dayavg.class);
+
+    }
 	private String [] RegionNameCollection = {"Shuangliu","Longquanyi","Xindu","Pidu","Qingbaijiang","Wenjiang","Chenghua","Jinniu","Wuhou","Qingyang","Jinjiang"};
 	private int [] ReionaIdCollection = {510122,510112,510114,510124,510113,510115,510108,510106,510107,510105,510104};
 	private double [] RegionAreaCollection = {1032,558,497,438,379,227,110,108,77,68,61};
@@ -215,4 +229,9 @@ public class Factor_Solution {
 
        return (double) sum / cnt;
    }
+   
+   @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
 }

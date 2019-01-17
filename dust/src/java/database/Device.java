@@ -43,11 +43,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Device.findByLng", query = "SELECT d FROM Device d WHERE d.lng = :lng")
     , @NamedQuery(name = "Device.findByLat", query = "SELECT d FROM Device d WHERE d.lat = :lat")
     , @NamedQuery(name = "Device.findByRegionalId", query = "SELECT d FROM Device d WHERE d.regionalId = :regionalId")
-    , @NamedQuery(name = "Device.findAllcity", query = "SELECT d FROM Device d WHERE d.regionalId = '510104'\n" +
-                                                                               "OR d.regionalId = '510105'\n" +
-                                                                               "OR d.regionalId = '510106'\n" +
-                                                                               "OR d.regionalId = '510107'\n" +
-                                                                               "OR d.regionalId = '510108'\n")})
+    , @NamedQuery(name = "Device.findAllcity", query = "SELECT d FROM Device d WHERE d.regionalId > 510101\n" +
+                                                                               "AND d.regionalId <= 510109\n")})
 @NamedNativeQueries({
     @NamedNativeQuery(name = "Device.findByRegionalIdForMap"
             , query = "SELECT d.device_id as deviceId\n" +
@@ -71,14 +68,29 @@ import javax.xml.bind.annotation.XmlRootElement;
                     ",AVG(da.pm10) as pm10\n" +
                     "FROM device d LEFT JOIN dayavg da\n" +
                     "on d.device_id = da.device_id\n" +
-                    "where\n" +
-                    "da.avg_time >= ?from\n" +
-                    "AND da.avg_time < ?to\n" +
+                    "where (d.regional_id > 510101 AND d.regional_id <= 510109)\n" +
+                    "AND (da.avg_time >= ?from AND da.avg_time < ?to)\n" +
                     "GROUP BY d.device_id;"
             , resultSetMapping = "forMap")
     , @NamedNativeQuery(name = "Device.findByRegionalIdForTable"
             , query = "SELECT d.device_id, d.device_name FROM device d where d.regional_id=?regionalId"
             , resultSetMapping = "forTable")
+    , @NamedNativeQuery(name = "Device.findDeviceForRelation"
+            , query = "select CASE d.regional_id\n" +
+                        "  WHEN 510104 THEN '锦江区'\n" +
+                        "  WHEN 510105 THEN '青羊区' \n" +
+                        "  WHEN 510106 THEN '金牛区'\n" +
+                        "  WHEN 510107 THEN '武侯区'\n" +
+                        "  WHEN 510108 THEN '成华区'\n" +
+                        "  WHEN 510109 THEN '高新区'\n" +
+                        "  ELSE '市辖区' END as regionalId,\n" +
+                        "count(*) as relation\n" +
+                        "from device d\n" +
+                        "where\n" +
+                        "d.regional_id > 510101\n" +
+                        "AND d.regional_id <= 510109\n" +
+                        "group by regionalId having relation>1"
+            , resultSetMapping = "forRelation")
 })
 @SqlResultSetMappings(
 {
@@ -101,7 +113,15 @@ import javax.xml.bind.annotation.XmlRootElement;
                 @ColumnResult(name = "device_id"),  
                 @ColumnResult(name = "device_name") 
             }  
-    )      
+    )
+    , @SqlResultSetMapping(
+            name="forRelation",
+            entities = {},  
+            columns = {  
+                @ColumnResult(name = "regionalId"),  
+                @ColumnResult(name = "relation") 
+            }  
+    )
 })
 
 public class Device implements Serializable {

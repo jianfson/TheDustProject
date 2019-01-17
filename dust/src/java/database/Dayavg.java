@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author root
+ * @author jasonley
  */
 @Entity
 @Table(name = "dayavg")
@@ -86,7 +86,7 @@ import javax.xml.bind.annotation.XmlRootElement;
                         "  WHEN 1 THEN '春'\n" +
                         "  WHEN 2 THEN '夏' \n" +
                         "  WHEN 3 THEN '秋' \n" +
-                        "  ELSE '东' END)  as date FROM dayavg d\n" +
+                        "  ELSE '冬' END)  as date FROM dayavg d\n" +
                         "WHERE CASE QUARTER(d.avg_time)\n" +
                         "  WHEN 1 THEN 'spring'\n" +
                         "  WHEN 2 THEN 'summer' \n" +
@@ -100,7 +100,7 @@ import javax.xml.bind.annotation.XmlRootElement;
                         "  WHEN 1 THEN '春'\n" +
                         "  WHEN 2 THEN '夏' \n" +
                         "  WHEN 3 THEN '秋' \n" +
-                        "  ELSE '东' END)  as date FROM dayavg d\n" +
+                        "  ELSE '冬' END)  as date FROM dayavg d\n" +
                         "WHERE CASE QUARTER(d.avg_time)\n" +
                         "  WHEN 1 THEN 'spring'\n" +
                         "  WHEN 2 THEN 'summer' \n" +

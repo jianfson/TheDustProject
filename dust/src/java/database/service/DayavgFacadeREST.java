@@ -27,10 +27,11 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
+import method.Pm10_Prediction;
 
 /**
  *
- * @author root
+ * @author jasonley
  */
 @javax.ejb.Stateless
 @Path("database.dayavg")
@@ -216,9 +217,9 @@ public class DayavgFacadeREST extends AbstractFacade<Dayavg> {
     {
         Query query =  em.createNamedQuery("Dayavg.findAllcityForSeason");
         query.setParameter("season", season);
-        //System.out.println("from is " + from);
-        //System.out.println("to is " + to);
         List<Object[]> list = (List<Object[]>)query.getResultList();
+//        Pm10_Prediction pmPrediction = new Pm10_Prediction();
+//        List<Object[]> list = pmPrediction.findAllcityForSeason(season);
         List<MonthQuery> deList = null;
         try 
         {

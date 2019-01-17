@@ -28,195 +28,224 @@
  
 
 package method;
+import database.Dayavg;
+import database.MonthQuery;
+import database.service.AbstractFacade;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 
-public class Pm10_Prediction {
-	
-	
-	//该方法用于预测某月pm10均值
-        public double NextMonth_Pm10_Prediction_Caculate(String device,String year_month) {
-        	
-        	double sum = 0 ,MonthA_Avg=0,MonthB_Avg=0,MonthC_Avg=0,MonthD_Avg=0,Predicted_pm10=0;
-        	//A代表上年度的同一月，BCD分别为待预测月份的前三月
-        	String MonthA1,MonthA2;
-        	String MonthB1 = new String();
-        	String MonthB2 = new String();
-        	String MonthC1 = new String();
-        	String MonthC2 = new String();
-        	String MonthD1 = new String();
-        	String MonthD2 = new String();
-        	//这四个数组用来存储四个月的pm10日均值
-        	double [] MonthA_pm10 = new double [31];
-        	double [] MonthB_pm10 = new double [31];
-        	double [] MonthC_pm10 = new double [31];
-        	double [] MonthD_pm10 = new double [31];
-        	//构成查找条件
-        	MonthA1 = Integer.toString(Integer.parseInt(year_month.substring(0,4))-1) + "-" + year_month.substring(5,7)+"-01";
-        	MonthA2 = Integer.toString(Integer.parseInt(year_month.substring(0,4))-1) + "-" + year_month.substring(5,7)+"-31";
-        	
-        	if (Integer.parseInt(year_month.substring(5,7))>3){
-        	MonthB1 = year_month.substring(0,4) + "-" +Integer.toString(Integer.parseInt(year_month.substring(5,7))-3)+"-01";
-        	MonthB2 = year_month.substring(0,4) + "-" +Integer.toString(Integer.parseInt(year_month.substring(5,7))-3)+"-31";
-        	MonthC1 = year_month.substring(0,4) + "-" +Integer.toString(Integer.parseInt(year_month.substring(5,7))-2)+"-01";
-        	MonthC2 = year_month.substring(0,4) + "-" +Integer.toString(Integer.parseInt(year_month.substring(5,7))-2)+"-31";
-        	MonthD1 = year_month.substring(0,4) + "-" +Integer.toString(Integer.parseInt(year_month.substring(5,7))-1)+"-01";
-        	MonthD2 = year_month.substring(0,4) + "-" +Integer.toString(Integer.parseInt(year_month.substring(5,7))-1)+"-31";
-        	}
-        	else if(Integer.parseInt(year_month.substring(5,7))==1){
-        		MonthB1 = year_month.substring(0,4) + "-" +"10"+"-01";
-            	MonthB2 = year_month.substring(0,4) + "-" +"10"+"-31";
-            	MonthC1 = year_month.substring(0,4) + "-" +"11"+"-01";
-            	MonthC2 = year_month.substring(0,4) + "-" +"11"+"-31";
-            	MonthD1 = year_month.substring(0,4) + "-" +"12"+"-01";
-            	MonthD2 = year_month.substring(0,4) + "-" +"12"+"-31";
-        	}
-        		else if(Integer.parseInt(year_month.substring(5,7))==2){
-        			MonthB1 = year_month.substring(0,4) + "-" +"11"+"-01";
-                	MonthB2 = year_month.substring(0,4) + "-" +"11"+"-31";
-                	MonthC1 = year_month.substring(0,4) + "-" +"12"+"-01";
-                	MonthC2 = year_month.substring(0,4) + "-" +"12"+"-31";
-                	MonthD1 = year_month.substring(0,4) + "-" +"01"+"-01";
-                	MonthD2 = year_month.substring(0,4) + "-" +"01"+"-31";
-        	} else {
-		        		MonthB1 = year_month.substring(0,4) + "-" +"12"+"-01";
-		            	MonthB2 = year_month.substring(0,4) + "-" +"12"+"-31";
-		            	MonthC1 = year_month.substring(0,4) + "-" +"01"+"-01";
-		            	MonthC2 = year_month.substring(0,4) + "-" +"01"+"-31";
-		            	MonthD1 = year_month.substring(0,4) + "-" +"02"+"-01";
-		            	MonthD2 = year_month.substring(0,4) + "-" +"02"+"-31";
-        	}
-        	
-        	//System.out.println("\n MonthB1："+MonthB1);
-        	//System.out.println("\n MonthB2："+MonthB2);
-        	
-        	//加载MYSQL JDBC驱动程序  
-        	try {
-      	      Class.forName("com.mysql.cj.jdbc.Driver");     
-      	      //Class.forName("org.gjt.mm.mysql.Driver");
-      	     System.out.println("Success loading Mysql Driver!");
-      	    }
-      	    catch (Exception e) {
-      	      System.out.print("Error loading Mysql Driver!");
-      	      e.printStackTrace();
-      	    }
-        	
-        	//连接URL为   jdbc:mysql//服务器地址/数据库名  ，后面的2个参数分别是登陆用户名和密码
-    	    try {
-    	      Connection connect = DriverManager.getConnection(
-    	          "jdbc:mysql://localhost:3307/dust?characterEncoding=utf8&useSSL=true&serverTimezone=GMT","root","123456");
-    	           
+@javax.ejb.Stateless
+public class Pm10_Prediction  extends AbstractFacade<Dayavg> {
+    
+    String persistenceUnitName = "dustPU"; 
+    EntityManagerFactory factory = Persistence.createEntityManagerFactory(persistenceUnitName);
+    private EntityManager em = factory.createEntityManager();
+    
+    public Pm10_Prediction() {
+        super(Dayavg.class);
 
-    	      System.out.println("Success connect Mysql server!");
-    	      //Statement stmt = connect.createStatement();
-    	      
-    	      //在dayavg中找寻上一年度同一月份的记录，并将pm10数据存储在MonthA_pm10数组中，然后求月均值，找不到就退出该方法
-    	      PreparedStatement pstmt1 = connect.prepareStatement("select * from dayavg where device_id = ? && avg_time between ? and ? ORDER BY avg_time ASC ");
-    	      pstmt1.setString(1, device);
-    	      pstmt1.setString(2, MonthA1 );
-    	      pstmt1.setString(3, MonthA2 );
-    	      ResultSet Dayavg1 = pstmt1.executeQuery();
-    	      int i = 0;
-    	      while (Dayavg1.next()) {
-    	    	  
-    	    	  MonthA_pm10[i] = Dayavg1.getDouble("pm10"); 
-    	    	  i++;
-    	    	  //System.out.println(CDJW_pm10[Integer.parseInt(string) - 1]);
-    	      }
-    	      //求该月的总pm10
-    	      for (int j=0;j<MonthA_pm10.length;j++) {
-    	    	  sum += MonthA_pm10[j];
-    	      }
-    	      //如果sum=0说明没有对应月份的数据
-    	      if (sum == 0) {
-    	    	  System.out.print(" error：01.上年度同月数据不存在，无法进行预测!");
-    	    	  return -1;
-    	      } else MonthA_Avg=sum/i;   //求出A月份的月均值
-    	      sum=0; //将sum清零，以便用来装另一个月的总pm10数据；
-    	      
-    	      //在dayavg中找寻同一年度前三月份的记录，并将pm10数据存储在MonthB_pm10数组中，然后求月均值，找不到就退出该方法
-    	      PreparedStatement pstmt2 = connect.prepareStatement("select * from dayavg where device_id = ? && avg_time between ? and ? ORDER BY avg_time ASC ");
-    	      pstmt2.setString(1, device);
-    	      pstmt2.setString(2, MonthB1 );
-    	      pstmt2.setString(3, MonthB2 );
-    	      ResultSet Dayavg2 = pstmt2.executeQuery();
-    	       i = 0;
-    	      while (Dayavg2.next()) {
-    	    	  
-    	    	  MonthB_pm10[i] = Dayavg2.getDouble("pm10"); 
-    	    	  i++;
-    	    	  //System.out.println(CDJW_pm10[Integer.parseInt(string) - 1]);
-    	      }
-    	      //求该月的总pm10
-    	      for (int j=0;j<MonthB_pm10.length;j++) {
-    	    	  sum += MonthB_pm10[j];
-    	      }
-    	      //如果sum=0说明没有对应月份的数据
-    	      if (sum == 0) {
-    	    	  System.out.print(" error：02.同年度前三月数据不存在，无法进行预测!");
-    	    	  return -1;
-    	      } else MonthB_Avg=sum/i;   //求出B月份的月均值
-    	      sum=0; //将sum清零，以便用来装另一个月的总pm10数据；
-    	      
-    	    //在dayavg中找寻同一年度前二月份的记录，并将pm10数据存储在MonthC_pm10数组中，然后求月均值，找不到就退出该方法
-    	      PreparedStatement pstmt3 = connect.prepareStatement("select * from dayavg where device_id = ? && avg_time between ? and ? ORDER BY avg_time ASC ");
-    	      pstmt2.setString(1, device);
-    	      pstmt2.setString(2, MonthC1 );
-    	      pstmt2.setString(3, MonthC2 );
-    	      ResultSet Dayavg3 = pstmt2.executeQuery();
-    	       i = 0;
-    	      while (Dayavg3.next()) {
-    	    	  
-    	    	  MonthC_pm10[i] = Dayavg3.getDouble("pm10"); 
-    	    	  i++;
-    	    	  //System.out.println(CDJW_pm10[Integer.parseInt(string) - 1]);
-    	      }
-    	      //求该月的总pm10
-    	      for (int j=0;j<MonthC_pm10.length;j++) {
-    	    	  sum += MonthC_pm10[j];
-    	      }
-    	      //如果sum=0说明没有对应月份的数据
-    	      if (sum == 0) {
-    	    	  System.out.print(" error：03.同年度前二月数据不存在，无法进行预测!");
-    	    	  return -1;
-    	      } else MonthC_Avg=sum/i;   //求出C月份的月均值
-    	      sum=0; //将sum清零，以便用来装另一个月的总pm10数据；
-    	      
-    	    //在dayavg中找寻同一年度前一月份的记录，并将pm10数据存储在MonthD_pm10数组中，然后求月均值，找不到就退出该方法
-    	      PreparedStatement pstmt4 = connect.prepareStatement("select * from dayavg where device_id = ? && avg_time between ? and ? ORDER BY avg_time ASC ");
-    	      pstmt4.setString(1, device);
-    	      pstmt4.setString(2, MonthD1 );
-    	      pstmt4.setString(3, MonthD2 );
-    	      ResultSet Dayavg4 = pstmt4.executeQuery();
-    	       i = 0;
-    	      while (Dayavg4.next()) {
-    	    	  
-    	    	  MonthD_pm10[i] = Dayavg4.getDouble("pm10"); 
-    	    	  i++;
-    	    	  //System.out.println(CDJW_pm10[Integer.parseInt(string) - 1]);
-    	      }
-    	      //求该月的总pm10
-    	      for (int j=0;j<MonthD_pm10.length;j++) {
-    	    	  sum += MonthD_pm10[j];
-    	      }
-    	      //如果sum=0说明没有对应月份的数据
-    	      if (sum == 0) {
-    	    	  System.out.print(" error：04.同年度前一月数据不存在，无法进行预测!");
-    	    	  return -1;
-    	      } else MonthD_Avg=sum/i;   //求出D月份的月均值
-    	      sum=0; //将sum清零，以便用来装另一个月的总pm10数据；
-    	      
-    	      Predicted_pm10 = MonthA_Avg*0.1 + MonthB_Avg*0.2 + MonthC_Avg*0.3 + MonthD_Avg*0.4;
-    	      System.out.println("all done1");
-    	      return Predicted_pm10;
-    	    }catch (Exception e) {
-    	        System.out.print("get data error!");
-    	        e.printStackTrace();
-    	      }
-    	    return Predicted_pm10;
+    }
+	
+//    public List<Object[]> findAllcityForSeason(String season)
+//    {
+//        Query query =  em.createNamedQuery("Dayavg.findAllcityForSeason");
+//        query.setParameter("season", season);
+//        //System.out.println("from is " + from);
+//        //System.out.println("to is " + to);
+//        List<Object[]> list = (List<Object[]>)query.getResultList();
+//        return list;
+//    }	
+    
+    //该方法用于预测某月pm10均值
+    public double NextMonth_Pm10_Prediction_Caculate(String device,String year_month) {
+
+            double sum = 0 ,MonthA_Avg=0,MonthB_Avg=0,MonthC_Avg=0,MonthD_Avg=0,Predicted_pm10=0;
+            //A代表上年度的同一月，BCD分别为待预测月份的前三月
+            String MonthA1,MonthA2;
+            String MonthB1 = new String();
+            String MonthB2 = new String();
+            String MonthC1 = new String();
+            String MonthC2 = new String();
+            String MonthD1 = new String();
+            String MonthD2 = new String();
+            //这四个数组用来存储四个月的pm10日均值
+            double [] MonthA_pm10 = new double [31];
+            double [] MonthB_pm10 = new double [31];
+            double [] MonthC_pm10 = new double [31];
+            double [] MonthD_pm10 = new double [31];
+            //构成查找条件
+            MonthA1 = Integer.toString(Integer.parseInt(year_month.substring(0,4))-1) + "-" + year_month.substring(5,7)+"-01";
+            MonthA2 = Integer.toString(Integer.parseInt(year_month.substring(0,4))-1) + "-" + year_month.substring(5,7)+"-31";
+
+            if (Integer.parseInt(year_month.substring(5,7))>3){
+            MonthB1 = year_month.substring(0,4) + "-" +Integer.toString(Integer.parseInt(year_month.substring(5,7))-3)+"-01";
+            MonthB2 = year_month.substring(0,4) + "-" +Integer.toString(Integer.parseInt(year_month.substring(5,7))-3)+"-31";
+            MonthC1 = year_month.substring(0,4) + "-" +Integer.toString(Integer.parseInt(year_month.substring(5,7))-2)+"-01";
+            MonthC2 = year_month.substring(0,4) + "-" +Integer.toString(Integer.parseInt(year_month.substring(5,7))-2)+"-31";
+            MonthD1 = year_month.substring(0,4) + "-" +Integer.toString(Integer.parseInt(year_month.substring(5,7))-1)+"-01";
+            MonthD2 = year_month.substring(0,4) + "-" +Integer.toString(Integer.parseInt(year_month.substring(5,7))-1)+"-31";
+            }
+            else if(Integer.parseInt(year_month.substring(5,7))==1){
+                    MonthB1 = year_month.substring(0,4) + "-" +"10"+"-01";
+            MonthB2 = year_month.substring(0,4) + "-" +"10"+"-31";
+            MonthC1 = year_month.substring(0,4) + "-" +"11"+"-01";
+            MonthC2 = year_month.substring(0,4) + "-" +"11"+"-31";
+            MonthD1 = year_month.substring(0,4) + "-" +"12"+"-01";
+            MonthD2 = year_month.substring(0,4) + "-" +"12"+"-31";
+            }
+                    else if(Integer.parseInt(year_month.substring(5,7))==2){
+                            MonthB1 = year_month.substring(0,4) + "-" +"11"+"-01";
+                    MonthB2 = year_month.substring(0,4) + "-" +"11"+"-31";
+                    MonthC1 = year_month.substring(0,4) + "-" +"12"+"-01";
+                    MonthC2 = year_month.substring(0,4) + "-" +"12"+"-31";
+                    MonthD1 = year_month.substring(0,4) + "-" +"01"+"-01";
+                    MonthD2 = year_month.substring(0,4) + "-" +"01"+"-31";
+            } else {
+                                    MonthB1 = year_month.substring(0,4) + "-" +"12"+"-01";
+                            MonthB2 = year_month.substring(0,4) + "-" +"12"+"-31";
+                            MonthC1 = year_month.substring(0,4) + "-" +"01"+"-01";
+                            MonthC2 = year_month.substring(0,4) + "-" +"01"+"-31";
+                            MonthD1 = year_month.substring(0,4) + "-" +"02"+"-01";
+                            MonthD2 = year_month.substring(0,4) + "-" +"02"+"-31";
+            }
+
+            //System.out.println("\n MonthB1："+MonthB1);
+            //System.out.println("\n MonthB2："+MonthB2);
+
+            //加载MYSQL JDBC驱动程序  
+            try {
+          Class.forName("com.mysql.cj.jdbc.Driver");     
+          //Class.forName("org.gjt.mm.mysql.Driver");
+         System.out.println("Success loading Mysql Driver!");
         }
+        catch (Exception e) {
+          System.out.print("Error loading Mysql Driver!");
+          e.printStackTrace();
+        }
+
+            //连接URL为   jdbc:mysql//服务器地址/数据库名  ，后面的2个参数分别是登陆用户名和密码
+        try {
+          Connection connect = DriverManager.getConnection(
+              "jdbc:mysql://localhost:3307/dust?characterEncoding=utf8&useSSL=true&serverTimezone=GMT","root","123456");
+
+
+          System.out.println("Success connect Mysql server!");
+          //Statement stmt = connect.createStatement();
+
+          //在dayavg中找寻上一年度同一月份的记录，并将pm10数据存储在MonthA_pm10数组中，然后求月均值，找不到就退出该方法
+          PreparedStatement pstmt1 = connect.prepareStatement("select * from dayavg where device_id = ? && avg_time between ? and ? ORDER BY avg_time ASC ");
+          pstmt1.setString(1, device);
+          pstmt1.setString(2, MonthA1 );
+          pstmt1.setString(3, MonthA2 );
+          ResultSet Dayavg1 = pstmt1.executeQuery();
+          int i = 0;
+          while (Dayavg1.next()) {
+
+              MonthA_pm10[i] = Dayavg1.getDouble("pm10"); 
+              i++;
+              //System.out.println(CDJW_pm10[Integer.parseInt(string) - 1]);
+          }
+          //求该月的总pm10
+          for (int j=0;j<MonthA_pm10.length;j++) {
+              sum += MonthA_pm10[j];
+          }
+          //如果sum=0说明没有对应月份的数据
+          if (sum == 0) {
+              System.out.print(" error：01.上年度同月数据不存在，无法进行预测!");
+              return -1;
+          } else MonthA_Avg=sum/i;   //求出A月份的月均值
+          sum=0; //将sum清零，以便用来装另一个月的总pm10数据；
+
+          //在dayavg中找寻同一年度前三月份的记录，并将pm10数据存储在MonthB_pm10数组中，然后求月均值，找不到就退出该方法
+          PreparedStatement pstmt2 = connect.prepareStatement("select * from dayavg where device_id = ? && avg_time between ? and ? ORDER BY avg_time ASC ");
+          pstmt2.setString(1, device);
+          pstmt2.setString(2, MonthB1 );
+          pstmt2.setString(3, MonthB2 );
+          ResultSet Dayavg2 = pstmt2.executeQuery();
+           i = 0;
+          while (Dayavg2.next()) {
+
+              MonthB_pm10[i] = Dayavg2.getDouble("pm10"); 
+              i++;
+              //System.out.println(CDJW_pm10[Integer.parseInt(string) - 1]);
+          }
+          //求该月的总pm10
+          for (int j=0;j<MonthB_pm10.length;j++) {
+              sum += MonthB_pm10[j];
+          }
+          //如果sum=0说明没有对应月份的数据
+          if (sum == 0) {
+              System.out.print(" error：02.同年度前三月数据不存在，无法进行预测!");
+              return -1;
+          } else MonthB_Avg=sum/i;   //求出B月份的月均值
+          sum=0; //将sum清零，以便用来装另一个月的总pm10数据；
+
+        //在dayavg中找寻同一年度前二月份的记录，并将pm10数据存储在MonthC_pm10数组中，然后求月均值，找不到就退出该方法
+          PreparedStatement pstmt3 = connect.prepareStatement("select * from dayavg where device_id = ? && avg_time between ? and ? ORDER BY avg_time ASC ");
+          pstmt2.setString(1, device);
+          pstmt2.setString(2, MonthC1 );
+          pstmt2.setString(3, MonthC2 );
+          ResultSet Dayavg3 = pstmt2.executeQuery();
+           i = 0;
+          while (Dayavg3.next()) {
+
+              MonthC_pm10[i] = Dayavg3.getDouble("pm10"); 
+              i++;
+              //System.out.println(CDJW_pm10[Integer.parseInt(string) - 1]);
+          }
+          //求该月的总pm10
+          for (int j=0;j<MonthC_pm10.length;j++) {
+              sum += MonthC_pm10[j];
+          }
+          //如果sum=0说明没有对应月份的数据
+          if (sum == 0) {
+              System.out.print(" error：03.同年度前二月数据不存在，无法进行预测!");
+              return -1;
+          } else MonthC_Avg=sum/i;   //求出C月份的月均值
+          sum=0; //将sum清零，以便用来装另一个月的总pm10数据；
+
+        //在dayavg中找寻同一年度前一月份的记录，并将pm10数据存储在MonthD_pm10数组中，然后求月均值，找不到就退出该方法
+          PreparedStatement pstmt4 = connect.prepareStatement("select * from dayavg where device_id = ? && avg_time between ? and ? ORDER BY avg_time ASC ");
+          pstmt4.setString(1, device);
+          pstmt4.setString(2, MonthD1 );
+          pstmt4.setString(3, MonthD2 );
+          ResultSet Dayavg4 = pstmt4.executeQuery();
+           i = 0;
+          while (Dayavg4.next()) {
+
+              MonthD_pm10[i] = Dayavg4.getDouble("pm10"); 
+              i++;
+              //System.out.println(CDJW_pm10[Integer.parseInt(string) - 1]);
+          }
+          //求该月的总pm10
+          for (int j=0;j<MonthD_pm10.length;j++) {
+              sum += MonthD_pm10[j];
+          }
+          //如果sum=0说明没有对应月份的数据
+          if (sum == 0) {
+              System.out.print(" error：04.同年度前一月数据不存在，无法进行预测!");
+              return -1;
+          } else MonthD_Avg=sum/i;   //求出D月份的月均值
+          sum=0; //将sum清零，以便用来装另一个月的总pm10数据；
+
+          Predicted_pm10 = MonthA_Avg*0.1 + MonthB_Avg*0.2 + MonthC_Avg*0.3 + MonthD_Avg*0.4;
+          System.out.println("all done1");
+          return Predicted_pm10;
+        }catch (Exception e) {
+            System.out.print("get data error!");
+            e.printStackTrace();
+          }
+        return Predicted_pm10;
+    }
         
         
         //该方法用来计算某个季度的pm10预测值
@@ -501,4 +530,9 @@ public class Pm10_Prediction {
 	      }  
         	return predicted_pm10;
         }
+        
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
 }
