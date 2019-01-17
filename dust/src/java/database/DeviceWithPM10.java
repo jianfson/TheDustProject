@@ -10,7 +10,7 @@ import method.ReturnPack_of_PollutionLevel;
 
 /**
  *
- * @author jiangxin
+ * @author jasonley
  */
 public class DeviceWithPM10 {
     private String deviceId;
