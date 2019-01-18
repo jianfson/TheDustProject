@@ -19,7 +19,8 @@ router.all('*', function (req, res, next) {
 // var create = function () {
 //   let result = []
 //   var colors = ['yellow', 'red', 'orange', 'blue']
-//   var areas = [510104, 510105, 510106, 510107, 510108]
+//   var rank = ['bad', 'middle', 'good', 'excellent']
+//   var area = [510104, 510105, 510106, 510107, 510108]
 //   var maxWidth = 10417795346 - 10401795346
 //   var maxHeight = 3070994585 - 3061994585
 //   for (var i = 0; i < 80; i++) {
@@ -30,7 +31,9 @@ router.all('*', function (req, res, next) {
 //       deviceId: 'xy-m89x' + Math.floor(Math.random() * 10000) + 'sc',
 //       lng: (10401795346 + Math.floor(Math.random() * maxWidth) + 1) / 100000000,
 //       lat: (3061994585 + Math.floor(Math.random() * maxHeight) + 1) / 100000000,
-//       regionalId: areas[Math.floor(Math.random() * 5)]
+//       pollutionRank: rank[Math.floor(Math.random() * 4)],
+//       regionalId: area[Math.floor(Math.random() * 4)],
+//       pm10: Math.floor(Math.random() * 100) + 50
 //     })
 //   }
 //   fs.writeFile('./points.json', JSON.stringify(result))

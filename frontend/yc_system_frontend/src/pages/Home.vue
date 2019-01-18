@@ -133,6 +133,8 @@ export default {
               label: '青羊区', value: 510105
             }, {
               label: '金牛区', value: 510106
+            }, {
+              label: '高新区', value: 510109
             }
           ]
         }
@@ -165,6 +167,7 @@ export default {
         if (valid) {
           // 1.请求，查询对应时间的区域的历史数据,精度月
           let area = !this.homeForm.area[1] ? this.homeForm.area[0] : this.homeForm.area[1]
+          this.currentArea = this.$areaBelong(area)
           // 根据后端接口要求，将时间戳改成字符串
           // let date = this.homeForm.date
           // let postData = {
@@ -175,19 +178,41 @@ export default {
           let start = this.dateFormateMonth(this.homeForm.date.startMonth)
           let end = this.dateFormateMonth(this.homeForm.date.endMonth)
           this.$axios.get('/dust/webresourcses/database.device/' + area + '/' + start + '/' + end).then(res => {
-            let data = res.data
-            console.log(res.data)
-            this.currentArea = this.$areaBelong(area)
+            let data = res.data.data
+            let lineChartNeeded = {
+              category: [],
+              data: []
+            }
             // 调用子组件linechart的事件
-            this.$refs.homeLineChart.grapmaker(data.data, data.category)
+            data.forEach(element => {
+              lineChartNeeded.category.push(element.avgTime)
+              lineChartNeeded.data.push(element.pm10)
+            })
+            this.$refs.homeLineChart.grapmaker(lineChartNeeded.data, lineChartNeeded.category)
           })
 
           // 2.地图的点位切换到对应的区域，对应的时间段，点位的信息
           this.$refs.homeMap.showPoints(area, this.homeForm.date)
 
           // 3.表格切换到对应区域对应时间的数据，通过请求完成。
-          this.$axios.get('dust/webresourcses/database.device/table/' + area).then(res => {
+          this.$axios.get('dust/webresourcses/database.device/table/' + area + '/' + start + '/' + end).then(res => {
             this.tableContext = res.data.data
+            this.tableContext.forEach(element => {
+              switch (element.pollutionRank) {
+                case 'bad':
+                  element.pollutionRank = '差'
+                  break
+                case 'middle':
+                  element.pollutionRank = '中'
+                  break
+                case 'good':
+                  element.pollutionRank = '良'
+                  break
+                case 'excellent':
+                  element.pollutionRank = '优'
+                  break
+              }
+            })
           })
         } else {
           console.log('error submit')

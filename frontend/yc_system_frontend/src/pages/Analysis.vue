@@ -37,7 +37,7 @@
         <all-predict ref="allPredict"></all-predict>
       </div>
       <div class="predict-right">
-        <span>{{pickedArea}}随时间变化趋势预测</span>
+        <span>{{pickedArea}}{{pickedRange}}预测</span>
         <week-predict ref="weekPredict"></week-predict>
       </div>
     </div>
@@ -117,6 +117,7 @@ export default {
     return {
       pickedArea: '全市',
       pickedRelationArea: null,
+      pickedRange: null,
       analysisPredictForm: {
         area: null,
         range: null
@@ -202,11 +203,12 @@ export default {
       return Zh
     },
     showPredict() {
-      let area = this.analysisPredictForm.area[1] ? this.analysisPredictForm.area[1] : null
-      let range = this.analysisPredictForm.range[0]
-      // console.log(area)
-      /* 发请求，POST，提交的选择的区域，返回当前区域，未来两年的数据（按季度），用于柱状体显示,修改为get
-      ** 返回的数据格式:
+      if (!this.analysisPredictForm.area) {
+        this.$message.error('请选择区域，再点击提交')
+        return
+      }
+      let area = this.analysisPredictForm.area[1] ? this.analysisPredictForm.area[1] : this.analysisPredictForm.area[0]
+      /* 需要的格式:
       ** {
       **  category: ['2018', '2019'], 始终返回的是未来两年的，密度为季度
       **  spring: [123,251],
@@ -245,49 +247,53 @@ export default {
         this.$refs.allPredict.drawAllPredict(dataAfterFormat)
         this.pickedArea = this.areaTransform(area)
       })
-      /* POST，提交选择的区域和预测的时间，用于折线图显示，修改为get
-      ** 判断选择的预测时间，然后分别请求三个接口
-      ** 返回的数据格式:
-      **
-      */
-      if (range === 'month') {
-        this.$axios.get('/dust/webresourcses/database.dayavg/predict/month/' + area).then(res => {
-          // console.log(res)
-          let predictByMonth = {
-            category: [],
-            data: []
-          }
-          res.data.data.forEach(ele => {
-            predictByMonth.category.push(ele.year + '-' + ele.month + '-' + ele.day)
-            predictByMonth.data.push(ele.pm10)
+      // 预测一个月
+      if (this.analysisPredictForm.range) {
+        let range = this.analysisPredictForm.range[0]
+        if (range === 'month') {
+          this.$axios.get('/dust/webresourcses/database.dayavg/predict/month/' + area).then(res => {
+            // console.log(res)
+            let predictByMonth = {
+              category: [],
+              data: []
+            }
+            res.data.data.forEach(ele => {
+              predictByMonth.category.push(ele.date)
+              predictByMonth.data.push(ele.pm10)
+            })
+            this.pickedRange = '未来一个月'
+            this.$refs.weekPredict.drawLinePredict(predictByMonth)
+            // this.pickedArea = this.areaTransform(area)
           })
-          this.$refs.weekPredict.drawLinePredict(predictByMonth)
-          // this.pickedArea = this.areaTransform(area)
-        })
-      } else if (range === 'year') {
-        this.$axios.get('/dust/webresourcses/database.dayavg/predict/year/' + area).then(res => {
-          let predictByYear = {
-            category: [],
-            data: []
-          }
-          res.data.data.forEach(ele => {
-            predictByYear.category.push(ele.year + '-' + ele.month)
-            predictByYear.data.push(ele.pm10)
+          // 预测一年
+        } else if (range === 'year') {
+          this.$axios.get('/dust/webresourcses/database.dayavg/predict/year/' + area).then(res => {
+            let predictByYear = {
+              category: [],
+              data: []
+            }
+            res.data.data.forEach(ele => {
+              predictByYear.category.push(ele.date)
+              predictByYear.data.push(ele.pm10)
+            })
+            this.pickedRange = '未来一年'
+            this.$refs.weekPredict.drawLinePredict(predictByYear)
           })
-          this.$refs.weekPredict.drawLinePredict(predictByYear)
-        })
-      } else if (range === 'threeyear') {
-        this.$axios.get('/dust/webresourcses/database.dayavg/predict/year/' + area).then(res => {
-          let predictThreeYear = {
-            category: [],
-            data: []
-          }
-          res.data.data.forEach(ele => {
-            predictThreeYear.category.push(ele.year)
-            predictThreeYear.data.push(ele.pm10)
+          // 预测三年
+        } else if (range === 'threeyear') {
+          this.$axios.get('/dust/webresourcses/database.dayavg/predict/threeyear/' + area).then(res => {
+            let predictThreeYear = {
+              category: [],
+              data: []
+            }
+            res.data.data.forEach(ele => {
+              predictThreeYear.category.push(ele.date)
+              predictThreeYear.data.push(ele.pm10)
+            })
+            this.pickedRange = '未来三年'
+            this.$refs.weekPredict.drawLinePredict(predictThreeYear)
           })
-          this.$refs.weekPredict.drawLinePredict(predictThreeYear)
-        })
+        }
       }
     },
     changeRelationArea() {

@@ -1,25 +1,26 @@
 <template>
   <div>
-    <el-table :data="contextForTable" size="mini" border>
+    <el-table :data="contextForTable" size="mini" border :cell-class-name="tableCellClassName"
+     :default-sort = "{prop: 'pm10', order: 'descending'}">
       <!-- :row-class-name="tableRowClassName" -->
-      <el-table-column label="点位名称" prop="device_id"></el-table-column>
-      <el-table-column label="工程位置" prop="device_address"></el-table-column>
-      <el-table-column label="污染等级" prop="level"></el-table-column>
-      <!-- <el-table-column label="变化趋势" prop="trend"></el-table-column> -->
+      <el-table-column label="点位名称" prop="deviceName"></el-table-column>
+      <el-table-column label="点位ID" prop="deviceId" sortable></el-table-column>
+      <el-table-column label="工程位置" prop="deviceAddress"></el-table-column>
+      <el-table-column label="pm10" prop="pm10" sortable></el-table-column>
+      <el-table-column label="污染等级" prop="pollutionRank"></el-table-column>
       <!-- <el-table-column type="expand">
         <template>
           <div class="expand-graph-contaienr" id="expandGraph">
             <expanded-line-chart :chart-data="expandedChartData"></expanded-line-chart>
           </div>
         </template>
-      </el-table-column> -->
+      </el-table-column>-->
     </el-table>
   </div>
 </template>
 
 <script>
 import expandedLineChart from './charts/expandedLineChart'
-// import qs from 'qs'
 export default {
   name: 'rankTable',
   props: ['dataForTable', 'contextForTable'],
@@ -66,20 +67,13 @@ export default {
     //   }]
     //   this.expandedChartData.setOption(this.expandedOptions)
     // },
-    // tableRowClassName({ row, rowIndex }) {
-    //   let level = this.polutionRank[rowIndex].level
-    //   let result
-    //   switch (level) {
-    //     case '3级': result = 'level3-row'
-    //       break
-    //     case '2级': result = 'level2-row'
-    //       break
-    //     case '1级': result = 'level1-row'
-    //       break
-    //   }
-    //   // console.log(result)
-    //   return result
-    // },
+    tableCellClassName({ row, column, rowIndex, columnIndex }) {
+      if (columnIndex === 4 && row.pollutionRank === '差') {
+        return 'level3-cell'
+      } else if (columnIndex === 4 && row.pollutionRank === '中') {
+        return 'level2-cell'
+      }
+    }
     // drawInnerGraph(row) {
     //   // 点击展开按钮，发起请求，携带点位id，时间段（包含开始时间，结束时间），返回此时间段的此点位的变化数据。
     //   /* 数据格式 {
@@ -98,13 +92,10 @@ export default {
 </script>
 
 <style>
-.el-table .level3-row {
+.el-table .level3-cell {
   background-color: red;
 }
-.el-table .level2-row {
-  background-color: orange;
-}
-.el-table .level1-row {
+.el-table .level2-cell {
   background-color: yellow;
 }
 .expand-graph-contaienr {

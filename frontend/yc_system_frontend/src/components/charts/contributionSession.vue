@@ -128,6 +128,7 @@ export default {
             name: currentName, value: currenValue, label: currentLabel
           })
         }
+        console.log(dateAfterFormat)
         this.grapOptionsInit.series[0].data = dateAfterFormat.sort(function (a, b) {
           return a.value - b.value
         })

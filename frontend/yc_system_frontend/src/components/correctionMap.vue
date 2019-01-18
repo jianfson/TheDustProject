@@ -3,7 +3,7 @@ import { constants } from 'http2';
  * @Author: mikey.zhaopeng
  * @Date: 2018-12-12 11:05:56
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2019-01-14 22:54:26
+ * @Last Modified time: 2019-01-17 21:37:58
  * desciption:
  *  1.实现父组件点击相应区域，能够切换到只显示对应区域的点位信息，通过添加和移除标注点实现。
  */
@@ -146,18 +146,18 @@ export default {
     */
     this.initMap = this.drawMap()
     // 向后端请求： 返回所有点位信息
-    this.$axios.get('dust/webresourcses/database.device/region/allcity').then(res => {
+    this.$axios.get('dust/webresourcses/database.device/find/allcity').then(res => {
       // console.log(res.data)
       // 点位属于哪个区现在是前端的模拟，随机生成的，设计以后端返回的数据中就带上点位属于哪个区，前端不做判断
       // let areas = ['双流区', '武侯区', '金牛区', '高新区']
       // 初始化点位,构建全市所需要的点位，并赋值到全局。
-      res.data.forEach(element => {
+      res.data.data.forEach(element => {
         let point = new window.BMap.Point(element.lng, element.lat)
         let options = {
           name: element.deviceName,
           id: element.deviceId,
           address: element.deviceAddress,
-          area: this.$areaBelong(element.regionalId)
+          area: element.region
         }
         this.allPoints.push({
           point,

@@ -52,12 +52,12 @@ router.get('/init', function (req, res) {
         name: 'Y0028091510021',
         location: '锦巷兰台小区',
         startDate: '2016-05-02'
-      },{
+      }, {
         endDate: '2016-05-04',
         name: 'Y0028091510021',
         location: '锦巷兰台小区',
         startDate: '2016-05-02'
-      },{
+      }, {
         endDate: '2016-05-04',
         name: 'Y0028091510021',
         location: '锦巷兰台小区',
@@ -147,5 +147,68 @@ router.get('/init', function (req, res) {
   })
 })
 
+router.get('/:num', function (req, res) {
+  if (req.params.num === 'allcity') {
+    res.json({
+      data:
+      {
+        "season": "2018年冬季",
+        "red": 7,
+        "orange": 7,
+        "yellow": 7,
+        "max": 15,
+        "current": 10,
+        "remain": 5,
+        "stop": 0
+      }
+    })
+  } else {
+    res.json({
+      data: {
+        "season": "2018年冬季",
+        "max": 15,
+        "current": 10,
+        "remain": 5,
+        "stop": 0
+      }
+    })
+
+  }
+
+})
+
+router.get('/company/:num', function (req, res) {
+  res.json({
+    data: [
+      {
+        "companyName": "航校项目8号地块",
+        "companyAddress": "武侯区二环路南一段20号",
+        "startTime": "2016-01-01",
+        "stopTime": "2019-01-01"
+      }, {
+        "companyName": "航校项目8号地块",
+        "companyAddress": "武侯区二环路南一段20号",
+        "startTime": "2016-01-01",
+        "stopTime": "2019-01-01"
+      }, {
+        "companyName": "航校项目8号地块",
+        "companyAddress": "武侯区二环路南一段20号",
+        "startTime": "2016-01-01",
+        "stopTime": "2019-01-01"
+      }, {
+        "companyName": "航校项目8号地块",
+        "companyAddress": "武侯区二环路南一段20号",
+        "startTime": "2016-01-01",
+        "stopTime": "2019-01-01"
+      }, {
+        "companyName": "航校项目8号地块",
+        "companyAddress": "武侯区二环路南一段20号",
+        "startTime": "2016-01-01",
+        "stopTime": "2019-01-01"
+      }
+
+    ]
+  })
+})
 
 module.exports = router

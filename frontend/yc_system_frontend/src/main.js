@@ -27,6 +27,8 @@ Vue.prototype.$areaBelong = function (areaNum) {
       return '武侯区'
     case 510108:
       return '成华区'
+    case 510109:
+      return '高新区'
   }
 }
 Vue.use(Echarts)

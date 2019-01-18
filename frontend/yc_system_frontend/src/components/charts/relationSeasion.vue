@@ -134,15 +134,12 @@ export default {
             { value: 0.058, name: '金牛区' }
           ]
       ** }
-      */
-      if (this.selectedArea) {
-        this.$axios.get('/dust/webresourcses/relation/season/', {
-          params: {
-            area: this.selectedArea,
+      area: this.selectedArea,
             date: pieRequest[0],
             season: pieRequest[1]
-          }
-        }).then(res => {
+      */
+      if (this.selectedArea) {
+        this.$axios.get('/dust/webresourcses/relation/season/' + this.selectedArea + '/' + pieRequest[0] + '/' + pieRequest[1]).then(res => {
           let dateAfterFormat = []
           let dataAddLabel = null
           this.grapOptionsInit.title.subtext = pieRequest[0] + this.formatSession(pieRequest[1])

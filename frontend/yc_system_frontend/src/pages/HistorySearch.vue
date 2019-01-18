@@ -5,7 +5,7 @@
         <span class="history-subtitle">{{ pickedArea }}点位信息</span>
       </div>
       <div class="history-map-left">
-        <map-area ref="historyPoints"></map-area>
+        <map-search-area ref="historyPoints"></map-search-area>
       </div>
     </div>
     <div class="history-right-container">
@@ -52,11 +52,11 @@
 
 <script>
 import historyDate from '../components/charts/historyDate'
-import mapArea from '../components/mapArea'
+import mapSearchArea from '../components/searchMap'
 export default {
   components: {
     historyDate,
-    mapArea
+    mapSearchArea
   },
   data() {
     return {
@@ -118,6 +118,8 @@ export default {
               label: '青羊区', value: 510105
             }, {
               label: '金牛区', value: 510106
+            }, {
+              label: '高新区', value: 510109
             }
           ]
         }
@@ -136,7 +138,6 @@ export default {
 
       // 引用折线图组件的方法，根据所选，绘出折线图。
       this.$refs.historyLineChart.drawGraph(dataTransform)
-      // 点位切换到对应的区域, 目前参数存在一点问题
       this.$refs.historyPoints.showPoints(dataTransform.area)
 
       // 切换本页面的标题

@@ -41,6 +41,18 @@ export default {
           date: this.dateFormateMonth(spotMessage.date)
         }
       }).then(data => {
+        let resAfterFormat = {
+          category: [],
+          originData: [],
+          nationControl: [],
+          correction: []
+        }
+        data.data.forEach(element => {
+          resAfterFormat.category.push(element.date)
+          resAfterFormat.originData.push(element.pm10_nomal)
+          resAfterFormat.nationControl.push(element.pm10_nation)
+          resAfterFormat.correction.push(element.pm10_correct)
+        })
         this.correctPie.setOption({
           tooltip: {
             trigger: 'axis'
@@ -48,7 +60,7 @@ export default {
           xAxis: {
             type: 'category',
             // data: category
-            data: data.data.category
+            data: resAfterFormat.category
           },
           yAxis: {
             type: 'value',
@@ -60,17 +72,17 @@ export default {
           series: [{
             // data: mockData.predictData,
             name: '原始数据',
-            data: data.data.originData,
+            data: resAfterFormat.originData,
             type: 'line'
           },
           {
             // data: mockData.realData,
             name: '国控点数据',
-            data: data.data.nationControl,
+            data: resAfterFormat.nationControl,
             type: 'line'
           }, {
             name: '修正后数据',
-            data: data.data.correction,
+            data: resAfterFormat.correction,
             type: 'line'
           }]
         })

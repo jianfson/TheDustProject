@@ -86,12 +86,7 @@ export default {
       // 获取选取的时间点，发出请求，更新饼图
       if (this.selectedArea) {
         let dateAfterFormat = this.dateFormateMonth(pieRequest)
-        this.$axios.get('/dust/webresourcses/relation/month/', {
-          params: {
-            area: this.selectedArea,
-            date: dateAfterFormat
-          }
-        }).then(res => {
+        this.$axios.get('/dust/webresourcses/relation/month/' + this.selectedArea + '/' + dateAfterFormat).then(res => {
           let dateAfterFormat = []
           let dataAddLabel = null
           this.grapOptionsInit.title.subtext = this.dealDate(pieRequest)

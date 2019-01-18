@@ -34,14 +34,22 @@ router.get('/month/:num/:start/', function (req, res) {
   //   "day": "01",
   //   "pm10": 251.28000
   // })
-  console.log(req.params)
   var date = new Date(req.params.start)
   var start = new Date(date)
   var end = new Date(new Date(date.setMonth(date.getMonth() + 1)).setDate(-1))
   var length = (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24) + 1
+  let category = randomData.createDateArr(start, end)
+  let data = randomData.randomArr(100, 500, length)
+  let result = []
+
+  category.forEach(function (ele, idx) {
+    result.push({
+      avgTime: ele,
+      pm10: data[idx]
+    })
+  })
   res.json({
-    category: randomData.createDateArr(start, end),
-    pm10: randomData.randomArr(100, 500, length)
+    data: result
   })
 })
 
@@ -49,14 +57,46 @@ router.get('/season/:num/:season', function (req, res) {
   method = areaTransform(req.params.season)
   console.log(req.params.season)
   res.json({
-    category: ['2015' + '-' + method, '2016' + '-' + method, '2017' + '-' + method, '2018' + '-' + method],
-    pm10: randomData.randomArr(100, 500, 4)
+    data: [{
+      "avgTime": " 2016年春",
+      "pm10": 251.28000
+    },
+    {
+      "avgTime": " 2017年春",
+      "pm10": 251.28000
+    }
+      ,
+    {
+      "avgTime": " 2018年春",
+      "pm10": 251.28000
+    }
+      , {
+      "avgTime": " 2019年春",
+      "pm10": 251.28000
+    }
+    ]
   })
 })
 router.get('/year/:num', function (req, res) {
   res.json({
-    category: ['2015', '2016', '2017', '2018'],
-    pm10: randomData.randomArr(100, 500, 4)
+    data: [{
+      "avgTime": " 2016",
+      "pm10": 251.28000
+    },
+    {
+      "avgTime": " 2017",
+      "pm10": 41
+    }
+      ,
+    {
+      "avgTime": " 2018",
+      "pm10": 25
+    }
+      , {
+      "avgTime": " 2019",
+      "pm10": 22
+    }
+    ]
   })
 })
 
@@ -89,15 +129,11 @@ router.get('/predict/month/:num', function (req, res) {
   res.json({
     data: [
       {
-        "year": " 2019",
-        "month": " 01",
-        "day": " 01",
+        "date": " 2019-01-01",
         "pm10": 251.28000
       },
       {
-        "year": " 2019",
-        "month": " 01",
-        "day": " 02",
+        "date": " 2019-01-02",
         "pm10": 251.28000
       }
     ]
@@ -107,18 +143,15 @@ router.get('/predict/year/:num', function (req, res) {
   res.json({
     data: [
       {
-        "year": " 2019",
-        "month": " 01",
+        "date": " 2019-01",
         "pm10": 251.28000
       },
       {
-        "year": " 2019",
-        "month": " 02",
+        "date": " 2019-02",
         "pm10": 251.28000
       }
       , {
-        "year": " 2019",
-        "month": " 03",
+        "date": " 2019-03",
         "pm10": 251.28000
       }
     ]
@@ -128,15 +161,15 @@ router.get('/predict/threeyear/:num', function (req, res) {
   res.json({
     data: [
       {
-        "year": " 2019",
+        "date": " 2019",
         "pm10": 251.28000
       },
       {
-        "year": " 2020",
+        "date": " 2020",
         "pm10": 251.28000
       }
       , {
-        "year": " 2021",
+        "date": " 2021",
         "pm10": 251.28000
       }
     ]
@@ -145,6 +178,8 @@ router.get('/predict/threeyear/:num', function (req, res) {
 // ******************
 
 // 综合查询页面，
+// 查询点位信息
+
 router.get('/session/:num/:start/:end', function (req, res) {
   // res.json({
   //   "year": " 2016",

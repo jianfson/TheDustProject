@@ -113,17 +113,13 @@ export default {
             { value: 0.08, name: '青羊区' },
             { value: 0.058, name: '金牛区' }
           ]
-      ** }
+      ** }  area: this.selectedArea,
+            date: dateAfterFormate
       */
       // 首先要验证区域是否已经选择上了，如果没有选择区域不做处理
       if (this.selectedArea) {
         let dateAfterFormate = this.dateFormateYear(this.selectedArea)
-        this.$axios.get('/dust/webresourcses/relation/year', {
-          params: {
-            area: this.selectedArea,
-            date: dateAfterFormate
-          }
-        }).then(res => {
+        this.$axios.get('/dust/webresourcses/relation/year/' + this.selectedArea + '/' + dateAfterFormate).then(res => {
           let dateAfterFormat = []
           let dataAddLabel = null
           this.grapOptionsInit.title.subtext = pieRequest.getFullYear() + '年度'

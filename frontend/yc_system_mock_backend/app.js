@@ -15,6 +15,7 @@ var predict = require('./routes/predict')
 var contribution = require('./routes/contribution')
 var relation = require('./routes/relation')
 var effect = require('./routes/effect')
+var find = require('./routes/find')
 
 
 var bodyParser = require('body-parser')
@@ -45,7 +46,7 @@ app.use('/predict', predict)
 app.use('/contribution', contribution)
 app.use('/relation', relation)
 app.use('/effect', effect)
-
+app.use('/find', find)
 
 
 

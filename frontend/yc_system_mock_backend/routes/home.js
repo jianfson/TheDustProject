@@ -15,34 +15,21 @@ router.all('*', function (req, res, next) {
   next();
 })
 
-router.get('/years', function (req, res) {
-  res.json({
-    name: "byyear",
-    // chenghuaqu: randomArr(100, 500, 10),
-    // gaoxinqu: randomArr(100, 500, 10),
-    // shuangliuqu: randomArr(100, 500, 10),
-    // jinniuqu: randomArr(100, 500, 10),
-    // wuhouqu: randomArr(100, 500, 10),
-    // qingyangqu: randomArr(100, 500, 10),
-    // quanshi: randomArr(100, 500, 10)
-  })
-})
-
-
 
 // ************
 // home 点位信息接口
-router.get('/region/:num', function(req, res) {
+router.get('/region/:num/:from/:to', function (req, res) {
+  // console.log(req.params)
   // res.json([{
   //  "device_id" : "1440-0028-sclw-2803",
-	// 	"lng" : 104.13328828752,
-	// 	"lat" : 30.628542467496,
+  // 	"lng" : 104.13328828752,
+  // 	"lat" : 30.628542467496,
   //   "location" : "510108",
   //   "color": 'red',
-	// 	"pm10" : 218.5
+  // 	"pm10" : 218.5
   // }])
   // console.log(req.params)
-  
+
   // 接口实际格式
   // {
   //   deviceAddress: "成华区圣灯街道理工大学片区地块二",
@@ -55,7 +42,7 @@ router.get('/region/:num', function(req, res) {
   //   }
   if (req.params.num == "allcity" || !req.params.num) {
     // console.log('全市选择上了')
-    var data = fs.readFile('./points.json', function (err, data) {
+    fs.readFile('./routes/points.json', function (err, data) {
       var toStr = JSON.parse(data)
       res.json(
         toStr
@@ -63,7 +50,7 @@ router.get('/region/:num', function(req, res) {
     })
   } else {
     var resultData = []
-    var data = fs.readFile('./points.json', function (err, data) {
+    var data = fs.readFile('./routes/points.json', function (err, data) {
       var toStr = JSON.parse(data)
       if (err) {
         return console.log(err)
@@ -81,43 +68,108 @@ router.get('/region/:num', function(req, res) {
 })
 
 // home 表格用
-router.get('/table/:num', function(req, res) {
-  // console.log(req.params)
-  res.json( res.json({
+router.get('/table/:num/:from/:to', function (req, res) {
+  res.json({
     data: [{
-      device_id: 'Y0028152017154',
-      device_address: '成都后花园二期B区一标段',
-      level: '3级',
-    }, 
-    {
-      device_id: 'Y0028091510021',
-      device_address: '成都科学城生态水环境工程项目部EPC总承包',
-      level: '1级',
+      "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+      "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+      "color": "red",
+      "deviceId": "xy-m89x9030sc",
+      "lng": 104.10198848,
+      "lat": 30.62738274,
+      "pollutionRank": "middle",
+      "pm10": 104
     },
     {
-      device_id: '1440-0028-sclw-2814',
-      device_address: '绿岛筑三标段15号楼',
-      level: '1级',
+      "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+      "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+      "color": "red",
+      "deviceId": "xy-m89x9030sc",
+      "lng": 104.10198848,
+      "lat": 30.62738274,
+      "pollutionRank": "bad",
+      "pm10": 172
     },
     {
-      device_id: 'Y0028152618102',
-      device_address: '锦巷兰台小区',
-      level: '1级',
-    }
+      "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+      "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+      "color": "red",
+      "deviceId": "xy-m89x9030sc",
+      "lng": 104.10198848,
+      "lat": 30.62738274,
+      "pollutionRank": "excellent",
+      "pm10": 10
+    },
+    {
+      "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+      "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+      "color": "yellow",
+      "deviceId": "xy-m89x1788sc",
+      "lng": 104.05894342,
+      "lat": 30.62571377,
+      "pollutionRank": "middle",
+      "pm10": 110
+    },
+    {
+      "deviceAddress": "成华区圣灯街道办事处圣灯村二组",
+      "deviceName": "成华区圣灯街道办事处（朗基少东家）",
+      "color": "yellow",
+      "deviceId": "xy-m89x396sc",
+      "lng": 104.11444129,
+      "lat": 30.6796686,
+      "pollutionRank": "good",
+      "pm10": 70
+    },
     ]
-  }))
+  })
 })
 // home 折线图用
-router.get('/:num/:from/:to', function(req, res) {
-  // console.log(req.params)
-  var start = req.params.from
-  var end = req.params.to
-  var category = randomData.createMonthArr(start, end)
-  var data = randomData.randomArr(20, 280, randomData.howmanyMonth)
-  // console.log(category)
+router.get('/:num/:from/:to', function (req, res) {
+  console.log(req.params)
   res.json({
-    category,
-    data
+    data: [
+      {
+        "avgTime": "2016-01",
+        "pm10": 251.28000
+      },
+      {
+        "avgTime": "2016-02",
+        "pm10": 251.28000
+      }, {
+        "avgTime": "2016-03",
+        "pm10": 251.28000
+      }, {
+        "avgTime": "2016-04",
+        "pm10": 251.28000
+      }
+
+    ]
+  })
+})
+
+
+// 综合查询地图点位
+router.get('/find/:num', function (req, res) {
+  console.log(req.params)
+  res.json({
+    data: [
+      {
+        "deviceAddress": "武侯区二环]dsxxx",
+        "deviceId": "1440-0028-sclw-2800",
+        "deviceName": "住宅、商业及配套xdfssfsa目8号地块",
+        "lng": 104.133288,
+        "lat": 30.628542,
+        "region": "成华区"
+      },
+      {
+        "deviceAddress": "武侯区二环路南一段20号",
+        "deviceId": "1440-0028-sclw-28xdsa",
+        "deviceName": "住宅、商业及配套设施（航校项目8号地块",
+        "lng": 104.123188,
+        "lat": 30.648552,
+        "region": "成华区"
+      }
+    ]
   })
 })
 // ************

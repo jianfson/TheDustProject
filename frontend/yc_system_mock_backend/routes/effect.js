@@ -41,7 +41,10 @@ router.get('/year/:date', function (req, res) {
           "ID": " 510108",
           "effect": 0.3,
           "workSite": 31
-
+        }, {
+          "ID": " 510109",
+          "effect": 0.3,
+          "workSite": 31
         }
       ]
     }
@@ -79,7 +82,10 @@ router.get('/season/:year/:season', function (req, res) {
           "ID": " 510108",
           "effect": 0.3,
           "workSite": 31
-
+        }, {
+          "ID": " 510109",
+          "effect": 0.3,
+          "workSite": 31
         }
       ]
     }
@@ -116,7 +122,10 @@ router.get('/month/:date', function (req, res) {
           "ID": " 510108",
           "effect": 0.3,
           "workSite": 31
-
+        }, {
+          "ID": " 510109",
+          "effect": 0.3,
+          "workSite": 31
         }
       ]
     }

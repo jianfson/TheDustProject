@@ -7,19 +7,19 @@
         <div class="control-zone-middle-tran">
           <div class="zone-work-sum">
             <ul class="control-data-panel">
-              <li>{{chengdu.alert[0]}}</li>
+              <li>{{chengdu.red}}</li>
               <li>红色预警</li>
             </ul>
           </div>
           <div class="zone-max-work">
             <ul class="control-data-panel">
-              <li>{{chengdu.alert[1]}}</li>
+              <li>{{chengdu.orange}}</li>
               <li>橙色预警</li>
             </ul>
           </div>
           <div class="zone-left-work">
             <ul class="control-data-panel">
-              <li>{{chengdu.alert[2]}}</li>
+              <li>{{chengdu.yellow}}</li>
               <li>黄色预警</li>
             </ul>
           </div>
@@ -29,20 +29,26 @@
         <div class="control-zone-middle-tran">
           <div class="zone-work-sum">
             <ul class="control-data-panel">
-              <li>{{chengdu.currentWorkSite}}</li>
+              <li>{{chengdu.current}}</li>
               <li>当前开工数量</li>
             </ul>
           </div>
           <div class="zone-max-work">
             <ul class="control-data-panel">
-              <li>{{chengdu.leftWorksite}}</li>
-              <li>最大的开工工地数量</li>
+              <li>{{chengdu.max}}</li>
+              <li>工地最大开工数量</li>
             </ul>
           </div>
           <div class="zone-left-work">
             <ul class="control-data-panel">
-              <li>{{chengdu.maxWorkSite}}</li>
+              <li>{{chengdu.remain}}</li>
               <li>剩余可开工数量</li>
+            </ul>
+          </div>
+          <div class="zone-left-work">
+            <ul class="control-data-panel">
+              <li>{{chengdu.stop}}</li>
+              <li>需强制停工数量</li>
             </ul>
           </div>
         </div>
@@ -56,20 +62,26 @@
         <div class="control-zone-middle-tran">
           <div class="zone-work-sum">
             <ul class="control-data-panel">
-              <li>{{qingyang.currentWorkSite}}</li>
+              <li>{{qingyang.current}}</li>
               <li>当前开工数量</li>
             </ul>
           </div>
           <div class="zone-max-work">
             <ul class="control-data-panel">
-              <li>{{qingyang.maxWorkSite}}</li>
-              <li>最大的开工工地数量</li>
+              <li>{{qingyang.max}}</li>
+              <li>工地最大开工数量</li>
             </ul>
           </div>
           <div class="zone-left-work">
             <ul class="control-data-panel">
-              <li>{{qingyang.leftWorksite}}</li>
+              <li>{{qingyang.remain}}</li>
               <li>剩余可开工数量</li>
+            </ul>
+          </div>
+          <div class="zone-left-work">
+            <ul class="control-data-panel">
+              <li>{{qingyang.stop}}</li>
+              <li>需强制停工数量</li>
             </ul>
           </div>
         </div>
@@ -78,11 +90,11 @@
         <!-- <span @click="toggleZoneDetail">查看区域点位详情<i class="iconfront-yc icon-yc-jiantouarrowheads3"></i></span> -->
         <div class="zoneDetailTable">
           <!-- <span class="zoneTableTitle">区域点位详情</span> -->
-          <el-table :data="qingyang.detailTable" size="mini" border height="210">
-            <el-table-column label="点位名称" prop="name"></el-table-column>
-            <el-table-column label="工程位置" prop="location"></el-table-column>
-            <el-table-column label="开工日期" prop="startDate"></el-table-column>
-            <el-table-column label="竣工日期" prop="endDate"></el-table-column>
+          <el-table :data="qingyangTable" size="mini" border height="210">
+            <el-table-column label="点位名称" prop="companyName"></el-table-column>
+            <el-table-column label="工程位置" prop="companyAddress"></el-table-column>
+            <el-table-column label="开工日期" prop="startTime"></el-table-column>
+            <el-table-column label="竣工日期" prop="stopTime"></el-table-column>
           </el-table>
         </div>
       </div>
@@ -95,20 +107,26 @@
         <div class="control-zone-middle-tran">
           <div class="zone-work-sum">
             <ul class="control-data-panel">
-              <li>{{chenghua.currentWorkSite}}</li>
+              <li>{{chenghua.current}}</li>
               <li>当前开工数量</li>
             </ul>
           </div>
           <div class="zone-max-work">
             <ul class="control-data-panel">
-              <li>{{chenghua.maxWorkSite}}</li>
-              <li>最大的开工工地数量</li>
+              <li>{{chenghua.max}}</li>
+              <li>工地最大开工数量</li>
             </ul>
           </div>
           <div class="zone-left-work">
             <ul class="control-data-panel">
-              <li>{{chenghua.leftWorksite}}</li>
+              <li>{{chenghua.remain}}</li>
               <li>剩余可开工数量</li>
+            </ul>
+          </div>
+          <div class="zone-left-work">
+            <ul class="control-data-panel">
+              <li>{{chenghua.stop}}</li>
+              <li>需强制停工数量</li>
             </ul>
           </div>
         </div>
@@ -117,11 +135,11 @@
         <!-- <span @click="toggleZoneDetail">查看区域点位详情<i class="iconfront-yc icon-yc-jiantouarrowheads3"></i></span> -->
         <div class="zoneDetailTable">
           <!-- <span class="zoneTableTitle">区域点位详情</span> -->
-          <el-table :data="chenghua.detailTable" size="mini" border height="210">
-            <el-table-column label="点位名称" prop="name"></el-table-column>
-            <el-table-column label="工程位置" prop="location"></el-table-column>
-            <el-table-column label="开工日期" prop="startDate"></el-table-column>
-            <el-table-column label="竣工日期" prop="endDate"></el-table-column>
+          <el-table :data="chenghuaTable" size="mini" border height="210">
+            <el-table-column label="点位名称" prop="companyName"></el-table-column>
+            <el-table-column label="工程位置" prop="companyAddress"></el-table-column>
+            <el-table-column label="开工日期" prop="startTime"></el-table-column>
+            <el-table-column label="竣工日期" prop="stopTime"></el-table-column>
           </el-table>
         </div>
       </div>
@@ -134,20 +152,26 @@
         <div class="control-zone-middle-tran">
           <div class="zone-work-sum">
             <ul class="control-data-panel">
-              <li>{{jinniu.currentWorkSite}}</li>
+              <li>{{jinniu.current}}</li>
               <li>当前开工数量</li>
             </ul>
           </div>
           <div class="zone-max-work">
             <ul class="control-data-panel">
-              <li>{{jinniu.maxWorkSite}}</li>
-              <li>最大的开工工地数量</li>
+              <li>{{jinniu.max}}</li>
+              <li>工地最大开工数量</li>
             </ul>
           </div>
           <div class="zone-left-work">
             <ul class="control-data-panel">
-              <li>{{jinniu.leftWorksite}}</li>
+              <li>{{jinniu.remain}}</li>
               <li>剩余可开工数量</li>
+            </ul>
+          </div>
+          <div class="zone-left-work">
+            <ul class="control-data-panel">
+              <li>{{jinniu.stop}}</li>
+              <li>需强制停工数量</li>
             </ul>
           </div>
         </div>
@@ -156,11 +180,11 @@
         <!-- <span @click="toggleZoneDetail">查看区域点位详情<i class="iconfront-yc icon-yc-jiantouarrowheads3"></i></span> -->
         <div class="zoneDetailTable">
           <!-- <span class="zoneTableTitle">区域点位详情</span> -->
-          <el-table :data="jinniu.detailTable" size="mini" border height="210">
-            <el-table-column label="点位名称" prop="name"></el-table-column>
-            <el-table-column label="工程位置" prop="location"></el-table-column>
-            <el-table-column label="开工日期" prop="startDate"></el-table-column>
-            <el-table-column label="竣工日期" prop="endDate"></el-table-column>
+          <el-table :data="jinniuTable" size="mini" border height="210">
+            <el-table-column label="点位名称" prop="companyName"></el-table-column>
+            <el-table-column label="工程位置" prop="companyAddress"></el-table-column>
+            <el-table-column label="开工日期" prop="startTime"></el-table-column>
+            <el-table-column label="竣工日期" prop="stopTime"></el-table-column>
           </el-table>
         </div>
       </div>
@@ -173,20 +197,26 @@
         <div class="control-zone-middle-tran">
           <div class="zone-work-sum">
             <ul class="control-data-panel">
-              <li>{{wuhou.currentWorkSite}}</li>
+              <li>{{wuhou.current}}</li>
               <li>当前开工数量</li>
             </ul>
           </div>
           <div class="zone-max-work">
             <ul class="control-data-panel">
-              <li>{{wuhou.maxWorkSite}}</li>
-              <li>最大的开工工地数量</li>
+              <li>{{wuhou.max}}</li>
+              <li>工地最大开工数量</li>
             </ul>
           </div>
           <div class="zone-left-work">
             <ul class="control-data-panel">
-              <li>{{wuhou.leftWorksite}}</li>
+              <li>{{wuhou.remain}}</li>
               <li>剩余可开工数量</li>
+            </ul>
+          </div>
+          <div class="zone-left-work">
+            <ul class="control-data-panel">
+              <li>{{wuhou.stop}}</li>
+              <li>需强制停工数量</li>
             </ul>
           </div>
         </div>
@@ -195,37 +225,43 @@
         <!-- <span @click="toggleZoneDetail">查看区域点位详情<i class="iconfront-yc icon-yc-jiantouarrowheads3"></i></span> -->
         <div class="zoneDetailTable">
           <!-- <span class="zoneTableTitle">区域点位详情</span> -->
-          <el-table :data="wuhou.detailTable" size="mini" border height="210">
-            <el-table-column label="点位名称" prop="name"></el-table-column>
-            <el-table-column label="工程位置" prop="location"></el-table-column>
-            <el-table-column label="开工日期" prop="startDate"></el-table-column>
-            <el-table-column label="竣工日期" prop="endDate"></el-table-column>
+          <el-table :data="wuhouTable" size="mini" border height="210">
+            <el-table-column label="点位名称" prop="companyName"></el-table-column>
+            <el-table-column label="工程位置" prop="companyAddress"></el-table-column>
+            <el-table-column label="开工日期" prop="startTime"></el-table-column>
+            <el-table-column label="竣工日期" prop="stopTime"></el-table-column>
           </el-table>
         </div>
       </div>
     </div>
     <!-- 第六行 -->
     <div class="control-zone-container">
-      <span class="control-title">双流区</span>
+      <span class="control-title">锦江区</span>
       <span class="control-subtitle">{{currentDate}}</span>
       <div class="control-zone-middle">
         <div class="control-zone-middle-tran">
           <div class="zone-work-sum">
             <ul class="control-data-panel">
-              <li>{{shuangliu.currentWorkSite}}</li>
+              <li>{{jinjiang.current}}</li>
               <li>当前开工数量</li>
             </ul>
           </div>
           <div class="zone-max-work">
             <ul class="control-data-panel">
-              <li>{{shuangliu.maxWorkSite}}</li>
-              <li>最大的开工工地数量</li>
+              <li>{{jinjiang.max}}</li>
+              <li>工地最大开工数量</li>
             </ul>
           </div>
           <div class="zone-left-work">
             <ul class="control-data-panel">
-              <li>{{shuangliu.leftWorksite}}</li>
+              <li>{{jinjiang.remain}}</li>
               <li>剩余可开工数量</li>
+            </ul>
+          </div>
+          <div class="zone-left-work">
+            <ul class="control-data-panel">
+              <li>{{jinjiang.stop}}</li>
+              <li>需强制停工数量</li>
             </ul>
           </div>
         </div>
@@ -234,11 +270,11 @@
         <!-- <span @click="toggleZoneDetail">查看区域点位详情<i class="iconfront-yc icon-yc-jiantouarrowheads3"></i></span> -->
         <div class="zoneDetailTable">
           <!-- <span class="zoneTableTitle">区域点位详情</span> -->
-          <el-table :data="shuangliu.detailTable" size="mini" border height="210">
-            <el-table-column label="点位名称" prop="name"></el-table-column>
-            <el-table-column label="工程位置" prop="location"></el-table-column>
-            <el-table-column label="开工日期" prop="startDate"></el-table-column>
-            <el-table-column label="竣工日期" prop="endDate"></el-table-column>
+          <el-table :data="jinjiangTable" size="mini" border height="210">
+            <el-table-column label="点位名称" prop="companyName"></el-table-column>
+            <el-table-column label="工程位置" prop="companyAddress"></el-table-column>
+            <el-table-column label="开工日期" prop="startTime"></el-table-column>
+            <el-table-column label="竣工日期" prop="stopTime"></el-table-column>
           </el-table>
         </div>
       </div>
@@ -251,20 +287,26 @@
         <div class="control-zone-middle-tran">
           <div class="zone-work-sum">
             <ul class="control-data-panel">
-              <li>{{gaoxin.currentWorkSite}}</li>
+              <li>{{gaoxin.current}}</li>
               <li>当前开工数量</li>
             </ul>
           </div>
           <div class="zone-max-work">
             <ul class="control-data-panel">
-              <li>{{gaoxin.maxWorkSite}}</li>
-              <li>最大的开工工地数量</li>
+              <li>{{gaoxin.max}}</li>
+              <li>工地最大开工数量</li>
             </ul>
           </div>
           <div class="zone-left-work">
             <ul class="control-data-panel">
-              <li>{{gaoxin.leftWorksite}}</li>
+              <li>{{gaoxin.remain}}</li>
               <li>剩余可开工数量</li>
+            </ul>
+          </div>
+          <div class="zone-left-work">
+            <ul class="control-data-panel">
+              <li>{{gaoxin.stop}}</li>
+              <li>需强制停工数量</li>
             </ul>
           </div>
         </div>
@@ -273,11 +315,11 @@
         <!-- <span @click="toggleZoneDetail">查看区域点位详情<i class="iconfront-yc icon-yc-jiantouarrowheads3"></i></span> -->
         <div class="zoneDetailTable">
           <!-- <span class="zoneTableTitle">区域点位详情</span> -->
-          <el-table :data="gaoxin.detailTable" size="mini" border height="210">
-            <el-table-column label="点位名称" prop="name"></el-table-column>
-            <el-table-column label="工程位置" prop="location"></el-table-column>
-            <el-table-column label="开工日期" prop="startDate"></el-table-column>
-            <el-table-column label="竣工日期" prop="endDate"></el-table-column>
+          <el-table :data="gaoxinTable" size="mini" border height="210">
+            <el-table-column label="点位名称" prop="companyName"></el-table-column>
+            <el-table-column label="工程位置" prop="companyAddress"></el-table-column>
+            <el-table-column label="开工日期" prop="startTime"></el-table-column>
+            <el-table-column label="竣工日期" prop="stopTime"></el-table-column>
           </el-table>
         </div>
       </div>
@@ -286,220 +328,102 @@
 </template>
 
 <script>
-// 这些组件并没有用，待删除
-// import allPredict from '../components/charts/allpredict'
-// import weekPredict from '../components/charts/weekPredict'
-// import contributionSession from '../components/charts/contributionSession'
-// import relationSeasion from '../components/charts/relationSeasion'
-
 export default {
-  components: {
-    // allPredict,
-    // weekPredict,
-    // contributionSession,
-    // relationSeasion
-  },
   data() {
     return {
-      tableData: [
-        {
-          endDate: '2016-05-02',
-          name: '王小虎',
-          location: '上海市普陀区金沙江路',
-          startDate: '2016-05-02'
-        }, {
-          endDate: '2016-05-04',
-          name: '王小虎',
-          location: '上海市普陀区金沙江路',
-          startDate: '2016-05-02'
-        }, {
-          endDate: '2016-05-01',
-          name: '王小虎',
-          location: '上海市普陀区金沙江路',
-          startDate: '2016-05-02'
-        }, {
-          endDate: '2016-05-03',
-          name: '王小虎',
-          location: '上海市普陀区金沙江路',
-          startDate: '2016-05-02'
-        }, {
-          endDate: '2016-05-03',
-          name: '王小虎',
-          location: '上海市普陀区金沙江路',
-          startDate: '2016-05-02'
-        }, {
-          endDate: '2016-05-03',
-          name: '王小虎',
-          location: '上海市普陀区金沙江路',
-          startDate: '2016-05-02'
-        }, {
-          endDate: '2016-05-03',
-          name: '王小虎',
-          location: '上海市普陀区金沙江路',
-          startDate: '2016-05-02'
-        }, {
-          endDate: '2016-05-03',
-          name: '王小虎',
-          location: '上海市普陀区金沙江路',
-          startDate: '2016-05-02'
-        }
-      ],
       currentDate: null, // 当前显示的数据的日期,
-      chengdu: {
-        alert: []
-      },
+      chengdu: {},
       chenghua: {
-        currentWorkSite: null,
-        maxWorkSite: null,
-        leftWorksite: null
+        current: null,
+        max: null,
+        remain: null
       },
+      chenghuaTable: null,
       qingyang: {
-        currentWorkSite: null,
-        maxWorkSite: null,
-        leftWorksite: null
+        current: null,
+        max: null,
+        remain: null
       },
+      qingyangTable: null,
       wuhou: {
-        currentWorkSite: null,
-        maxWorkSite: null,
-        leftWorksite: null
+        current: null,
+        max: null,
+        remain: null
       },
-      shuangliu: {
-        currentWorkSite: null,
-        maxWorkSite: null,
-        leftWorksite: null
+      wuhouTable: null,
+      jinjiang: {
+        current: null,
+        max: null,
+        remain: null
       },
+      jinjiangTable: null,
       gaoxin: {
-        currentWorkSite: null,
-        maxWorkSite: null,
-        leftWorksite: null
+        current: null,
+        max: null,
+        remain: null
       },
+      gaoxinTable: null,
       jinniu: {
-        currentWorkSite: null,
-        maxWorkSite: null,
-        leftWorksite: null
-      }
+        current: null,
+        max: null,
+        remain: null
+      },
+      jinniuTable: null
     }
   },
   mounted() {
-    // 页面初始时，返回全市的各项数据，以及各区域的所需数据
-    /* 返回的数据格式：
-    ** data: {
-      date: String | Date 显示的是哪个季度
-      chengdu: {
-        alert: [Number, Number, Number] 分别红色预警，橙色预警，红色预警,
-        currentWorkSite: Number 当前开工数量
-        maxWorkSite: Number 最大开工数量
-        leftWorksite: Number 剩余开工数量,
-      },
-      qingyang: {
-        currentWorkSite: Number 当前开工数量
-        maxWorkSite: Number 最大开工数量
-        leftWorksite: Number 剩余开工数量,
-        detailTable:[{
-          endDate: '2016-05-02',
-          name: '王小虎',
-          location: '上海市普陀区金沙江路',
-          startDate: '2016-05-02'
-        }, {
-          endDate: '2016-05-04',
-          name: '王小虎',
-          location: '上海市普陀区金沙江路',
-          startDate: '2016-05-02'
-        }]
-      },
-      chenghua: {
-        currentWorkSite: Number 当前开工数量
-        maxWorkSite: Number 最大开工数量
-        leftWorksite: Number 剩余开工数量,
-        detailTable:[{
-          endDate: '2016-05-02',
-          name: '王小虎',
-          location: '上海市普陀区金沙江路',
-          startDate: '2016-05-02'
-        }, {
-          endDate: '2016-05-04',
-          name: '王小虎',
-          location: '上海市普陀区金沙江路',
-          startDate: '2016-05-02'
-        }]
-      },
-      jinniu: {
-        currentWorkSite: Number 当前开工数量
-        maxWorkSite: Number 最大开工数量
-        leftWorksite: Number 剩余开工数量,
-        detailTable:[{
-          endDate: '2016-05-02',
-          name: '王小虎',
-          location: '上海市普陀区金沙江路',
-          startDate: '2016-05-02'
-        }, {
-          endDate: '2016-05-04',
-          name: '王小虎',
-          location: '上海市普陀区金沙江路',
-          startDate: '2016-05-02'
-        }]
-      },
-      wuhou: {
-        currentWorkSite: Number 当前开工数量
-        maxWorkSite: Number 最大开工数量
-        leftWorksite: Number 剩余开工数量,
-        detailTable:[{
-          endDate: '2016-05-02',
-          name: '王小虎',
-          location: '上海市普陀区金沙江路',
-          startDate: '2016-05-02'
-        }, {
-          endDate: '2016-05-04',
-          name: '王小虎',
-          location: '上海市普陀区金沙江路',
-          startDate: '2016-05-02'
-        }]
-      },
-      shuangliu: {
-        currentWorkSite: Number 当前开工数量
-        maxWorkSite: Number 最大开工数量
-        leftWorksite: Number 剩余开工数量,
-        detailTable:[{
-          endDate: '2016-05-02',
-          name: '王小虎',
-          location: '上海市普陀区金沙江路',
-          startDate: '2016-05-02'
-        }, {
-          endDate: '2016-05-04',
-          name: '王小虎',
-          location: '上海市普陀区金沙江路',
-          startDate: '2016-05-02'
-        }]
-      }
-      gaoxing: {
-        currentWorkSite: Number 当前开工数量
-        maxWorkSite: Number 最大开工数量
-        leftWorksite: Number 剩余开工数量,
-        detailTable:[{
-          endDate: '2016-05-02',
-          name: '王小虎',
-          location: '上海市普陀区金沙江路',
-          startDate: '2016-05-02'
-        }, {
-          endDate: '2016-05-04',
-          name: '王小虎',
-          location: '上海市普陀区金沙江路',
-          startDate: '2016-05-02'
-        }]
-      }
-    }
-    **
-    */
-    this.$axios.get('/dust/webresourcses/control/init').then(data => {
-      console.log(data.data.gaoxin)
-      this.currentDate = data.data.date
-      this.chengdu = data.data.chengdu
-      this.chenghua = data.data.chenghua
-      this.qingyang = data.data.qingyang
-      this.wuhou = data.data.wuhou
-      this.shuangliu = data.data.shuangliu
-      this.gaoxin = data.data.gaoxin
-      this.jinniu = data.data.jinniu
+    // 全市的情况
+    this.$axios.get('/dust/webresourcses/control/allcity').then(res => {
+      this.chengdu = res.data.data
+      this.currentDate = res.data.data.season
+    })
+
+    // 青羊区
+    this.$axios.get('/dust/webresourcses/control/510105').then(res => {
+      this.qingyang = res.data.data
+    })
+    this.$axios.get('/dust/webresourcses/control/company/510105').then(res => {
+      this.qingyangTable = res.data.data
+    })
+
+    // 锦江区
+    this.$axios.get('/dust/webresourcses/control/510104').then(res => {
+      this.jinjiang = res.data.data
+    })
+    this.$axios.get('/dust/webresourcses/control/company/510104').then(res => {
+      this.jinjiangTable = res.data.data
+    })
+
+    // 金牛区
+    this.$axios.get('/dust/webresourcses/control/510106').then(res => {
+      this.jinniu = res.data.data
+    })
+    this.$axios.get('/dust/webresourcses/control/company/510106').then(res => {
+      this.jinniuTable = res.data.data
+    })
+
+    // 武侯区
+    this.$axios.get('/dust/webresourcses/control/510107').then(res => {
+      this.wuhou = res.data.data
+    })
+    this.$axios.get('/dust/webresourcses/control/company/510107').then(res => {
+      this.wuhouTable = res.data.data
+    })
+
+    // 成华区
+    this.$axios.get('/dust/webresourcses/control/510108').then(res => {
+      this.chenghua = res.data.data
+    })
+    this.$axios.get('/dust/webresourcses/control/company/510108').then(res => {
+      this.chenghuaTable = res.data.data
+    })
+
+    // 高新区
+    this.$axios.get('/dust/webresourcses/control/510109').then(res => {
+      this.gaoxin = res.data.data
+    })
+    this.$axios.get('/dust/webresourcses/control/company/510109').then(res => {
+      this.gaoxinTable = res.data.data
     })
   }
 }

@@ -51,8 +51,8 @@ router.post('/init', function (req, res) {
     }
   })
 })
-router.get('/year', function (req, res) {
-  console.log(req.query)
+router.get('/year/:num/:date', function (req, res) {
+  console.log(req.params)
   res.json(
     {
       data: [
@@ -79,8 +79,8 @@ router.get('/year', function (req, res) {
   )
 })
 
-router.get('/season', function (req, res) {
-  console.log(req.query)
+router.get('/season/:num/:year/:date', function (req, res) {
+  console.log(req.params)
   res.json(
     {
       data: [
@@ -107,8 +107,8 @@ router.get('/season', function (req, res) {
   )
 })
 
-router.get('/month', function (req, res) {
-  console.log(req.query)
+router.get('/month/:num/:date', function (req, res) {
+  console.log(req.params)
   res.json(
     {
       data: [
