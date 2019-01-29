@@ -63,7 +63,7 @@ public class PredictFacadeREST {
         Pm10_Prediction prediction = new Pm10_Prediction();
         String date = new String("2019-02");
         //System.out.print("regionalId:   "+regionID);
-        return prediction.NextMonth_Pm10DayAvg_Prediction_Caculate(regionID, date);
+        return prediction.NextMonth(regionID, date);
     }
     
     @GET
@@ -74,13 +74,13 @@ public class PredictFacadeREST {
         Pm10_Prediction prediction = new Pm10_Prediction();
         String date = new String("2019-02");
         //System.out.print("regionalId:   "+regionID);
-        return prediction.NextMonth_Pm10DayAvg_Prediction_Caculate(510101, date);
+        return prediction.NextMonth(510101, date);
     }
     
     @GET
     @Path("season/{regionID}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<MonthQuery> getSeason(@PathParam("regionalId") Integer regionalId) {
+    public List<MonthQuery> getSeason(@PathParam("regionID") Integer regionID) {
         //TODO return proper representation object
         List<MonthQuery> deList = null;
         return deList;
@@ -89,16 +89,18 @@ public class PredictFacadeREST {
     @GET
     @Path("year/{regionID}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<MonthQuery> getYear(@PathParam("regionalId") Integer regionalId) {
+    public List<MonthQuery> getYear(@PathParam("regionID") Integer regionID) {
         //TODO return proper representation object
-        List<MonthQuery> deList = null;
-        return deList;
+        Pm10_Prediction prediction = new Pm10_Prediction();
+        String date = new String("2018-02");
+        //System.out.print("regionalId:   "+regionID);
+        return prediction.NextYear(regionID, date);
     }
     
     @GET
     @Path("threeyear/{regionID}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<MonthQuery> getThreeYear(@PathParam("regionalId") Integer regionalId) {
+    public List<MonthQuery> getThreeYear(@PathParam("regionID") Integer regionID) {
         //TODO return proper representation object
         List<MonthQuery> deList = null;
         return deList;
