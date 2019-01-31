@@ -121,7 +121,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedNativeQuery(name = "Dayavg.findDayavgForAllcity"
             , query = "SELECT AVG(da.pm10) as pm, da.avg_time as date\n" +
                         "FROM dayavg da\n" +
-                        "where\n" +
+                        "where da.regional_id > 510101 AND da.regional_id <= 510109 AND\n" +
                         "da.avg_time >= ?from\n" +
                         "AND da.avg_time < ?to\n" +
                         "GROUP BY date\n" +
@@ -137,6 +137,34 @@ import javax.xml.bind.annotation.XmlRootElement;
                         "GROUP BY date\n" +
                         "ORDER BY date ASC"
             , resultSetMapping = "forMonth")
+    , @NamedNativeQuery(name = "Dayavg.findYearByAllcityForFactor"
+            , query = "SELECT AVG(d.pm10) as pm, date_format(d.avg_time,'%Y') as date\n" +
+                        "FROM dayavg d\n" +
+                        "WHERE d.regional_id > 510101 AND d.regional_id <= 510109 AND date_format(d.avg_time,'%Y') = ?from\n" +
+                        "GROUP BY date"
+            , resultSetMapping = "forMonth")
+    , @NamedNativeQuery(name = "Dayavg.findYearByRegionalIdForFactor"
+            , query = "SELECT AVG(d.pm10) as pm, date_format(d.avg_time,'%Y') as date\n" +
+                        "FROM dayavg d\n" +
+                        "WHERE d.regional_id = ?regionalId\n" +
+                        "AND date_format(d.avg_time,'%Y') = ?from\n" +
+                        "GROUP BY date"
+            , resultSetMapping = "forMonth")
+    , @NamedNativeQuery(name = "Dayavg.findWorksiteByAllcityForFactor"
+            , query = "SELECT COUNT(c.id) as site\n" +
+                        "FROM company c\n" +
+                        "WHERE c.regional_id > 510101\n" +
+                        "AND c.regional_id <= 510109\n" +
+                        "AND c.jgrq >= ?from\n" +
+                        "AND c.kgrq <= ?from"
+            , resultSetMapping = "forWorksite")
+    , @NamedNativeQuery(name = "Dayavg.findWorksiteByRegionalIdForFactor"
+            , query = "SELECT COUNT(c.id) as site\n" +
+                        "FROM company c\n" +
+                        "WHERE c.regional_id = ?regionalId\n" +
+                        "AND c.jgrq >= ?from\n" +
+                        "AND c.kgrq <= ?from"
+            , resultSetMapping = "forWorksite")
 })
 @SqlResultSetMappings(
 {
@@ -146,8 +174,15 @@ import javax.xml.bind.annotation.XmlRootElement;
             columns = {
                 @ColumnResult(name = "pm"),  
                 @ColumnResult(name = "date")
+            }
+    )
+    , @SqlResultSetMapping(
+            name="forWorksite",
+            entities = {},  
+            columns = {
+                @ColumnResult(name = "site") 
             }  
-    )      
+    )
 })
 
 public class Dayavg implements Serializable {

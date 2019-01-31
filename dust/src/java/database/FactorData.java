@@ -10,24 +10,24 @@ package database;
  * @author jasonley
  */
 public class FactorData {
-    private String region;
+    private Integer region;
     private Double effect;
     private Integer worksite;
     
     public FactorData() {
     }
 
-    public FactorData(String region, Double effect, Integer worksite) {
+    public FactorData(Integer region, Double effect, Integer worksite) {
         this.region = region;
         this.effect = effect;
         this.worksite = worksite;
     }
     
-    public String getRegion() {
+    public Integer getRegion() {
         return region;
     }
 
-    public void setRegion(String region) {
+    public void setRegion(Integer region) {
         this.region = region;
     }
     
