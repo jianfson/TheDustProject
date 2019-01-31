@@ -74,7 +74,7 @@ npm config set disturl https://npm.taobao.org/dist --global
 
 地址：```https://git-scm.com/downloads```
 
-#### 运行
+#### 本地启动
 
 地址： ```https://github.com/nukebomb/TheDustProject```
 
@@ -84,4 +84,45 @@ npm config set disturl https://npm.taobao.org/dist --global
 
 4.另外重新打开一个命令行窗口，打开文件夹```frontend/yc_system_frontend```，安装依赖:```npm install```
 
-,运行项目```npm run dev```,在浏览器输入```http://localhost:3000```,即可。![1543198757622](C:\Users\yangf\AppData\Roaming\Typora\typora-user-images\1543198757622.png)
+,运行项目```npm run dev```,在浏览器输入```http://localhost：8080```,即可。
+
+
+#### 部署说明
+
+本部分，请在确定代码克隆成功，并且本地启动（参看本地启动部分）没问题之后使用。
+前端的代码编写完成后，需要部署前端项目，实际上，前端会通过打包项目，将前端的项目代码生成只有html,css,jss,和图片等所组成的静态资源。后端部署的时候只需要根据前端打包好的文件结构代理访问对应的静态资源即可。
+
+下面从两个部分说明，1.根据后端地址，修改前端代码的请求地址。
+
+2.打包前端代码生成前端静态资源。
+
+**根据后端地址，修改前端代码的请求地址**
+前端的项目编写一直是更具模拟前端而来的，所以在部署项目时，应更改前端的配置文件中的后端目标地址,修改前端代码config文件下的index.js中的proxyTable，将其中的target属性换成真实后端的地址，保存。
+<img src="./readme_imgs/地址变化.png">
+
+**打包前端代码生成前端静态资源**
+打包前端项目:
+```shell
+// 命令行打开模拟前端代码位置
+// 打包前端项目
+npm run build
+```
+<img src='./readme_imgs/build项目1.png'>
+执行成功后可以在命令行中看到'build complete'，执行过后可以看到前端代码文件夹中多了一个名为dist的文件夹。这个文件夹就是存放打包项目所产生的静态资源的文件夹。
+<img src='./readme_imgs/build文件夹.png'>
+
+dist 文件夹的文件路径：
+```
+
+├─static
+│    ├─css
+│    ├─fonts
+│    ├─img
+│    ├─imgs
+│    ├─js
+│    └─json
+└─index.html
+
+```
+然后只需在通过配置一个代理服务到dist文件夹，就可以访问前端静态资源了。
+
