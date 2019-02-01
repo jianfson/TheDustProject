@@ -43,40 +43,36 @@ public class Factor_Solution extends AbstractFacade<Dayavg> {
 
     }
     
-    private List<Object[]> findDayavgForRegion(Integer regionalId, String from, String to)
+    private List<Object[]> findDayavgForRegion(Integer regionalId, String from)
     {
-        Query query =  em.createNamedQuery("Dayavg.findDayavgForRegion");
+        Query query =  em.createNamedQuery("Dayavg.findDayByRegionalIdForFactor");
         query.setParameter("regionalId", regionalId);
         query.setParameter("from", from);
-        query.setParameter("to", to);
         List<Object[]> list = (List<Object[]>)query.getResultList();
         return list;
     }
     
-    private List<Object[]> findDayavgForAllcity(String from, String to)
+    private List<Object[]> findDayavgForAllcity(String from)
     {
-        Query query =  em.createNamedQuery("Dayavg.findDayavgForAllcity");
+        Query query =  em.createNamedQuery("Dayavg.findDayByAllcityForFactor");
         query.setParameter("from", from);
-        query.setParameter("to", to);
         List<Object[]> list = (List<Object[]>)query.getResultList();
         return list;
     }
     
-    private List<Object[]> findMonthavgForRegion(Integer regionalId, String from, String to)
+    private List<Object[]> findMonthavgForRegion(Integer regionalId, String from)
     {
-        Query query =  em.createNamedQuery("Dayavg.findByRegionalIdForMonth");
+        Query query =  em.createNamedQuery("Dayavg.findMonthByRegionalIdForFactor");
         query.setParameter("regionalId", regionalId);
         query.setParameter("from", from);
-        query.setParameter("to", to);
         List<Object[]> list = (List<Object[]>)query.getResultList();
         return list;
     }
     
-    private List<Object[]> findMonthavgForAllcity(String from, String to)
+    private List<Object[]> findMonthavgForAllcity(String from)
     {
-        Query query =  em.createNamedQuery("Dayavg.findAllcityForMonth");
+        Query query =  em.createNamedQuery("Dayavg.findMonthByAllcityForFactor");
         query.setParameter("from", from);
-        query.setParameter("to", to);
         List<Object[]> list = (List<Object[]>)query.getResultList();
         return list;
     }
@@ -126,37 +122,37 @@ public class Factor_Solution extends AbstractFacade<Dayavg> {
     int  SelectdRegional_id = 0,SelectedLabel=-1;
     double ImpactFactor_Value;
 	
-	//求某行政区某季度pm10影响因子，会调用Factor_Solution_Calculate
-	public double Season_Factor_Solution_Calculate(String Region_name,String Year,String Season) {
-	      String Month1 = new String();
-	      String Month2 = new String();
-	      String Month3 = new String();
-	       ArrayList<Double> temp = new ArrayList<Double>();
-	      if (Season.equals("Spring")) {
-	    	  Month1 = Year + "-03";
-	    	  Month2 = Year + "-04";
-	    	  Month3 = Year + "-05";
-	    	  
-	      } else if(Season.equals("Summer")) {
-	    	  Month1 = Year + "-06";
-	    	  Month2 = Year + "-07";
-	    	  Month3 = Year + "-08";
-	      } else if(Season.equals("Autumn")) {
-	    	  Month1 = Year + "-09";
-	    	  Month2 = Year + "-10";
-	    	  Month3 = Year + "-11";
-	      } else if(Season.equals("Winter")) {
-	    	  Month1 = Year + "-12";
-	    	  Month2 = Integer.toString(Integer.parseInt(Year)+1) + "-01";
-	    	  Month3 = Integer.toString(Integer.parseInt(Year)+1) + "-02";
-	      }
-	      //temp.add(Factor_Solution_Calculate(Region_name,Month1));
-	      //temp.add(Factor_Solution_Calculate(Region_name,Month2));
-	      //temp.add(Factor_Solution_Calculate(Region_name,Month3));
-	      //System.out.println(temp.size());
-	      //ImpactFactor_Value = calcAverage(temp);
-	      return ImpactFactor_Value;
-	}
+    //求某行政区某季度pm10影响因子，会调用Factor_Solution_Calculate
+    public double Season_Factor_Solution_Calculate(String Region_name,String Year,String Season) {
+        String Month1 = new String();
+        String Month2 = new String();
+        String Month3 = new String();
+        //ArrayList<Double> temp = new ArrayList<Double>();
+        if (Season.equals("Spring")) {
+            Month1 = Year + "-03";
+            Month2 = Year + "-04";
+            Month3 = Year + "-05";
+
+        } else if(Season.equals("Summer")) {
+            Month1 = Year + "-06";
+            Month2 = Year + "-07";
+            Month3 = Year + "-08";
+        } else if(Season.equals("Autumn")) {
+            Month1 = Year + "-09";
+            Month2 = Year + "-10";
+            Month3 = Year + "-11";
+        } else if(Season.equals("Winter")) {
+            Month1 = Year + "-12";
+            Month2 = Integer.toString(Integer.parseInt(Year)+1) + "-01";
+            Month3 = Integer.toString(Integer.parseInt(Year)+1) + "-02";
+        }
+        //temp.add(Factor_Solution_Calculate(Region_name,Month1));
+        //temp.add(Factor_Solution_Calculate(Region_name,Month2));
+        //temp.add(Factor_Solution_Calculate(Region_name,Month3));
+        //System.out.println(temp.size());
+        //ImpactFactor_Value = calcAverage(temp);
+        return ImpactFactor_Value;
+    }
 	
     // 求解某行政区某日/月/年pm10的影响因子
     public List<FactorData> Factor_Solution_Calculate(String Date) {
@@ -179,7 +175,6 @@ public class Factor_Solution extends AbstractFacade<Dayavg> {
                     
                     List<Object[]> site = null;
                     site = findWorksiteForRegion(ReionaIdCollection[i], Date);
-                    //ImpactFactor_Value = (calcAverage(Region_pm10)*RegionAreaCollection[SelectedLabel]) / (calcAverage(City_pm10)*ChengduTotalArea);
                     Double effect = 0.0;
                     Object[] coRegion = yearRegion.get(0);
                     Object[] coAll = yearAvg.get(0);
@@ -193,108 +188,69 @@ public class Factor_Solution extends AbstractFacade<Dayavg> {
                 }
                 return returnList;
 	    }
+            //求当月影响因子
+	    else {
+                List<Object[]> monthAvg = null;
+                monthAvg = findMonthavgForAllcity(Date);
+                if (monthAvg.isEmpty()) {
+                    return null;
+                }
+		for(int i=0;i<ReionaIdCollection.length;i++) {
+                    List<Object[]> monthRegion = null;
+                    monthRegion = findMonthavgForRegion(ReionaIdCollection[i], Date);
+                    if (monthRegion.isEmpty()) {
+                        continue;
+                    }
+                    
+                    List<Object[]> site = null;
+                    site = findWorksiteForRegion(ReionaIdCollection[i], Date);
+                    //ImpactFactor_Value = (calcAverage(Region_pm10)*RegionAreaCollection[SelectedLabel]) / (calcAverage(City_pm10)*ChengduTotalArea);
+                    Double effect = 0.0;
+                    Object[] coRegion = monthRegion.get(0);
+                    Object[] coAll = monthAvg.get(0);
+                    effect = Double.parseDouble(coRegion[0].toString())*RegionAreaCollection[i] / (Double.parseDouble(coAll[0].toString())*ChengduTotalArea);
+
+                    Object[] coSite = site.get(0);
+                    Integer workSite = Integer.parseInt(coSite[0].toString());
+                    
+                    FactorData data = new FactorData(ReionaIdCollection[i], effect, workSite);
+                    returnList.add(data);
+                }
+                return returnList;
+            }
         }
-        return null;
+        //求当日影响因子
+        else {
+            List<Object[]> dayAvg = null;
+            dayAvg = findDayavgForAllcity(Date);
+            if (dayAvg.isEmpty()) {
+                return null;
+            }
+            for(int i=0;i<ReionaIdCollection.length;i++) {
+                List<Object[]> dayRegion = null;
+                dayRegion = findDayavgForRegion(ReionaIdCollection[i], Date);
+                if (dayRegion.isEmpty()) {
+                    continue;
+                }
+
+                List<Object[]> site = null;
+                site = findWorksiteForRegion(ReionaIdCollection[i], Date);
+                //ImpactFactor_Value = (calcAverage(Region_pm10)*RegionAreaCollection[SelectedLabel]) / (calcAverage(City_pm10)*ChengduTotalArea);
+                Double effect = 0.0;
+                Object[] coRegion = dayRegion.get(0);
+                Object[] coAll = dayAvg.get(0);
+                effect = Double.parseDouble(coRegion[0].toString())*RegionAreaCollection[i] / (Double.parseDouble(coAll[0].toString())*ChengduTotalArea);
+
+                Object[] coSite = site.get(0);
+                Integer workSite = Integer.parseInt(coSite[0].toString());
+
+                FactorData data = new FactorData(ReionaIdCollection[i], effect, workSite);
+                returnList.add(data);
+            }
+            return returnList;
+        }
+        //return null;
     }
-		   //求当月影响因子
-//	    else {
-//			 //连接URL为   jdbc:mysql//服务器地址/数据库名  ，后面的2个参数分别是登陆用户名和密码
-//		   	    try {
-//		   	      Connection connect = DriverManager.getConnection(
-//		   	          "jdbc:mysql://localhost:3307/dust?characterEncoding=utf8&useSSL=true&serverTimezone=GMT","root","123456");
-//		   	           
-//
-//		   	      //System.out.println("Success connect Mysql server!");
-//		   	      //Statement stmt = connect.createStatement();
-//		   	      
-//		   	      //在dayavg中找寻符合条件的记录，并将pm10数据存储在Region_pm10动态数组中
-//		   	      PreparedStatement pstmt1 = connect.prepareStatement("select * from dayavg where regional_id = ? && avg_time between ? and ? ");
-//		   	      pstmt1.setInt(1, SelectdRegional_id);
-//		   	      pstmt1.setString(2, Date+"-01" );
-//		   	      pstmt1.setString(3, Date+"-31" );
-//		   	      ResultSet Region = pstmt1.executeQuery();
-//		   	      //int i = 1;
-//		   	      while (Region.next()) {
-//		   	    	  
-//		   	    	Region_pm10.add(Region.getDouble("pm10")); //
-//		   	    	  
-//		   	      }
-//		   	      //System.out.println("all done1");
-//		   	      
-//		   	 //在dayavg中找寻符合条件的记录，并将pm10数据存储在City_pm10动态数组中
-//		   	      PreparedStatement pstmt2 = connect.prepareStatement("select * from dayavg where avg_time between ? and ? ");
-//		   	      pstmt2.setString(1, Date+"-01" );
-//		   	      pstmt2.setString(2, Date+"-31" );
-//		   	      
-//		   	      ResultSet City = pstmt2.executeQuery();
-//		   	      //int i = 1;
-//		   	      while (City.next()) {
-//		   	    	  
-//		   	    	City_pm10.add(City.getDouble("pm10")); //
-//		   	    	  
-//		   	      }
-//		   	      //System.out.println("all done2");
-//		   	      //计算影响因子
-//		   	   ImpactFactor_Value = (calcAverage(Region_pm10)*RegionAreaCollection[SelectedLabel]) / (calcAverage(City_pm10)*ChengduTotalArea);
-//		   	   return ImpactFactor_Value;
-//				   
-//			   }catch (Exception e) {
-//			        System.out.print(" 出错！");
-//			        e.printStackTrace();
-//			      }
-//		   }
-//	   } 
-//	   //求当日影响因子
-//	   else {
-//		      
-//		 //连接URL为   jdbc:mysql//服务器地址/数据库名  ，后面的2个参数分别是登陆用户名和密码
-//   	    try {
-//   	      Connection connect = DriverManager.getConnection(
-//   	          "jdbc:mysql://localhost:3307/dust?characterEncoding=utf8&useSSL=true&serverTimezone=GMT","root","123456");
-//   	           
-//
-//   	      System.out.println("Success connect Mysql server!");
-//   	      //Statement stmt = connect.createStatement();
-//   	      
-//   	      //在dayavg中找寻符合条件的记录，并将pm10数据存储在Region_pm10动态数组中
-//   	      PreparedStatement pstmt1 = connect.prepareStatement("select * from dayavg where regional_id = ? && avg_time = ? ");
-//   	      pstmt1.setInt(1, SelectdRegional_id);
-//   	      pstmt1.setString(2, Date );
-//   	      
-//   	      ResultSet Region = pstmt1.executeQuery();
-//   	      //int i = 1;
-//   	      while (Region.next()) {
-//   	    	  
-//   	    	Region_pm10.add(Region.getDouble("pm10")); //
-//   	    	  
-//   	      }
-//   	      //System.out.println("all done1");
-//   	      
-//   	 //在dayavg中找寻符合条件的记录，并将pm10数据存储在City_pm10动态数组中
-//   	      PreparedStatement pstmt2 = connect.prepareStatement("select * from dayavg where avg_time = ? ");
-//   	      
-//   	      pstmt2.setString(1, Date );
-//   	      
-//   	      ResultSet City = pstmt2.executeQuery();
-//   	      //int i = 1;
-//   	      while (City.next()) {
-//   	    	  
-//   	    	City_pm10.add(City.getDouble("pm10")); //
-//   	    	  
-//   	      }
-//   	      //System.out.println("all done2");
-//   	      //计算影响因子
-//   	   ImpactFactor_Value = (calcAverage(Region_pm10)*RegionAreaCollection[SelectedLabel]) / (calcAverage(City_pm10)*ChengduTotalArea);
-//   	   return ImpactFactor_Value;
-//		   
-//	   }catch (Exception e) {
-//	        System.out.print(" 出错！");
-//	        e.printStackTrace();
-//	      }
-//   	 
-//   }
-//	   return ImpactFactor_Value;
- //}
    
    @Override
     protected EntityManager getEntityManager() {

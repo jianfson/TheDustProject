@@ -137,6 +137,32 @@ import javax.xml.bind.annotation.XmlRootElement;
                         "GROUP BY date\n" +
                         "ORDER BY date ASC"
             , resultSetMapping = "forMonth")
+    , @NamedNativeQuery(name = "Dayavg.findDayByAllcityForFactor"
+            , query = "SELECT AVG(d.pm10) as pm, date_format(d.avg_time,'%Y-%m-%d') as date\n" +
+                        "FROM dayavg d\n" +
+                        "WHERE d.regional_id > 510101 AND d.regional_id <= 510109 AND date_format(d.avg_time,'%Y-%m-%d') = ?from\n" +
+                        "GROUP BY date"
+            , resultSetMapping = "forMonth")
+    , @NamedNativeQuery(name = "Dayavg.findDayByRegionalIdForFactor"
+            , query = "SELECT AVG(d.pm10) as pm, date_format(d.avg_time,'%Y-%m-%d') as date\n" +
+                        "FROM dayavg d\n" +
+                        "WHERE d.regional_id = ?regionalId\n" +
+                        "AND date_format(d.avg_time,'%Y-%m-%d') = ?from\n" +
+                        "GROUP BY date"
+            , resultSetMapping = "forMonth")
+    , @NamedNativeQuery(name = "Dayavg.findMonthByAllcityForFactor"
+            , query = "SELECT AVG(d.pm10) as pm, date_format(d.avg_time,'%Y-%m') as date\n" +
+                        "FROM dayavg d\n" +
+                        "WHERE d.regional_id > 510101 AND d.regional_id <= 510109 AND date_format(d.avg_time,'%Y-%m') = ?from\n" +
+                        "GROUP BY date"
+            , resultSetMapping = "forMonth")
+    , @NamedNativeQuery(name = "Dayavg.findMonthByRegionalIdForFactor"
+            , query = "SELECT AVG(d.pm10) as pm, date_format(d.avg_time,'%Y-%m') as date\n" +
+                        "FROM dayavg d\n" +
+                        "WHERE d.regional_id = ?regionalId\n" +
+                        "AND date_format(d.avg_time,'%Y-%m') = ?from\n" +
+                        "GROUP BY date"
+            , resultSetMapping = "forMonth")
     , @NamedNativeQuery(name = "Dayavg.findYearByAllcityForFactor"
             , query = "SELECT AVG(d.pm10) as pm, date_format(d.avg_time,'%Y') as date\n" +
                         "FROM dayavg d\n" +
